@@ -1,14 +1,18 @@
 DOCKER_DIR ?= .
-DOCKER_SHELL_CMD ?= tmux
+CMD ?= bash
 
-docker-build:
+ifneq ($(wildcard Dockerfile.yaml),)
+    DOCKERFILE ?= -f $$(./Dockerfile.yaml)
+endif
+
+docker-build: $(DOCKER_DEPS)
 	docker build \
 	    -t $(DOCKER_IMAGE) \
-	    -f $$(./Dockerfile.yaml) \
+	    $(DOCKERFILE) \
 	    $(DOCKER_DIR)
 
 docker-shell: docker-build
-	$(call docker-run,$(DOCKER_SHELL_CMD))
+	$(call docker-run,$(CMD))
 
 docker-push: docker-build
 	docker push $(DOCKER_IMAGE)

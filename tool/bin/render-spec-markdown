@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -e -u -o pipefail
+shopt -s inherit_errexit
+
+front=$(< "$1")
+markdown=$(< "$2")
+
+markdown=${markdown//YYYY/2021}
+markdown=${markdown/\[%toc%\]/**Contents**$'\n'* TOC$'\n'\{:toc\}}
+
+echo "$front"
+echo "$markdown"

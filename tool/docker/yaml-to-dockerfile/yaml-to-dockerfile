@@ -1,0 +1,69 @@
+#!/usr/bin/env python3
+
+import os, sys
+import yaml
+import tempfile
+import pathlib
+
+class YamlToDockerfile():
+    @classmethod
+    def run(cls, args):
+        self = cls(args)
+
+        data = yaml.safe_load(open(self.file))
+
+        dockerfile = self.format(data)
+
+        temp_dir = tempfile.mkdtemp()
+        temp_file = temp_dir + '/Dockerfile'
+        temp = open(temp_file, 'w+')
+
+        temp.write(dockerfile)
+
+        self.chown(temp_dir, temp_file)
+
+        print(temp_file)
+
+    def __init__(self, args):
+        self.file, self.opts = self.getopt(args)
+
+    def getopt(self, args):
+        return args[0], {}
+
+    def format(self, data):
+        lines = []
+
+        for step in data:
+            for key, val in step.items():
+                method = getattr(self, 'format_%s' % key)
+                line = method(val)
+                lines.append(line + "\n")
+                break
+
+        return '\n'.join(lines)
+
+    def format_from(self, data):
+        return "FROM %s" % data
+
+    def format_run(self, data):
+        if isinstance(data, list):
+            text = ' \\\n && '.join(data)
+        else:
+            text = data
+
+        return "RUN %s" % text
+
+    def format_copy(self, data):
+        return 'COPY %s %s' % tuple(data)
+
+    def chown(self, dir_, file_):
+        path = pathlib.Path(self.file)
+        stat = path.stat()
+        uid = stat.st_uid
+        gid = stat.st_gid
+        os.chown(dir_, uid, gid)
+        os.chown(file_, uid, gid)
+
+
+if __name__ == '__main__':
+    YamlToDockerfile.run(sys.argv[1:])

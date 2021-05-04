@@ -1,59 +1,12 @@
-#!/usr/bin/env python3
+#!/usr/bin/env bash
 
-import sys
-import yaml
-import tempfile
+set -eu
+source "$YAML_SPEC_ROOT/tool/lib/runner.bash"
 
-class YamlToDockerfile():
-    @classmethod
-    def run(cls, args):
-        self = cls(args)
+check() (
+  [[ $(command -v python) ]] || return 1
 
-        data = yaml.safe_load(open(self.file))
-        if isinstance(data, list):
-            data = { 'steps': data }
+  python -c 'import yaml' 2>/dev/null || return 1
+)
 
-        dockerfile = self.format(data)
-
-        temp_file = tempfile.mkdtemp() + '/Dockerfile'
-        temp = open(temp_file, 'w+')
-
-        temp.write(dockerfile)
-
-        print(temp_file)
-
-    def __init__(self, args):
-        self.file, self.opts = self.getopt(args)
-
-    def getopt(self, args):
-        return args[0], {}
-
-    def format(self, data):
-        lines = []
-
-        for step in data.get('steps'):
-            for key, val in step.items():
-                method = getattr(self, 'format_%s' % key)
-                line = method(val)
-                lines.append(line + "\n")
-                break
-
-        return '\n'.join(lines)
-
-    def format_from(self, data):
-        return "FROM %s" % data
-
-    def format_run(self, data):
-        if isinstance(data, list):
-            text = ' \\\n && '.join(data)
-        else:
-            text = data
-
-        return "RUN %s" % text
-
-    def format_copy(self, data):
-        return 'COPY %s %s' % tuple(data)
-
-
-if __name__ == '__main__':
-    YamlToDockerfile.run(sys.argv[1:])
+run "$@"

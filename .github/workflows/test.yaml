@@ -13,6 +13,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Make spec/index.md from 1.2/spec.html
+      run:
+        source .rc &&
+        make -C spec clean build
+
     - name: Make the 1.2 spec.html from docbook
       run:
         source .rc &&
