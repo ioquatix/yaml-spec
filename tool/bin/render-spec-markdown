@@ -1,13 +1,50 @@
-#!/usr/bin/env bash
+#!/usr/bin/env perl
 
-set -e -u -o pipefail
-shopt -s inherit_errexit
+use v5.18;
 
-front=$(< "$1")
-markdown=$(< "$2")
+use XXX;  # XXX
 
-markdown=${markdown//YYYY/2021}
-markdown=${markdown/\[%toc%\]/**Contents**$'\n'* TOC$'\n'\{:toc\}}
+my ($front, $markdown);
+my ($YYYY, $MM, $DD);
 
-echo "$front"
-echo "$markdown"
+sub main {
+  read_files(@_);
+  set_vars();
+  fmt_dates();
+  fmt_toc();
+
+  print "$front$markdown\n";
+}
+
+sub read_files {
+  my ($front_file, $markdown_file) = @_;
+  $front = read_file($front_file);
+  $markdown = read_file($markdown_file);
+}
+
+sub read_file {
+  my ($file) = @_;
+  open my $fh, '<', $file;
+  local $/;
+  <$fh>;
+}
+
+sub set_vars {
+  my ($d,$m,$y);
+  ($_,$_,$_,$d,$m,$y) = localtime;
+  $YYYY = 1900 + $y;
+  $MM = sprintf "%02d", $m + 1;
+  $DD = sprintf "%02d", $d;
+}
+
+sub fmt_dates {
+  $markdown =~ s/YYYY/$YYYY/g;
+  $markdown =~ s/MM/$MM/g;
+  $markdown =~ s/DD/$DD/g;
+}
+
+sub fmt_toc {
+  $markdown =~ s/^\[%toc%\]/**Contents**\n\n* TOC\n\{:toc\}/m;
+}
+
+main @ARGV;

@@ -1756,23 +1756,21 @@ ERROR:
 
 _Indicators_ are characters that have special semantics.
 
+A ["**`-`**"](#- block sequence entry//) (**`#x2D`**, hyphen) denotes a [block sequence](#style/block/sequence) entry.
+
 ```
 [4] c-sequence-entry ::= "-"
 ```
-
-A ["**`-`**"](#- block sequence entry//) (**`#x2D`**, hyphen) denotes a [block sequence](#style/block/sequence) entry.
+A ["**`?`**"](#? mapping key//) (**`#x3F`**, question mark) denotes a [mapping key](#key//).
 
 ```
 [5] c-mapping-key ::= "?"
 ```
-
-A ["**`?`**"](#? mapping key//) (**`#x3F`**, question mark) denotes a [mapping key](#key//).
+A ["**`:`**"](#: mapping value//) (**`#x3A`**, colon) denotes a [mapping value](#value//).
 
 ```
 [6] c-mapping-value ::= ":"
 ```
-
-A ["**`:`**"](#: mapping value//) (**`#x3A`**, colon) denotes a [mapping value](#value//).
 
 **Example 5.3. Block Structure Indicators**
 
@@ -1807,35 +1805,31 @@ Legend:
 }
 ```
 
+A ["**`,`**"](#, end flow entry//) (**`#x2C`**, comma) ends a [flow collection](#style/flow/collection) entry.
+
 ```
 [7] c-collect-entry ::= ","
 ```
-
-A ["**`,`**"](#, end flow entry//) (**`#x2C`**, comma) ends a [flow collection](#style/flow/collection) entry.
+A ["**`[`**"](#[ start flow sequence//) (**`#x5B`**, left bracket) starts a [flow sequence](#style/flow/sequence).
 
 ```
 [8] c-sequence-start ::= "["
 ```
-
-A ["**`[`**"](#[ start flow sequence//) (**`#x5B`**, left bracket) starts a [flow sequence](#style/flow/sequence).
+A ["**`]`**"](#] end flow sequence//) (**`#x5D`**, right bracket) ends a [flow sequence](#style/flow/sequence).
 
 ```
 [9] c-sequence-end ::= "]"
 ```
-
-A ["**`]`**"](#] end flow sequence//) (**`#x5D`**, right bracket) ends a [flow sequence](#style/flow/sequence).
+A ["**`{`**"](#{ start flow mapping//) (**`#x7B`**, left brace) starts a [flow mapping](#style/flow/mapping).
 
 ```
 [10] c-mapping-start ::= "{"
 ```
-
-A ["**`{`**"](#{ start flow mapping//) (**`#x7B`**, left brace) starts a [flow mapping](#style/flow/mapping).
+A ["**`}`**"](#} end flow mapping//) (**`#x7D`**, right brace) ends a [flow mapping](#style/flow/mapping).
 
 ```
 [11] c-mapping-end ::= "}"
 ```
-
-A ["**`}`**"](#} end flow mapping//) (**`#x7D`**, right brace) ends a [flow mapping](#style/flow/mapping).
 
 **Example 5.4. Flow Collection Indicators**
 
@@ -1866,11 +1860,11 @@ Legend:
 }
 ```
 
+An ["**`#`**"](## comment//) (**`#x23`**, octothorpe, hash, sharp, pound, number sign) denotes a [comment](#comment//).
+
 ```
 [12] c-comment ::= "#"
 ```
-
-An ["**`#`**"](## comment//) (**`#x23`**, octothorpe, hash, sharp, pound, number sign) denotes a [comment](#comment//).
 
 **Example 5.5. Comment Indicator**
 
@@ -1890,23 +1884,21 @@ Legend:
 # documents, only comments.
 ```
 
+An ["**`&`**"](#& anchor//) (**`#x26`**, ampersand) denotes a [node’s anchor property](#anchor//).
+
 ```
 [13] c-anchor ::= "&"
 ```
-
-An ["**`&`**"](#& anchor//) (**`#x26`**, ampersand) denotes a [node’s anchor property](#anchor//).
+An ["**`*`**"](#* alias//) (**`#x2A`**, asterisk) denotes an [alias node](#alias//).
 
 ```
 [14] c-alias ::= "*"
 ```
-
-An ["**`*`**"](#* alias//) (**`#x2A`**, asterisk) denotes an [alias node](#alias//).
+The ["**`!`**"](#! tag indicator//) (**`#x21`**, exclamation) is heavily overloaded for specifying [node tags](#tag//). It is used to denote [tag handles](#tag/handle/) used in [tag directives](#directive/TAG/) and [tag properties](#tag/property/); to denote [local tags](#tag/local/); and as the [non-specific tag](#tag/non-specific/) for non-[plain scalars](#style/flow/plain).
 
 ```
 [15] c-tag ::= "!"
 ```
-
-The ["**`!`**"](#! tag indicator//) (**`#x21`**, exclamation) is heavily overloaded for specifying [node tags](#tag//). It is used to denote [tag handles](#tag/handle/) used in [tag directives](#directive/TAG/) and [tag properties](#tag/property/); to denote [local tags](#tag/local/); and as the [non-specific tag](#tag/non-specific/) for non-[plain scalars](#style/flow/plain).
 
 **Example 5.6. Node Property Indicators**
 
@@ -1932,17 +1924,16 @@ Legend:
 }
 ```
 
+A ["**`|`**"](#| literal style//) (**`7C`**, vertical bar) denotes a [literal block scalar](#style/block/literal).
+
 ```
 [16] c-literal ::= "|"
 ```
-
-A ["**`|`**"](#| literal style//) (**`7C`**, vertical bar) denotes a [literal block scalar](#style/block/literal).
+A ["**`>`**"](#> folded style//) (**`#x3E`**, greater than) denotes a [folded block scalar](#style/block/folded).
 
 ```
 [17] c-folded ::= ">"
 ```
-
-A ["**`>`**"](#> folded style//) (**`#x3E`**, greater than) denotes a [folded block scalar](#style/block/folded).
 
 **Example 5.7. Block Scalar Indicators**
 
@@ -1972,17 +1963,16 @@ Legend:
 }
 ```
 
+An ["**`'`**"](#' single-quoted style//) (**`#x27`**, apostrophe, single quote) surrounds a [single-quoted flow scalar](#style/flow/single-quoted).
+
 ```
 [18] c-single-quote ::= "'"
 ```
-
-An ["**`'`**"](#' single-quoted style//) (**`#x27`**, apostrophe, single quote) surrounds a [single-quoted flow scalar](#style/flow/single-quoted).
+A ["**`"`**"](#" double-quoted style//) (**`#x22`**, double quote) surrounds a [double-quoted flow scalar](#style/flow/double-quoted).
 
 ```
 [19] c-double-quote ::= '"'
 ```
-
-A ["**`"`**"](#" double-quoted style//) (**`#x22`**, double quote) surrounds a [double-quoted flow scalar](#style/flow/double-quoted).
 
 **Example 5.8. Quoted Scalar Indicators**
 
@@ -2008,11 +1998,11 @@ Legend:
 }
 ```
 
+A ["**`%`**"](#% directive//) (**`#x25`**, percent) denotes a [directive](#directive//) line.
+
 ```
 [20] c-directive ::= "%"
 ```
-
-A ["**`%`**"](#% directive//) (**`#x25`**, percent) denotes a [directive](#directive//) line.
 
 **Example 5.9. Directive Indicator**
 
@@ -2033,12 +2023,12 @@ Legend:
 !!str "text"
 ```
 
+The _"**`@`**"_ (**`#x40`**, at) and _"**```**"_ (**`#x60`**, grave accent) are _reserved_ for future use.
+
 ```
 [21] c-reserved ::=
   "@" | "`"
 ```
-
-The _"**`@`**"_ (**`#x40`**, at) and _"**```**"_ (**`#x60`**, grave accent) are _reserved_ for future use.
 
 **Example 5.10. Invalid use of Reserved Indicators**
 
@@ -2314,133 +2304,113 @@ available.
 
 YAML escape sequences are a superset of C’s escape sequences:
 
+Escaped ASCII null (**`#x0`**) character.
+
 ```
 [42] ns-esc-null ::= "0"
 ```
-
-Escaped ASCII null (**`#x0`**) character.
+Escaped ASCII bell (**`#x7`**) character.
 
 ```
 [43] ns-esc-bell ::= "a"
 ```
-
-Escaped ASCII bell (**`#x7`**) character.
+Escaped ASCII backspace (**`#x8`**) character.
 
 ```
 [44] ns-esc-backspace ::= "b"
 ```
-
-Escaped ASCII backspace (**`#x8`**) character.
+Escaped ASCII horizontal tab (**`#x9`**) character. This is useful at the start or the end of a line to force a leading or trailing tab to become part of the [content](#content//).
 
 ```
 [45] ns-esc-horizontal-tab ::=
   "t" | #x9
 ```
-
-Escaped ASCII horizontal tab (**`#x9`**) character. This is useful at the start or the end of a line to force a leading or trailing tab to become part of the [content](#content//).
+Escaped ASCII line feed (**`#xA`**) character.
 
 ```
 [46] ns-esc-line-feed ::= "n"
 ```
-
-Escaped ASCII line feed (**`#xA`**) character.
+Escaped ASCII vertical tab (**`#xB`**) character.
 
 ```
 [47] ns-esc-vertical-tab ::= "v"
 ```
-
-Escaped ASCII vertical tab (**`#xB`**) character.
+Escaped ASCII form feed (**`#xC`**) character.
 
 ```
 [48] ns-esc-form-feed ::= "f"
 ```
-
-Escaped ASCII form feed (**`#xC`**) character.
+Escaped ASCII carriage return (**`#xD`**) character.
 
 ```
 [49] ns-esc-carriage-return ::= "r"
 ```
-
-Escaped ASCII carriage return (**`#xD`**) character.
+Escaped ASCII escape (**`#x1B`**) character.
 
 ```
 [50] ns-esc-escape ::= "e"
 ```
-
-Escaped ASCII escape (**`#x1B`**) character.
+Escaped ASCII space (**`#x20`**) character. This is useful at the start or the end of a line to force a leading or trailing space to become part of the [content](#content//).
 
 ```
 [51] ns-esc-space ::= #x20
 ```
-
-Escaped ASCII space (**`#x20`**) character. This is useful at the start or the end of a line to force a leading or trailing space to become part of the [content](#content//).
+Escaped ASCII double quote (**`#x22`**).
 
 ```
 [52] ns-esc-double-quote ::= '"'
 ```
-
-Escaped ASCII double quote (**`#x22`**).
+Escaped ASCII slash (**`#x2F`**), for [JSON compatibility](#JSON compatibility//).
 
 ```
 [53] ns-esc-slash ::= "/"
 ```
-
-Escaped ASCII slash (**`#x2F`**), for [JSON compatibility](#JSON compatibility//).
+Escaped ASCII back slash (**`#x5C`**).
 
 ```
 [54] ns-esc-backslash ::= "\"
 ```
-
-Escaped ASCII back slash (**`#x5C`**).
+Escaped Unicode next line (**`#x85`**) character.
 
 ```
 [55] ns-esc-next-line ::= "N"
 ```
-
-Escaped Unicode next line (**`#x85`**) character.
+Escaped Unicode non-breaking space (**`#xA0`**) character.
 
 ```
 [56] ns-esc-non-breaking-space ::= "_"
 ```
-
-Escaped Unicode non-breaking space (**`#xA0`**) character.
+Escaped Unicode line separator (**`#x2028`**) character.
 
 ```
 [57] ns-esc-line-separator ::= "L"
 ```
-
-Escaped Unicode line separator (**`#x2028`**) character.
+Escaped Unicode paragraph separator (**`#x2029`**) character.
 
 ```
 [58] ns-esc-paragraph-separator ::= "P"
 ```
-
-Escaped Unicode paragraph separator (**`#x2029`**) character.
+Escaped 8-bit Unicode character.
 
 ```
 [59] ns-esc-8-bit ::=
   "x"
   ( ns-hex-digit × 2 )
 ```
-
-Escaped 8-bit Unicode character.
+Escaped 16-bit Unicode character.
 
 ```
 [60] ns-esc-16-bit ::=
   "u"
   ( ns-hex-digit × 4 )
 ```
-
-Escaped 16-bit Unicode character.
+Escaped 32-bit Unicode character.
 
 ```
 [61] ns-esc-32-bit ::=
   "U"
   ( ns-hex-digit × 8 )
 ```
-
-Escaped 32-bit Unicode character.
-
 Any escaped character:
 
 ```
@@ -7123,538 +7093,4 @@ The yaml-core mailing list at
 e.net/lists/listinfo/yaml-core) is the preferred method for such submissions,
 as well as raising any questions regarding this draft.
 
-# Index
-
-**Indicators**
-
-! tag indicator, [Tags](#idm786), [Indicator Characters](#idm3570), [Node Tags](#idm6461)
-
-! local tag, [Tags](#idm1620), [Tag Handles](#idm6064), [Tag
-Prefixes](#idm6270), [Node Tags](#idm6461)
-
-! non-specific tag, [Resolved Tags](#idm2564), [Node Tags](#idm6461), [Tag
-Resolution](#idm11057), [Tag Resolution](#idm11448), [Tag
-Resolution](#idm11627)
-
-! primary tag handle, [Tag Handles](#idm6064)
-
-!! secondary tag handle, [Tag Handles](#idm6064)
-
-!…! named handle, [Tag Handles](#idm6064), [Node Tags](#idm6461)
-
-" double-quoted style, [Indicator Characters](#idm3570), [Double-Quoted Style](#idm7210)
-
-\# comment, [Collections](#idm406), [Indicator Characters](#idm3570), [Comments](#idm5481), [Plain Style](#idm7632), [Block Indentation Indicator](#idm8865)
-
-% directive, [Indicator Characters](#idm3570), [Directives](#idm5738), [Document Markers](#idm10381), [Bare Documents](#idm10520)
-
-% escaping in URI, [Tags](#idm1620), [Miscellaneous Characters](#idm4386), [Node Tags](#idm6461)
-
-& anchor, [Structures](#idm531), [Indicator Characters](#idm3570), [Node Anchors](#idm6842)
-
-' reserved indicator, [Indicator Characters](#idm3570)
-
-' single-quoted style, [Indicator Characters](#idm3570), [Single-Quoted Style](#idm7447)
-
-\* alias, [Structures](#idm531), [Indicator Characters](#idm3570), [Alias Nodes](#idm6989)
-
-\+ keep chomping, [Block Chomping Indicator](#idm8990)
-
-, end flow entry, [Collections](#idm406), [Indicator Characters](#idm3570), [Miscellaneous Characters](#idm4386), [Node Tags](#idm6461), [Node Anchors](#idm6842), [Plain Style](#idm7632), [Flow Collection Styles](#idm7932), [Flow Sequences](#idm7993), [Flow Mappings](#idm8114)
-
-\- block sequence entry, [Introduction](#Introduction), [Collections](#idm406), [Structures](#idm531), [Production Parameters](#idm3014), [Indicator Characters](#idm3570), [Indentation Spaces](#idm4883), [Plain Style](#idm7632), [Block Collection Styles](#idm9640), [Block Sequences](#idm9663), [Block Nodes](#idm10091)
-
-\- strip chomping, [Block Chomping Indicator](#idm8990)
-
-: mapping value, [Introduction](#Introduction), [Collections](#idm406), [Structures](#idm531), [Indicator Characters](#idm3570), [Indentation Spaces](#idm4883), [Plain Style](#idm7632), [Flow Mappings](#idm8114), [Block Mappings](#idm9826)
-
-<…> verbatim tag, [Node Tags](#idm6461)
-
-\> folded style, [Scalars](#idm656), [Indicator Characters](#idm3570), [Folded Style](#idm9400)
-
-? mapping key, [Structures](#idm531), [Indicator Characters](#idm3570), [Indentation Spaces](#idm4883), [Plain Style](#idm7632), [Flow Mappings](#idm8114), [Block Mappings](#idm9826)
-
-? non-specific tag, [Resolved Tags](#idm2564), [Node Tags](#idm6461), [Tag Resolution](#idm11057), [Tag Resolution](#idm11448), [Tag Resolution](#idm11627)
-
-@ reserved indicator, [Indicator Characters](#idm3570)
-
-\[ start flow sequence, [Collections](#idm406), [Indicator Characters](#idm3570), [Miscellaneous Characters](#idm4386), [Node Tags](#idm6461), [Node Anchors](#idm6842), [Plain Style](#idm7632), [Flow Sequences](#idm7993)
-
-\\ escaping in double-quoted scalars, [Escaped Characters](#idm4551), [Double-Quoted Style](#idm7210)
-
-\] end flow sequence, [Collections](#idm406), [Indicator Characters](#idm3570), [Miscellaneous Characters](#idm4386), [Node Tags](#idm6461), [Node Anchors](#idm6842), [Plain Style](#idm7632), [Flow Sequences](#idm7993)
-
-{ start flow mapping, [Collections](#idm406), [Indicator Characters](#idm3570), [Miscellaneous Characters](#idm4386), [Node Tags](#idm6461), [Node Anchors](#idm6842), [Plain Style](#idm7632), [Flow Mappings](#idm8114)
-
-| literal style, [Scalars](#idm656), [Indicator Characters](#idm3570), [Literal Style](#idm9265)
-
-} end flow mapping, [Collections](#idm406), [Indicator Characters](#idm3570), [Miscellaneous Characters](#idm4386), [Node Tags](#idm6461), [Node Anchors](#idm6842), [Plain Style](#idm7632), [Flow Mappings](#idm8114)
-
-**A**
-
-alias, [Introduction](#Introduction), [Prior Art](#idm141), [Structures](#idm531), [Dump](#idm1059), [Serialization Tree](#idm1931), [Anchors and Aliases](#idm2042), [Loading Failure Points](#idm2408), [Well-Formed Streams and Identified Aliases](#idm2524), [Resolved Tags](#idm2564), [Indicator Characters](#idm3570), [Node Anchors](#idm6842), [Flow Styles](#Flow), [Alias Nodes](#idm6989), [Flow Nodes](#idm8623)
-
-identified, [Structures](#idm531), [Anchors and Aliases](#idm2042),
-[Well-Formed Streams and Identified Aliases](#idm2524)
-
-unidentified, [Loading Failure Points](#idm2408), [Well-Formed Streams and
-Identified Aliases](#idm2524)
-
-anchor, [Structures](#idm531), [Dump](#idm1059), [Serialization Tree](#idm1931), [Anchors and Aliases](#idm2042), [Well-Formed Streams and Identified Aliases](#idm2524), [Resolved Tags](#idm2564), [Indicator Characters](#idm3570), [Node Properties](#idm6397), [Flow Styles](#Flow), [Alias Nodes](#idm6989), [Flow Nodes](#idm8623)
-
-application, [Introduction](#Introduction), [Prior Art](#idm141), [Tags](#idm786), [Processing YAML Information](#Processing), [Dump](#idm1059), [Information Models](#idm1384), [Tags](#idm1620), [Serialization Tree](#idm1931), [Keys Order](#idm1978), [Resolved Tags](#idm2564), [Available Tags](#idm2940), [Tag Prefixes](#idm6270), [Node Tags](#idm6461), [Streams](#idm10693), [Tag Resolution](#idm11057), [Other Schemas](#idm11801)
-
-**B**
-
-block scalar header, [Comments](#idm5481), [Block Scalar Headers](#idm8804), [Block Chomping Indicator](#idm8990)
-
-byte order mark, [Character Encodings](#idm3338), [Document Prefix](#idm10327)
-
-**C**
-
-character encoding, [Character Encodings](#idm3338), [Document Prefix](#idm10327), [Streams](#idm10693)
-
-in URI, [Miscellaneous Characters](#idm4386)
-
-chomping, [Production Parameters](#idm3014), [Line Folding](#idm5242), [Block Chomping Indicator](#idm8990), [Literal Style](#idm9265), [Folded Style](#idm9400)
-
-clip, [Production Parameters](#idm3014), [Block Chomping Indicator](#idm8990)
-
-keep, [Production Parameters](#idm3014), [Block Chomping Indicator](#idm8990)
-
-strip, [Production Parameters](#idm3014), [Block Chomping Indicator](#idm8990)
-
-collection, [Prior Art](#idm141), [Representation Graph](#idm1469), [Nodes](#idm1550), [Node Comparison](#idm1720), [Anchors and Aliases](#idm2042), [Node Styles](#idm2176), [Comments](#idm2341), [Resolved Tags](#idm2564), [Recognized and Valid Tags](#idm2858), [Tag Resolution](#idm11448), [Tag Resolution](#idm11627)
-
-comment, [Collections](#idm406), [Processes](#idm1002), [Dump](#idm1059), [Load](#idm1263), [Presentation Stream](#idm2106), [Comments](#idm2341), [Resolved Tags](#idm2564), [Indicator Characters](#idm3570), [Comments](#idm5481), [Separation Lines](#idm5659), [Plain Style](#idm7632), [Block Scalar Headers](#idm8804), [Block Chomping Indicator](#idm8990), [Document Prefix](#idm10327), [Streams](#idm10693)
-
-compose, [Processes](#idm1002), [Load](#idm1263), [Keys Order](#idm1978), [Anchors and Aliases](#idm2042), [Resolved Tags](#idm2564), [Recognized and Valid Tags](#idm2858), [Available Tags](#idm2940), [Node Anchors](#idm6842)
-
-construct, [Processes](#idm1002), [Load](#idm1263), [Node Comparison](#idm1720), [Serialization Tree](#idm1931), [Loading Failure Points](#idm2408), [Recognized and Valid Tags](#idm2858), [Available Tags](#idm2940), [Flow Styles](#Flow), [Generic Mapping](#idm10872), [Generic Sequence](#idm10943), [Generic String](#idm11000), [Null](#idm11140), [Boolean](#idm11216), [Integer](#idm11280)
-
-content, [Structures](#idm531), [Dump](#idm1059), [Nodes](#idm1550), [Tags](#idm1620), [Node Comparison](#idm1720), [Loading Failure Points](#idm2408), [Resolved Tags](#idm2564), [Recognized and Valid Tags](#idm2858), [Character Encodings](#idm3338), [Line Break Characters](#idm4188), [Escaped Characters](#idm4551), [Indentation Spaces](#idm4883), [Separation Spaces](#idm5049), [Line Prefixes](#idm5106), [Empty Lines](#idm5197), [Line Folding](#idm5242), [Comments](#idm5481), [Directives](#idm5738), [Tag Handles](#idm6064), [Node Properties](#idm6397), [Node Tags](#idm6461), [Node Anchors](#idm6842), [Alias Nodes](#idm6989), [Empty Nodes](#idm7075), [Flow Scalar Styles](#idm7165), [Double-Quoted Style](#idm7210), [Single-Quoted Style](#idm7447), [Plain Style](#idm7632), [Block Scalar Headers](#idm8804), [Block Indentation Indicator](#idm8865), [Block Chomping Indicator](#idm8990), [Literal Style](#idm9265), [Document Markers](#idm10381), [Bare Documents](#idm10520)
-
-valid, [Recognized and Valid Tags](#idm2858)
-
-context, [Production Parameters](#idm3014), [Plain Style](#idm7632)
-
-block-in, [Production Parameters](#idm3014), [Block Nodes](#idm10091)
-
-block-key, [Production Parameters](#idm3014), [Flow Collection
-Styles](#idm7932)
-
-block-out, [Production Parameters](#idm3014), [Block Nodes](#idm10091)
-
-flow-in, [Production Parameters](#idm3014), [Flow Collection Styles](#idm7932)
-
-flow-key, [Production Parameters](#idm3014), [Flow Collection Styles](#idm7932)
-
-flow-out, [Production Parameters](#idm3014), [Flow Collection Styles](#idm7932)
-
-**D**
-
-directive, [Structures](#idm531), [Dump](#idm1059), [Load](#idm1263), [Presentation Stream](#idm2106), [Directives](#idm2369), [Indicator Characters](#idm3570), [Directives](#idm5738), [Document Markers](#idm10381), [Bare Documents](#idm10520), [Explicit Documents](#idm10601), [Directives Documents](#idm10655)
-
-reserved, [Directives](#idm2369), [Directives](#idm5738)
-
-TAG, [Tags](#idm1620), [Directives](#idm2369), [Indicator
-Characters](#idm3570), [Directives](#idm5738), ["TAG" Directives](#idm5971),
-[Node Tags](#idm6461)
-
-YAML, [Directives](#idm2369), [Directives](#idm5738), ["YAML"
-Directives](#idm5841)
-
-document, [Prior Art](#idm141), [Structures](#idm531), [Presentation Stream](#idm2106), [Directives](#idm2369), [Loading Failure Points](#idm2408), [Resolved Tags](#idm2564), [Recognized and Valid Tags](#idm2858), [Character Encodings](#idm3338), [Line Break Characters](#idm4188), ["YAML" Directives](#idm5841), [Tag Prefixes](#idm6270), [Alias Nodes](#idm6989), [Documents](#idm10317), [Document Prefix](#idm10327), [Document Markers](#idm10381), [Explicit Documents](#idm10601), [Streams](#idm10693), [Failsafe Schema](#idm10850), [Other Schemas](#idm11801)
-
-bare, [Bare Documents](#idm10520)
-
-directives, [Directives Documents](#idm10655)
-
-explicit, [Explicit Documents](#idm10601)
-
-prefix, [Document Prefix](#idm10327)
-
-suffix, [Document Markers](#idm10381)
-
-dump, [Processes](#idm1002), [Dump](#idm1059)
-
-**E**
-
-empty line, [Prior Art](#idm141), [Scalars](#idm656), [Empty Lines](#idm5197), [Line Folding](#idm5242), [Block Indentation Indicator](#idm8865), [Block Chomping Indicator](#idm8990), [Literal Style](#idm9265), [Folded Style](#idm9400)
-
-equality, [Relation to JSON](#idm318), [Dump](#idm1059), [Representation Graph](#idm1469), [Nodes](#idm1550), [Tags](#idm1620), [Node Comparison](#idm1720), [Scalar Formats](#idm2300), [Loading Failure Points](#idm2408), [Recognized and Valid Tags](#idm2858), [Generic Mapping](#idm10872), [Generic Sequence](#idm10943), [Generic String](#idm11000), [Null](#idm11140), [Boolean](#idm11216), [Integer](#idm11280), [Floating Point](#idm11355)
-
-escaping
-
-in double-quoted scalars, [Prior Art](#idm141), [Scalars](#idm656), [Character
-Set](#idm3255), [Character Encodings](#idm3338), [Miscellaneous
-Characters](#idm4386), [Escaped Characters](#idm4551), [Double-Quoted
-Style](#idm7210)
-
-in single-quoted scalars, [Single-Quoted Style](#idm7447)
-
-in URIs, [Miscellaneous Characters](#idm4386)
-
-non-content line break, [Double-Quoted Style](#idm7210)
-
-**I**
-
-identity, [Node Comparison](#idm1720), [Generic Mapping](#idm10872), [Generic Sequence](#idm10943), [Floating Point](#idm11355)
-
-indicator, [Introduction](#Introduction), [Prior Art](#idm141), [Collections](#idm406), [Node Styles](#idm2176), [Production Parameters](#idm3014), [Indicator Characters](#idm3570), [Line Folding](#idm5242), [Plain Style](#idm7632), [Flow Mappings](#idm8114), [Flow Nodes](#idm8623), [Block Styles](#Block), [Block Scalar Headers](#idm8804), [Block Collection Styles](#idm9640)
-
-indentation, [Block Indentation Indicator](#idm8865)
-
-reserved, [Indicator Characters](#idm3570)
-
-information model, [Information Models](#idm1384)
-
-invalid content, [Loading Failure Points](#idm2408), [Recognized and Valid Tags](#idm2858)
-
-**J**
-
-JSON compatibility, [Character Set](#idm3255), [Character Encodings](#idm3338), [Line Break Characters](#idm4188), [Escaped Characters](#idm4551), [Comments](#idm5481), ["YAML" Directives](#idm5841), [Flow Mappings](#idm8114), [Block Mappings](#idm9826)
-
-JSON-like, [Flow Mappings](#idm8114), [Flow Nodes](#idm8623)
-
-**K**
-
-key, [Relation to JSON](#idm318), [Structures](#idm531), [Dump](#idm1059), [Information Models](#idm1384), [Representation Graph](#idm1469), [Nodes](#idm1550), [Node Comparison](#idm1720), [Serialization Tree](#idm1931), [Keys Order](#idm1978), [Resolved Tags](#idm2564), [Indicator Characters](#idm3570), [Flow Mappings](#idm8114), [Block Mappings](#idm9826), [Generic Mapping](#idm10872), [Null](#idm11140), [Floating Point](#idm11355)
-
-implicit, [Separation Lines](#idm5659), [Double-Quoted Style](#idm7210),
-[Single-Quoted Style](#idm7447), [Plain Style](#idm7632), [Flow Collection
-Styles](#idm7932), [Flow Mappings](#idm8114), [Block Mappings](#idm9826),
-[Block Nodes](#idm10091)
-
-order, [Processes](#idm1002), [Dump](#idm1059), [Load](#idm1263), [Information
-Models](#idm1384), [Serialization Tree](#idm1931), [Keys Order](#idm1978)
-
-key: value pair, [Introduction](#Introduction), [Collections](#idm406), [Structures](#idm531), [Nodes](#idm1550), [Keys Order](#idm1978), [Node Styles](#idm2176), [Plain Style](#idm7632), [Flow Mappings](#idm8114), [Block Collection Styles](#idm9640), [Block Mappings](#idm9826)
-
-kind, [Dump](#idm1059), [Representation Graph](#idm1469), [Nodes](#idm1550), [Tags](#idm1620), [Node Styles](#idm2176), [Resolved Tags](#idm2564), [Node Tags](#idm6461), [Tag Resolution](#idm11057), [Tag Resolution](#idm11448), [Tag Resolution](#idm11627)
-
-**L**
-
-line break, [Prior Art](#idm141), [Scalars](#idm656), [Production Parameters](#idm3014), [Production Naming Conventions](#idm3178), [Line Break Characters](#idm4188), [White Space Characters](#idm4316), [Empty Lines](#idm5197), [Line Folding](#idm5242), [Comments](#idm5481), [Double-Quoted Style](#idm7210), [Block Scalar Headers](#idm8804), [Block Chomping Indicator](#idm8990), [Literal Style](#idm9265), [Folded Style](#idm9400)
-
-non-ASCII, [Line Break Characters](#idm4188), ["YAML" Directives](#idm5841)
-
-normalization, [Line Break Characters](#idm4188), [Literal Style](#idm9265)
-
-line folding, [Prior Art](#idm141), [Scalars](#idm656), [Line Folding](#idm5242), [Flow Styles](#Flow), [Double-Quoted Style](#idm7210), [Single-Quoted Style](#idm7447), [Plain Style](#idm7632), [Block Chomping Indicator](#idm8990), [Folded Style](#idm9400)
-
-block, [Line Folding](#idm5242), [Folded Style](#idm9400)
-
-flow, [Line Folding](#idm5242), [Double-Quoted Style](#idm7210)
-
-line prefix, [Line Prefixes](#idm5106), [Empty Lines](#idm5197)
-
-load, [Processes](#idm1002), [Load](#idm1263), [Loading Failure Points](#idm2408)
-
-failure point, [Load](#idm1263), [Loading Failure Points](#idm2408)
-
-**M**
-
-mapping, [Introduction](#Introduction), [Prior Art](#idm141), [Relation to JSON](#idm318), [Collections](#idm406), [Structures](#idm531), [Dump](#idm1059), [Representation Graph](#idm1469), [Nodes](#idm1550), [Tags](#idm1620), [Node Comparison](#idm1720), [Keys Order](#idm1978), [Resolved Tags](#idm2564), [Plain Style](#idm7632), [Flow Sequences](#idm7993), [Flow Mappings](#idm8114), [Generic Mapping](#idm10872), [Null](#idm11140)
-
-marker, [Presentation Stream](#idm2106), [Document Markers](#idm10381), [Bare Documents](#idm10520), [Explicit Documents](#idm10601), [Streams](#idm10693)
-
-directives end, [Structures](#idm531), [Document Markers](#idm10381), [Explicit
-Documents](#idm10601), [Directives Documents](#idm10655), [Streams](#idm10693)
-
-document end, [Structures](#idm531), [Document Markers](#idm10381),
-[Streams](#idm10693)
-
-more-indented, [Scalars](#idm656), [Line Folding](#idm5242), [Folded Style](#idm9400)
-
-**N**
-
-native data structure, [Introduction](#Introduction), [Goals](#idm127), [Prior Art](#idm141), [Relation to JSON](#idm318), [Processing YAML Information](#Processing), [Processes](#idm1002), [Dump](#idm1059), [Load](#idm1263), [Representation Graph](#idm1469), [Nodes](#idm1550), [Tags](#idm1620), [Node Comparison](#idm1720), [Serialization Tree](#idm1931), [Loading Failure Points](#idm2408), [Recognized and Valid Tags](#idm2858), [Available Tags](#idm2940), [Node Tags](#idm6461), [Flow Styles](#Flow), [Generic Mapping](#idm10872), [Generic Sequence](#idm10943), [Generic String](#idm11000), [Null](#idm11140), [Boolean](#idm11216), [Integer](#idm11280), [Floating Point](#idm11355), [Other Schemas](#idm11801)
-
-need not, [Terminology](#idm357)
-
-node, [Structures](#idm531), [Dump](#idm1059), [Representation Graph](#idm1469), [Nodes](#idm1550), [Tags](#idm1620), [Node Comparison](#idm1720), [Serialization Tree](#idm1931), [Keys Order](#idm1978), [Anchors and Aliases](#idm2042), [Presentation Stream](#idm2106), [Node Styles](#idm2176), [Comments](#idm2341), [Loading Failure Points](#idm2408), [Well-Formed Streams and Identified Aliases](#idm2524), [Resolved Tags](#idm2564), [Recognized and Valid Tags](#idm2858), [Syntax Conventions](#Syntax), [Indentation Spaces](#idm4883), [Node Properties](#idm6397), [Node Tags](#idm6461), [Node Anchors](#idm6842), [Alias Nodes](#idm6989), [Empty Nodes](#idm7075), [Flow Mappings](#idm8114), [Flow Nodes](#idm8623), [Block Indentation Indicator](#idm8865), [Block Sequences](#idm9663), [Bare Documents](#idm10520), [Tag Resolution](#idm11057), [Tag Resolution](#idm11448), [Tag Resolution](#idm11627), [Other Schemas](#idm11801)
-
-completely empty, [Empty Nodes](#idm7075), [Flow Collection Styles](#idm7932),
-[Flow Mappings](#idm8114), [Block Sequences](#idm9663), [Explicit
-Documents](#idm10601)
-
-property, [Node Properties](#idm6397), [Alias Nodes](#idm6989), [Empty
-Nodes](#idm7075), [Flow Mappings](#idm8114), [Flow Nodes](#idm8623), [Block
-Sequences](#idm9663), [Block Mappings](#idm9826), [Block Nodes](#idm10091)
-
-root, [Representation Graph](#idm1469), [Resolved Tags](#idm2564)
-
-**P**
-
-parse, [Load](#idm1263), [Node Comparison](#idm1720), [Presentation Stream](#idm2106), [Resolved Tags](#idm2564), [Production Parameters](#idm3014), [Line Break Characters](#idm4188), [Escaped Characters](#idm4551), [Tag Handles](#idm6064), [Node Tags](#idm6461), [Flow Mappings](#idm8114), [Block Mappings](#idm9826), [Block Nodes](#idm10091), [Document Markers](#idm10381), [JSON Schema](#idm11107)
-
-present, [Processing YAML Information](#Processing), [Dump](#idm1059), [Load](#idm1263), [Nodes](#idm1550), [Node Comparison](#idm1720), [Presentation Stream](#idm2106), [Scalar Formats](#idm2300), [Character Set](#idm3255), [Miscellaneous Characters](#idm4386), [Node Tags](#idm6461), [Alias Nodes](#idm6989), [Block Mappings](#idm9826), [Core Schema](#idm11590)
-
-presentation, [Processing YAML Information](#Processing), [Information Models](#idm1384), [Node Comparison](#idm1720), [Presentation Stream](#idm2106), [Production Parameters](#idm3014)
-
-detail, [Dump](#idm1059), [Load](#idm1263), [Information Models](#idm1384),
-[Presentation Stream](#idm2106), [Node Styles](#idm2176), [Scalar
-Formats](#idm2300), [Comments](#idm2341), [Directives](#idm2369), [Resolved
-Tags](#idm2564), [Character Encodings](#idm3338), [Line Break
-Characters](#idm4188), [Escaped Characters](#idm4551), [Indentation
-Spaces](#idm4883), [Separation Spaces](#idm5049), [Line Prefixes](#idm5106),
-[Line Folding](#idm5242), [Comments](#idm5481), [Directives](#idm5738), [Tag
-Handles](#idm6064), [Node Tags](#idm6461), [Flow Scalar Styles](#idm7165),
-[Block Chomping Indicator](#idm8990)
-
-printable character, [Introduction](#Introduction), [Prior Art](#idm141), [Character Set](#idm3255), [White Space Characters](#idm4316), [Escaped Characters](#idm4551), [Single-Quoted Style](#idm7447), [Literal Style](#idm9265)
-
-processor, [Terminology](#idm357), [Processing YAML Information](#Processing), [Dump](#idm1059), [Node Comparison](#idm1720), [Presentation Stream](#idm2106), [Directives](#idm2369), [Well-Formed Streams and Identified Aliases](#idm2524), [Resolved Tags](#idm2564), [Recognized and Valid Tags](#idm2858), [Available Tags](#idm2940), [Character Set](#idm3255), [Character Encodings](#idm3338), [Line Break Characters](#idm4188), [Miscellaneous Characters](#idm4386), [Comments](#idm5481), [Directives](#idm5738), ["YAML" Directives](#idm5841), [Tag Handles](#idm6064), [Node Tags](#idm6461), [Node Anchors](#idm6842), [Flow Mappings](#idm8114), [Block Indentation Indicator](#idm8865), [Failsafe Schema](#idm10850), [JSON Schema](#idm11107), [Integer](#idm11280), [Floating Point](#idm11355), [Tag Resolution](#idm11448), [Core Schema](#idm11590), [Other Schemas](#idm11801)
-
-**R**
-
-represent, [Introduction](#Introduction), [Prior Art](#idm141), [Dump](#idm1059), [Tags](#idm1620), [Node Comparison](#idm1720), [Keys Order](#idm1978), [Generic Mapping](#idm10872), [Generic Sequence](#idm10943), [Generic String](#idm11000), [Null](#idm11140), [Boolean](#idm11216), [Integer](#idm11280), [Floating Point](#idm11355), [Other Schemas](#idm11801)
-
-representation, [Processing YAML Information](#Processing), [Processes](#idm1002), [Dump](#idm1059), [Load](#idm1263), [Information Models](#idm1384), [Representation Graph](#idm1469), [Nodes](#idm1550), [Node Comparison](#idm1720), [Serialization Tree](#idm1931), [Keys Order](#idm1978), [Anchors and Aliases](#idm2042), [Presentation Stream](#idm2106), [Node Styles](#idm2176), [Scalar Formats](#idm2300), [Comments](#idm2341), [Directives](#idm2369), [Available Tags](#idm2940), [Node Anchors](#idm6842), [Floating Point](#idm11355)
-
-complete, [Loading Failure Points](#idm2408), [Resolved Tags](#idm2564),
-[Recognized and Valid Tags](#idm2858), [Available Tags](#idm2940)
-
-partial, [Loading Failure Points](#idm2408), [Resolved Tags](#idm2564),
-[Recognized and Valid Tags](#idm2858), [Tag Resolution](#idm11057)
-
-required, [Terminology](#idm357)
-
-**S**
-
-scalar, [Introduction](#Introduction), [Prior Art](#idm141), [Scalars](#idm656), [Dump](#idm1059), [Representation Graph](#idm1469), [Nodes](#idm1550), [Tags](#idm1620), [Node Comparison](#idm1720), [Scalar Formats](#idm2300), [Comments](#idm2341), [Recognized and Valid Tags](#idm2858), [Line Break Characters](#idm4188), [Separation Spaces](#idm5049), [Line Prefixes](#idm5106), [Comments](#idm5481), [Empty Nodes](#idm7075), [Block Chomping Indicator](#idm8990), [Generic Mapping](#idm10872), [Generic String](#idm11000), [Null](#idm11140), [Boolean](#idm11216), [Integer](#idm11280), [Floating Point](#idm11355), [Tag Resolution](#idm11448), [Tag Resolution](#idm11627)
-
-canonical form, [Prior Art](#idm141), [Tags](#idm1620), [Node
-Comparison](#idm1720), [Scalar Formats](#idm2300), [Loading Failure
-Points](#idm2408)
-
-content format, [Dump](#idm1059), [Load](#idm1263), [Tags](#idm1620), [Node
-Comparison](#idm1720), [Presentation Stream](#idm2106), [Scalar
-Formats](#idm2300), [Loading Failure Points](#idm2408)
-
-schema, [Recommended Schemas](#Schema), [Failsafe Schema](#idm10850), [JSON Schema](#idm11107), [Tags](#idm11127), [Core Schema](#idm11590), [Tags](#idm11614), [Other Schemas](#idm11801)
-
-core, [Core Schema](#idm11590), [Tag Resolution](#idm11627), [Other
-Schemas](#idm11801)
-
-failsafe, [Tags](#idm786), [Failsafe Schema](#idm10850), [Tags](#idm11127),
-[Tag Resolution](#idm11448)
-
-JSON, [Tags](#idm786), [JSON Schema](#idm11107), [Tag Resolution](#idm11448),
-[Core Schema](#idm11590), [Tags](#idm11614), [Tag Resolution](#idm11627)
-
-sequence, [Introduction](#Introduction), [Prior Art](#idm141), [Dump](#idm1059), [Representation Graph](#idm1469), [Nodes](#idm1550), [Tags](#idm1620), [Keys Order](#idm1978), [Resolved Tags](#idm2564), [Flow Mappings](#idm8114), [Generic Sequence](#idm10943)
-
-serialization, [Processing YAML Information](#Processing), [Processes](#idm1002), [Dump](#idm1059), [Load](#idm1263), [Information Models](#idm1384), [Serialization Tree](#idm1931), [Anchors and Aliases](#idm2042), [Presentation Stream](#idm2106), [Node Styles](#idm2176), [Scalar Formats](#idm2300), [Comments](#idm2341), [Directives](#idm2369), [Node Anchors](#idm6842)
-
-detail, [Dump](#idm1059), [Load](#idm1263), [Information Models](#idm1384),
-[Keys Order](#idm1978), [Anchors and Aliases](#idm2042), [Node
-Anchors](#idm6842)
-
-serialize, [Introduction](#Introduction), [Prior Art](#idm141), [Relation to JSON](#idm318), [Dump](#idm1059), [Load](#idm1263), [Keys Order](#idm1978), [Anchors and Aliases](#idm2042), [Alias Nodes](#idm6989)
-
-shall, [Terminology](#idm357)
-
-space, [Prior Art](#idm141), [Scalars](#idm656), [White Space Characters](#idm4316), [Indentation Spaces](#idm4883), [Line Folding](#idm5242), [Single-Quoted Style](#idm7447), [Plain Style](#idm7632), [Block Indentation Indicator](#idm8865), [Folded Style](#idm9400), [Block Sequences](#idm9663), [Block Nodes](#idm10091), [Bare Documents](#idm10520)
-
-indentation, [Introduction](#Introduction), [Prior Art](#idm141),
-[Collections](#idm406), [Dump](#idm1059), [Load](#idm1263), [Information
-Models](#idm1384), [Node Styles](#idm2176), [Resolved Tags](#idm2564),
-[Production Parameters](#idm3014), [Production Naming Conventions](#idm3178),
-[Indentation Spaces](#idm4883), [Separation Spaces](#idm5049), [Line
-Prefixes](#idm5106), [Line Folding](#idm5242), [Comments](#idm5481),
-[Separation Lines](#idm5659), [Directives](#idm5738), [Block Styles](#Block),
-[Block Indentation Indicator](#idm8865), [Block Chomping Indicator](#idm8990),
-[Literal Style](#idm9265), [Block Sequences](#idm9663), [Block
-Nodes](#idm10091), [Bare Documents](#idm10520)
-
-separation, [Separation Spaces](#idm5049), [Comments](#idm5481), [Flow
-Mappings](#idm8114), [Block Sequences](#idm9663)
-
-white, [Production Naming Conventions](#idm3178), [White Space
-Characters](#idm4316), [Separation Spaces](#idm5049), [Line
-Prefixes](#idm5106), [Line Folding](#idm5242), [Comments](#idm5481),
-[Double-Quoted Style](#idm7210), [Single-Quoted Style](#idm7447), [Plain
-Style](#idm7632), [Flow Mappings](#idm8114), [Literal Style](#idm9265), [Folded
-Style](#idm9400), [Block Sequences](#idm9663)
-
-stream, [Prior Art](#idm141), [Processing YAML Information](#Processing), [Processes](#idm1002), [Dump](#idm1059), [Load](#idm1263), [Presentation Stream](#idm2106), [Loading Failure Points](#idm2408), [Well-Formed Streams and Identified Aliases](#idm2524), [Resolved Tags](#idm2564), [Syntax Conventions](#Syntax), [Character Set](#idm3255), [Character Encodings](#idm3338), [Miscellaneous Characters](#idm4386), [Comments](#idm5481), [Tag Prefixes](#idm6270), [Empty Nodes](#idm7075), [Documents](#idm10317), [Streams](#idm10693)
-
-ill-formed, [Load](#idm1263), [Loading Failure Points](#idm2408), [Well-Formed
-Streams and Identified Aliases](#idm2524)
-
-well-formed, [Well-Formed Streams and Identified Aliases](#idm2524),
-[Streams](#idm10693)
-
-style, [Dump](#idm1059), [Load](#idm1263), [Information Models](#idm1384), [Presentation Stream](#idm2106), [Node Styles](#idm2176), [Scalar Formats](#idm2300), [Resolved Tags](#idm2564), [Node Tags](#idm6461), [Double-Quoted Style](#idm7210), [Plain Style](#idm7632)
-
-block, [Prior Art](#idm141), [Scalars](#idm656), [Node Styles](#idm2176),
-[Production Parameters](#idm3014), [Indentation Spaces](#idm4883), [Block
-Styles](#Block), [Block Sequences](#idm9663)
-
-collection, [Collections](#idm406), [Structures](#idm531), [Indentation
-Spaces](#idm4883), [Flow Collection Styles](#idm7932), [Block Collection
-Styles](#idm9640), [Block Sequences](#idm9663), [Block Nodes](#idm10091)
-
-folded, [Scalars](#idm656), [Node Styles](#idm2176), [Indicator
-Characters](#idm3570), [Line Folding](#idm5242), [Block Scalar
-Styles](#idm8785), [Literal Style](#idm9265), [Folded Style](#idm9400)
-
-literal, [Prior Art](#idm141), [Scalars](#idm656), [Node Styles](#idm2176),
-[Indicator Characters](#idm3570), [Block Scalar Styles](#idm8785), [Literal
-Style](#idm9265), [Folded Style](#idm9400)
-
-mapping, [Node Styles](#idm2176), [Production Parameters](#idm3014), [Block
-Mappings](#idm9826), [Block Nodes](#idm10091)
-
-scalar, [Node Styles](#idm2176), [Block Scalar Styles](#idm8785), [Block Scalar
-Headers](#idm8804), [Block Indentation Indicator](#idm8865), [Block Chomping
-Indicator](#idm8990)
-
-sequence, [Collections](#idm406), [Node Styles](#idm2176), [Production
-Parameters](#idm3014), [Indicator Characters](#idm3570), [Block
-Sequences](#idm9663), [Block Mappings](#idm9826), [Block Nodes](#idm10091)
-
-compact block collection, [Node Styles](#idm2176), [Block Sequences](#idm9663),
-[Block Mappings](#idm9826)
-
-flow, [Prior Art](#idm141), [Collections](#idm406), [Scalars](#idm656), [Node
-Styles](#idm2176), [Production Parameters](#idm3014), [Line Folding](#idm5242),
-[Flow Styles](#Flow), [Flow Sequences](#idm7993), [Flow Nodes](#idm8623),
-[Block Nodes](#idm10091)
-
-collection, [Syntax Conventions](#Syntax), [Production Parameters](#idm3014),
-[Indicator Characters](#idm3570), [Miscellaneous Characters](#idm4386), [Node
-Tags](#idm6461), [Node Anchors](#idm6842), [Plain Style](#idm7632), [Flow
-Collection Styles](#idm7932)
-
-double-quoted, [Prior Art](#idm141), [Scalars](#idm656), [Node
-Styles](#idm2176), [Syntax Conventions](#Syntax), [Character Set](#idm3255),
-[Character Encodings](#idm3338), [Indicator Characters](#idm3570), [Escaped
-Characters](#idm4551), [Flow Scalar Styles](#idm7165), [Double-Quoted
-Style](#idm7210), [Flow Nodes](#idm8623)
-
-mapping, [Collections](#idm406), [Node Styles](#idm2176), [Production
-Parameters](#idm3014), [Indicator Characters](#idm3570), [Flow
-Mappings](#idm8114), [Block Mappings](#idm9826)
-
-plain, [Scalars](#idm656), [Node Styles](#idm2176), [Resolved Tags](#idm2564),
-[Production Parameters](#idm3014), [Indicator Characters](#idm3570), [Node
-Tags](#idm6461), [Empty Nodes](#idm7075), [Flow Scalar Styles](#idm7165),
-[Plain Style](#idm7632), [Flow Mappings](#idm8114), [Flow Nodes](#idm8623),
-[Block Collection Styles](#idm9640), [Block Sequences](#idm9663), [Block
-Mappings](#idm9826), [Block Nodes](#idm10091), [Document Markers](#idm10381),
-[Tag Resolution](#idm11448), [Tag Resolution](#idm11627)
-
-scalar, [Scalars](#idm656), [Node Styles](#idm2176), [Line Prefixes](#idm5106),
-[Line Folding](#idm5242), [Flow Scalar Styles](#idm7165)
-
-sequence, [Collections](#idm406), [Node Styles](#idm2176), [Indicator
-Characters](#idm3570), [Flow Sequences](#idm7993), [Flow Mappings](#idm8114)
-
-single-quoted, [Node Styles](#idm2176), [Production Parameters](#idm3014),
-[Indicator Characters](#idm3570), [Flow Scalar Styles](#idm7165),
-[Single-Quoted Style](#idm7447)
-
-scalar, [Node Styles](#idm2176), [Escaped Characters](#idm4551), [Empty
-Lines](#idm5197), [Flow Scalar Styles](#idm7165), [Literal Style](#idm9265)
-
-single key:value pair mapping, [Keys Order](#idm1978), [Node Styles](#idm2176),
-[Flow Sequences](#idm7993), [Flow Mappings](#idm8114), [Block
-Mappings](#idm9826)
-
-**T**
-
-tab, [Prior Art](#idm141), [Character Set](#idm3255), [White Space Characters](#idm4316), [Indentation Spaces](#idm4883), [Separation Spaces](#idm5049), [Line Prefixes](#idm5106), [Block Indentation Indicator](#idm8865)
-
-tag, [Prior Art](#idm141), [Tags](#idm786), [Dump](#idm1059), [Representation Graph](#idm1469), [Nodes](#idm1550), [Tags](#idm1620), [Node Comparison](#idm1720), [Scalar Formats](#idm2300), [Loading Failure Points](#idm2408), [Resolved Tags](#idm2564), [Recognized and Valid Tags](#idm2858), [Available Tags](#idm2940), [Syntax Conventions](#Syntax), [Production Parameters](#idm3014), [Indicator Characters](#idm3570), [Miscellaneous Characters](#idm4386), ["TAG" Directives](#idm5971), [Tag Prefixes](#idm6270), [Node Properties](#idm6397), [Node Tags](#idm6461), [Flow Styles](#Flow), [Recommended Schemas](#Schema), [Tags](#idm11127), [Tags](#idm11614), [Other Schemas](#idm11801)
-
-available, [Available Tags](#idm2940)
-
-global, [Prior Art](#idm141), [Tags](#idm786), [Dump](#idm1059),
-[Tags](#idm1620), [Resolved Tags](#idm2564), [Tag Handles](#idm6064), [Tag
-Prefixes](#idm6270), [Node Tags](#idm6461), [Other Schemas](#idm11801)
-
-handle, [Tags](#idm786), [Processes](#idm1002), [Dump](#idm1059), [Indicator
-Characters](#idm3570), ["TAG" Directives](#idm5971), [Tag Handles](#idm6064),
-[Tag Prefixes](#idm6270), [Node Tags](#idm6461)
-
-named, [Miscellaneous Characters](#idm4386), [Tag Handles](#idm6064), [Node
-Tags](#idm6461)
-
-primary, [Tag Handles](#idm6064)
-
-secondary, [Tag Handles](#idm6064)
-
-local, [Prior Art](#idm141), [Tags](#idm786), [Dump](#idm1059),
-[Tags](#idm1620), [Resolved Tags](#idm2564), [Indicator Characters](#idm3570),
-[Tag Handles](#idm6064), [Tag Prefixes](#idm6270), [Node Tags](#idm6461),
-[Other Schemas](#idm11801)
-
-non-specific, [Tags](#idm786), [Dump](#idm1059), [Node Comparison](#idm1720),
-[Loading Failure Points](#idm2408), [Resolved Tags](#idm2564), [Indicator
-Characters](#idm3570), [Node Tags](#idm6461), [Recommended Schemas](#Schema),
-[Tag Resolution](#idm11448), [Tag Resolution](#idm11627), [Other
-Schemas](#idm11801)
-
-prefix, ["TAG" Directives](#idm5971), [Tag Prefixes](#idm6270), [Node
-Tags](#idm6461)
-
-property, [Resolved Tags](#idm2564), [Indicator Characters](#idm3570), [Node
-Tags](#idm6461)
-
-recognized, [Recognized and Valid Tags](#idm2858)
-
-repository, [Tags](#idm786), [Tag Handles](#idm6064), [Other
-Schemas](#idm11801)
-
-bool, [Boolean](#idm11216)
-
-float, [Tags](#idm786), [Floating Point](#idm11355)
-
-int, [Tags](#idm786), [Integer](#idm11280)
-
-map, [Tags](#idm786), [Generic Mapping](#idm10872)
-
-null, [Tags](#idm786), [Empty Nodes](#idm7075), [Null](#idm11140)
-
-seq, [Tags](#idm786), [Generic Sequence](#idm10943)
-
-str, [Tags](#idm786), [Generic String](#idm11000)
-
-resolution, [Tags](#idm1620), [Node Comparison](#idm1720), [Loading Failure
-Points](#idm2408), [Resolved Tags](#idm2564), [Node Tags](#idm6461), [Flow
-Scalar Styles](#idm7165), [Recommended Schemas](#Schema), [Tag
-Resolution](#idm11057), [Tag Resolution](#idm11448), [Tag
-Resolution](#idm11627), [Other Schemas](#idm11801)
-
-convention, [Resolved Tags](#idm2564), [Node Tags](#idm6461), [Tag
-Resolution](#idm11057), [Tag Resolution](#idm11448), [Tag
-Resolution](#idm11627)
-
-shorthand, [Tags](#idm786), [Miscellaneous Characters](#idm4386), ["TAG"
-Directives](#idm5971), [Tag Handles](#idm6064), [Tag Prefixes](#idm6270), [Node
-Tags](#idm6461)
-
-specific, [Resolved Tags](#idm2564), [Node Tags](#idm6461)
-
-unavailable, [Load](#idm1263), [Loading Failure Points](#idm2408), [Available
-Tags](#idm2940)
-
-unrecognized, [Loading Failure Points](#idm2408), [Recognized and Valid
-Tags](#idm2858)
-
-unresolved, [Loading Failure Points](#idm2408), [Resolved Tags](#idm2564)
-
-verbatim, [Node Tags](#idm6461)
-
-trimming, [Line Folding](#idm5242)
-
-**V**
-
-value, [Dump](#idm1059), [Nodes](#idm1550), [Resolved Tags](#idm2564), [Indicator Characters](#idm3570), [Flow Mappings](#idm8114), [Block Mappings](#idm9826), [Generic Mapping](#idm10872), [Null](#idm11140)
-
-**Y**
-
-YAML 1.1 processing, [Line Break Characters](#idm4188), ["YAML" Directives](#idm5841)
+[%index%]

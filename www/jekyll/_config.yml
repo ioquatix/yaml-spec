@@ -37,3 +37,7 @@ theme: jekyll-theme-cayman
 # relative_links:
 #   enabled: true
 #   collections: true
+
+exclude:
+- Gemfile
+- index.md

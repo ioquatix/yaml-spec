@@ -7,6 +7,11 @@ wrap = require 'smartwrap'
 
 count = 0
 
+tag_and_class = (tag, class_)->
+  (n, o)->
+    n.nodeName == tag.toUpperCase() and
+    n.getAttribute('class') == class_
+
 getTexts = (node, a)->
   if node.nodeType == Node.TEXT_NODE
     a.push node._data
@@ -22,6 +27,15 @@ getRowData = (tr)->
     a.push _.trim(td.textContent) || ' '
   return a
 
+reformat_para = (para)->
+  text = para.replace /\ \ $/mg, '%%%'
+  text = text.replace /([\s\S]+?)(?:(\.)\ (?=[A-Z])|$)/g, (x, s, e)->
+    e ?= ''
+    wrap(s, width: 79) + "#{e}\n"
+  text = text.replace /%%%$/mg, '  '
+  return text
+
+
 class HtmlToMarkdown
   constructor: ->
     @turndown = new Turndown
@@ -35,40 +49,35 @@ class HtmlToMarkdown
       @turndown.addRule k, v
 
   convert: (html)->
+    html = html.replace(/[“”]/g, '"')
+
     markdown = @turndown.turndown html
       .replace(/.*\n.*\n/, '')
       .replace(/^(###.*)\n\n</gm, '$1 <')
-      .replace(/[“”]/g, '"')
       .replace(/"""/g, "'\"'")
 
-  @tag_and_class: (tag, class_)->
-    (n, o)->
-      n.nodeName == tag.toUpperCase() and
-      n.getAttribute('class') == class_
-
-  @reformat_para: (m, n, o)->
-    text = m.replace /\ \ $/mg, '%%%'
-    text = text.replace /([\s\S]+?)(?:(\.)\ (?=[A-Z])|$)/g, (x, s, e)->
-      e ?= ''
-      wrap(s, width: 79) + "#{e}\n"
-    text = text.replace /%%%$/mg, '  '
-    return "#{text}\n\n"
 
   @rules:
-#     simplelist:
-#       filter: @tag_and_class 'table', 'simplelist'
-#       replacement: (m, n, o)->
-#         warn m
-#         xxx 42
-#         return "**#{m}**\n"
+    index:
+      filter: tag_and_class 'div', 'index'
+      replacement: (m, n, o)->
+        return "[%index%]\n"
+
+
+    simplelist:
+      filter: tag_and_class 'table', 'simplelist'
+      replacement: (m, n, o)->
+        return m unless m.match /\[\d+\]/
+        return m.replace /^[\s\S]*(```\n[\s\S]+\n```\n)\s*(\S[\s\S]+?\S)\s*$/,
+          (m, m1, m2)-> "#{m2}\n\n#{m1}"
 
     subtitle:
-      filter: @tag_and_class 'h2', 'subtitle'
+      filter: tag_and_class 'h2', 'subtitle'
       replacement: (m, n, o)->
         return "**#{m}**\n"
 
     authorgroup:
-      filter: @tag_and_class 'div', 'authorgroup'
+      filter: tag_and_class 'div', 'authorgroup'
       replacement: (m, n, o)->
         text = m
           .replace(/### /g, '* **')
@@ -78,17 +87,17 @@ class HtmlToMarkdown
         text + "{:.authorgroup}"
 
     indexdiv:
-      filter: @tag_and_class 'div', 'indexdiv'
+      filter: tag_and_class 'div', 'indexdiv'
       replacement: (m, n, o)->
         return m.replace /### (.*)/, '**$1**'
 
     toc:
-      filter: @tag_and_class 'div', 'toc'
+      filter: tag_and_class 'div', 'toc'
       replacement: (m, n, o)->
         return "[%toc%]\n"
 
     informaltable:
-      filter: @tag_and_class 'div', 'informaltable'
+      filter: tag_and_class 'div', 'informaltable'
       replacement: (m, n, o)->
         table = ''
         for tr, i in n.getElementsByTagName 'TR'
@@ -100,7 +109,7 @@ class HtmlToMarkdown
         return table + "\n"
 
     br_example:
-      filter: @tag_and_class 'br', 'example-break'
+      filter: tag_and_class 'br', 'example-break'
       replacement: (m, n, o)-> ''
 
     production:
@@ -149,11 +158,13 @@ class HtmlToMarkdown
 
     p:
       filter: 'p'
-      replacement: @reformat_para
+      replacement: (m, n, o)->
+        return reformat_para(m) + "\n\n"
 
     dd:
       filter: 'dd'
-      replacement: @reformat_para
+      replacement: (m, n, o)->
+        return reformat_para(m) + "\n\n"
 
     code:
       filter: 'code'
