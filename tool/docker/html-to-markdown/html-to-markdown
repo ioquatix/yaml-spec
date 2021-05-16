@@ -6,13 +6,6 @@ Node = require 'domino/lib/Node'
 wrap = require 'smartwrap'
 
 count = 0
-skip = [
-  'parentNode'
-  'ownerDocument'
-  '_nextSibling'
-  '_previousSibling'
-  '_attributeChangeHandlers'
-]
 
 getTexts = (node, a)->
   if node.nodeType == Node.TEXT_NODE
@@ -53,23 +46,50 @@ class HtmlToMarkdown
       n.nodeName == tag.toUpperCase() and
       n.getAttribute('class') == class_
 
-  @reformat_para: (m, n)->
-      text = m.replace /\ \ $/mg, '%%%'
-      text = text.replace /([\s\S]+?)(?:(\.)\ (?=[A-Z])|$)/g, (x, s, e)->
-        e ?= ''
-        wrap(s, width: 79) + "#{e}\n"
-      text = text.replace /%%%$/mg, '  '
-      return "#{text}\n\n"
+  @reformat_para: (m, n, o)->
+    text = m.replace /\ \ $/mg, '%%%'
+    text = text.replace /([\s\S]+?)(?:(\.)\ (?=[A-Z])|$)/g, (x, s, e)->
+      e ?= ''
+      wrap(s, width: 79) + "#{e}\n"
+    text = text.replace /%%%$/mg, '  '
+    return "#{text}\n\n"
 
   @rules:
+#     simplelist:
+#       filter: @tag_and_class 'table', 'simplelist'
+#       replacement: (m, n, o)->
+#         warn m
+#         xxx 42
+#         return "**#{m}**\n"
+
+    subtitle:
+      filter: @tag_and_class 'h2', 'subtitle'
+      replacement: (m, n, o)->
+        return "**#{m}**\n"
+
+    authorgroup:
+      filter: @tag_and_class 'div', 'authorgroup'
+      replacement: (m, n, o)->
+        text = m
+          .replace(/### /g, '* **')
+          .replace(/\n\n</g, ' <')
+          .replace(/>/g, '>**')
+          .replace(/\n\n/g, "\n")
+        text + "{:.authorgroup}"
+
+    indexdiv:
+      filter: @tag_and_class 'div', 'indexdiv'
+      replacement: (m, n, o)->
+        return m.replace /### (.*)/, '**$1**'
+
     toc:
       filter: @tag_and_class 'div', 'toc'
-      replacement: (m, n)->
+      replacement: (m, n, o)->
         return "[%toc%]\n"
 
     informaltable:
       filter: @tag_and_class 'div', 'informaltable'
-      replacement: (m, n)->
+      replacement: (m, n, o)->
         table = ''
         for tr, i in n.getElementsByTagName 'TR'
           a = getRowData tr
@@ -81,13 +101,13 @@ class HtmlToMarkdown
 
     br_example:
       filter: @tag_and_class 'br', 'example-break'
-      replacement: (m, n)-> ''
+      replacement: (m, n, o)-> ''
 
     production:
       filter: (n, o)->
         n.nodeName == 'TR' and
         n.firstChild.getAttribute('class') == 'productioncounter'
-      replacement: (m, n)->
+      replacement: (m, n, o)->
         num = n.getElementsByClassName('productioncounter')[0].textContent
         lhs = n.getElementsByClassName('productionlhs')[0].textContent
         op  = n.getElementsByClassName('productionseperator')[0].textContent
@@ -109,12 +129,14 @@ class HtmlToMarkdown
 
     img:
       filter: 'img'
-      replacement: (m, n)->
-        XXX m
+      replacement: (m, n, o)->
+        img = n._attrsByQName.src.data
+        alt = n._attrsByQName.alt.data
+        return "![#{alt}](img/#{img})"
 
     pre:
       filter: 'pre'
-      replacement: (m, n)->
+      replacement: (m, n, o)->
         pre = m
           .replace(/^\\/gm, '')
           .replace(/\\([\[\]\*])/g, '$1')
@@ -135,7 +157,7 @@ class HtmlToMarkdown
 
     code:
       filter: 'code'
-      replacement: (m, n)->
+      replacement: (m, n, o)->
         if m.match /^<.*mailto/
           return m
         else
@@ -143,7 +165,14 @@ class HtmlToMarkdown
 
     xxx:
       filter: 'xxx'
-      replacement: (m, n)->
+      replacement: (m, n, o)->
+        skip = [
+          'parentNode'
+          'ownerDocument'
+          '_nextSibling'
+          '_previousSibling'
+          '_attributeChangeHandlers'
+        ]
         x = {}
         for k, v of n
           continue if k in skip

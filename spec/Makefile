@@ -15,7 +15,7 @@ build: $(ALL)
 force:
 	rm -f spec.md
 
-Force: force
+force-all: force
 	make -C $(SPEC12) clean
 
 %.md: $(SPEC12)/%.html
