@@ -4,34 +4,29 @@ use v5.18;
 
 use XXX;  # XXX
 
-my ($front, $markdown);
 my ($YYYY, $MM, $DD);
 
 sub main {
-  read_files(@_);
+  my ($front, $markdown) = read_files(@_);
   set_vars();
-  fmt_dates();
-  fmt_toc();
-  fmt_index();
 
-#   my @parts;
-#   for my $section (parse_sections()) {
-#     my ($key) = keys %$section;
-#     $method = "fmt_$key";
-#     $_ = $section->{$key};
-#     push @parts, main->$method;
-#   }
-# 
-#   print "$front";
-#   print join "\n", @parts;
+  my @sections;
+  for my $section (parse_sections($markdown)) {
+    my ($key) = keys %$section;
+    my $method = "fmt_$key";
+    $_ = $section->{$key};
+    main->$method;
+    push @sections, $_;
+  }
 
-  print "$front$markdown\n";
+  print "$front";
+  print join "\n", @sections;
 }
 
 sub parse_sections {
-  my @s;
+  ($_) = @_;
 
-  $_ = $markdown;
+  my @s;
   while ($_) {
     s/\A(#{1,4} .*\n)\n+//
       and push @s, {hx => $1} and next;
@@ -39,21 +34,21 @@ sub parse_sections {
       and push @s, {hx => $1} and next;
     s/\A((?:\* .*\n)+(?:\{:\.\S+\}\n)?)\n+//
       and push @s, {ul => $1} and next;
-    s/\A((?:(?:\*\*|\[[\w\"\*]|[\w\"\(]).*\n)+)\n+//
+    s/\A((?:(?:\*\*|-1 |\[[\w\"\*]|[\w\"\(]).*\n)+)\n+//
       and push @s, {p => $1} and next;
-    s/\A----\n\n+//
-      and push @s, {hr => 1} and next;
+    s/\A(----\n)\n+//
+      and push @s, {hr => $1} and next;
     s/\A\[%toc%\]\n\n+//
       and push @s, {toc => 1} and next;
     s/\A\[%index%\]\n//
       and push @s, {index => 1} and next;
     s/\A((?:> .*\n)+)\n+//
-      and push @s, {in => $1} and next;
+      and push @s, {ind => $1} and next;
     s/\A((?s:```.+?\n```\n))\n+//
       and push @s, {pre => $1} and next;
     s/\A(!\[.*\.png\)\n)\s+//
       and push @s, {img => $1} and next;
-    s/\A(\* .*\n(?:  \S.*\n)+)\n+//
+    s/\A(\* .*\n(?:  \S.*\n|\n(?=  \S))+)\n+//
       and push @s, {ul => $1} and next;
     s/\A(\`\w.*\n)\n+//
       and push @s, {p => $1} and next;
@@ -62,9 +57,8 @@ sub parse_sections {
     s/\A((?:\* .*\n)(?:  .*\n|\n(?=  ))+)\n+//
       and push @s, {ul => $1} and next;
 
-
     s/((?:.*\n){10})(?s:.*)/$1/;
-    WWW \@s;
+    WWW(\@s);
     die "------\n$_<<<";
   }
 
@@ -73,8 +67,9 @@ sub parse_sections {
 
 sub read_files {
   my ($front_file, $markdown_file) = @_;
-  $front = read_file($front_file);
-  $markdown = read_file($markdown_file);
+  my $front = read_file($front_file);
+  my $markdown = read_file($markdown_file);
+  return ($front, $markdown)
 }
 
 sub read_file {
@@ -92,18 +87,47 @@ sub set_vars {
   $DD = sprintf "%02d", $d;
 }
 
+sub fmt_hx {
+  fmt_dates();
+}
+sub fmt_ul {
+  fmt_undefined_links();
+}
+sub fmt_p {
+  fmt_dates();
+  fmt_undefined_links();
+}
+sub fmt_hr {}
+sub fmt_ind {
+  fmt_undefined_links();
+}
+sub fmt_pre {}
+sub fmt_img {}
+sub fmt_tbl {}
+
+sub fmt_undefined_links {
+  s/(\[[^\]]*?\]\(#\))/~~$1~~/sg;
+}
+
 sub fmt_dates {
-  $markdown =~ s/YYYY/$YYYY/g;
-  $markdown =~ s/MM/$MM/g;
-  $markdown =~ s/DD/$DD/g;
+  s/YYYY/$YYYY/g;
+  s/MM/$MM/g;
+  s/DD/$DD/g;
 }
 
 sub fmt_toc {
-  $markdown =~ s/^\[%toc%\]/**Contents**\n\n* TOC\n\{:toc\}/m;
+  $_ = <<'...';
+**Contents**
+
+* TOC
+{:toc}
+...
 }
 
 sub fmt_index {
-  $markdown =~ s/^(\[%index%\])$/# Index\n\n$1/m;
+  $_ = <<'...';
+# Index
+...
 }
 
 main @ARGV;

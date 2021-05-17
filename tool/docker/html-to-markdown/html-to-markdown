@@ -55,6 +55,11 @@ class HtmlToMarkdown
       .replace(/.*\n.*\n/, '')
       .replace(/^(###.*)\n\n</gm, '$1 <')
       .replace(/"""/g, "'\"'")
+      .replace(/^  $/mg, '')
+      .replace(/  \n/g, '')
+      .replace(/^\d\.\ +/mg, '1. ')
+
+    return markdown + "\n"
 
 
   @rules:
@@ -62,7 +67,7 @@ class HtmlToMarkdown
     link:
       filter: tag_and_class 'a', 'link'
       replacement: (m, n, o)->
-        return "[#{m}](#xxx)"
+        return "[#{m}](#)"
 
     index:
       filter: tag_and_class 'div', 'index'
@@ -82,7 +87,7 @@ class HtmlToMarkdown
       replacement: (m, n, o)->
         return m unless m.match /\[\d+\]/
         return m.replace /^[\s\S]*(```\n[\s\S]+\n```\n)\s*(\S[\s\S]+?\S)\s*$/,
-          (m, m1, m2)-> "#{m2}\n\n#{m1}"
+          (m, m1, m2)-> "#{m2}\n\n#{m1}\n"
 
     subtitle:
       filter: tag_and_class 'h2', 'subtitle'
@@ -168,7 +173,7 @@ class HtmlToMarkdown
           .replace(/`\s+/g, "\n")
           .replace(/`/g, '')
           .replace(/^/mg, '> * ')
-          .replace(/\[(.+?)\]\(#xxx\)/g, '[$1](#rule-$1)')
+          .replace(/\[(.+?)\]\(#\)/g, '[$1](#rule-$1)')
 
         return """
           #{text}
@@ -282,7 +287,7 @@ main = (spec)->
 
   html = file_read spec
 
-  out to_markdown.convert(html) + "\n"
+  out to_markdown.convert(html)
 
 
 main process.argv[2..]...
