@@ -42,7 +42,7 @@ sub parse_sections {
       and push @s, {toc => 1} and next;
     s/\A\[%index%\]\n//
       and push @s, {index => 1} and next;
-    s/\A((?:> .*\n)+)\n+//
+    s/\A((?:>.*\n)+)\n+//
       and push @s, {ind => $1} and next;
     s/\A((?s:```.+?\n```\n))\n+//
       and push @s, {pre => $1} and next;
@@ -57,7 +57,7 @@ sub parse_sections {
     s/\A((?:\* .*\n)(?:  .*\n|\n(?=  ))+)\n+//
       and push @s, {ul => $1} and next;
 
-    s/((?:.*\n){10})(?s:.*)/$1/;
+    s/((?:.*\n){20})(?s:.*)/$1/;
     WWW(\@s);
     die "------\n$_<<<";
   }
