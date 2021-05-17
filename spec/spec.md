@@ -787,7 +787,6 @@ output data model, as shown in the following diagram:
 
 ![Processing Overview](img/overview2.png)
 
-
 A YAML processor need not expose the [serialization](#) or [representation](#)
 stages.
 It may translate directly between [native data structures](#) and a character
@@ -815,7 +814,7 @@ following three stages:
 > corresponds to a Perl hash table and a Python dictionary.
 > The [scalar](#) represents strings, integers, dates, and other atomic data
 > types.
-> 
+>
 > Each YAML [node](#) requires, in addition to its [kind](#) and [content](#), a
 > [tag](#) specifying its data type.
 > Type specifiers are either [global](#) URIs, or are [local](#) in scope to a
@@ -920,8 +919,6 @@ denotes [presentation](#) details.
 
 ![Information Models](img/model2.png)
 
-
-
 ### 3.2.1. Representation Graph
 
 YAML’s _representation_ of [native data structure](#) is a rooted, connected,
@@ -942,8 +939,6 @@ are unordered and must be [unique](#).
 **Figure 3.3. Representation Model**
 
 ![Representation Model](img/represent2.png)
-
-
 
 #### 3.2.1.1. Nodes
 
@@ -1108,8 +1103,6 @@ order](#) or [anchor names](#) for the preservation of [application](#) data.
 
 ![Serialization Model](img/serialize2.png)
 
-
-
 #### 3.2.2.1. Keys Order
 
 In the [representation](#) model, [mapping keys](#) do not have an order.
@@ -1160,8 +1153,6 @@ graph](#).
 
 ![Presentation Model](img/present2.png)
 
-
-
 #### 3.2.3.1. Node Styles
 
 Each [node](#) is presented in some _style_, depending on its [kind](#).
@@ -1188,8 +1179,6 @@ These allow for a natural "ordered mapping" notation.
 **Figure 3.6. Kind/Style Combinations**
 
 ![Kind/Style Combinations](img/styles2.png)
-
-
 
 #### 3.2.3.2. Scalar Formats
 
@@ -1246,8 +1235,6 @@ structures](#).
 **Figure 3.7. Loading Failure Points**
 
 ![Loading Failure Points](img/validity2.png)
-
-
 
 ### 3.3.1. Well-Formed Streams and Identified Aliases
 
@@ -1404,13 +1391,13 @@ Productions use any of the following parameters:
 > surrounding.
 > YAML supports two groups of _contexts_, distinguishing between [block
 > styles](#) and [flow styles](#).
-> 
+>
 > In [block styles](#), [indentation](#) is used to delineate structure.
 > To capture human perception of [indentation](#) the rules require special
 > treatment of the ["**`-`**"](#) character, used in [block sequences](#).
 > Hence in some cases productions need to behave differently inside [block
 > sequences](#) (_block-in context_) and outside them (_block-out context_).
-> 
+>
 > In [flow styles](#), explicit [indicators](#) are used to delineate structure.
 > These styles can be viewed as the natural extension of JSON to cover
 > [tagged](#), [single-quoted](#) and [plain scalars](#).
@@ -1715,7 +1702,8 @@ mapping: { sky: blue, sea: green }
 > * [c-mapping-end](#rule-c-mapping-end)
 > * [c-collect-entry](#rule-c-collect-entry)
 
-An ["**`#`**"](#) (**`#x23`**, octothorpe, hash, sharp, pound, number sign) denotes a [comment](#).
+An ["**`#`**"](#) (**`#x23`**, octothorpe, hash, sharp, pound, number sign)
+denotes a [comment](#).
 
 ```
 [12] c-comment ::= "#"
@@ -1736,7 +1724,8 @@ An ["**`#`**"](#) (**`#x23`**, octothorpe, hash, sharp, pound, number sign) deno
 > **Legend:**
 > * [c-comment](#rule-c-comment)
 
-An ["**`&`**"](#) (**`#x26`**, ampersand) denotes a [node’s anchor property](#).
+An ["**`&`**"](#) (**`#x26`**, ampersand) denotes a [node’s anchor
+property](#).
 
 ```
 [13] c-anchor ::= "&"
@@ -1748,7 +1737,11 @@ An ["**`*`**"](#) (**`#x2A`**, asterisk) denotes an [alias node](#).
 [14] c-alias ::= "*"
 ```
 
-The ["**`!`**"](#) (**`#x21`**, exclamation) is heavily overloaded for specifying [node tags](#). It is used to denote [tag handles](#) used in [tag directives](#) and [tag properties](#); to denote [local tags](#); and as the [non-specific tag](#) for non-[plain scalars](#).
+The ["**`!`**"](#) (**`#x21`**, exclamation) is heavily overloaded for
+specifying [node tags](#).
+It is used to denote [tag handles](#) used in [tag directives](#) and [tag
+properties](#); to denote [local tags](#); and as the [non-specific tag](#) for
+non-[plain scalars](#).
 
 ```
 [15] c-tag ::= "!"
@@ -1815,13 +1808,15 @@ folded: >
 > * [c-literal](#rule-c-literal)
 > * [c-folded](#rule-c-folded)
 
-An ["**`'`**"](#) (**`#x27`**, apostrophe, single quote) surrounds a [single-quoted flow scalar](#).
+An ["**`'`**"](#) (**`#x27`**, apostrophe, single quote) surrounds a
+[single-quoted flow scalar](#).
 
 ```
 [18] c-single-quote ::= "'"
 ```
 
-A ["**`"`**"](#) (**`#x22`**, double quote) surrounds a [double-quoted flow scalar](#).
+A ["**`"`**"](#) (**`#x22`**, double quote) surrounds a [double-quoted flow
+scalar](#).
 
 ```
 [19] c-double-quote ::= '"'
@@ -1871,7 +1866,8 @@ A ["**`%`**"](#) (**`#x25`**, percent) denotes a [directive](#) line.
 > **Legend:**
 > * [c-directive](#rule-c-directive)
 
-The _"**`@`**"_ (**`#x40`**, at) and _"**```**"_ (**`#x60`**, grave accent) are _reserved_ for future use.
+The _"**`@`**"_ (**`#x40`**, at) and _"**```**"_ (**`#x60`**, grave accent) are
+_reserved_ for future use.
 
 ```
 [21] c-reserved ::=
@@ -2156,7 +2152,9 @@ Escaped ASCII backspace (**`#x8`**) character.
 [44] ns-esc-backspace ::= "b"
 ```
 
-Escaped ASCII horizontal tab (**`#x9`**) character. This is useful at the start or the end of a line to force a leading or trailing tab to become part of the [content](#).
+Escaped ASCII horizontal tab (**`#x9`**) character.
+This is useful at the start or the end of a line to force a leading or trailing
+tab to become part of the [content](#).
 
 ```
 [45] ns-esc-horizontal-tab ::=
@@ -2193,7 +2191,9 @@ Escaped ASCII escape (**`#x1B`**) character.
 [50] ns-esc-escape ::= "e"
 ```
 
-Escaped ASCII space (**`#x20`**) character. This is useful at the start or the end of a line to force a leading or trailing space to become part of the [content](#).
+Escaped ASCII space (**`#x20`**) character.
+This is useful at the start or the end of a line to force a leading or trailing
+space to become part of the [content](#).
 
 ```
 [51] ns-esc-space ::= #x20
@@ -2623,7 +2623,7 @@ Folding does distinguish between these cases in the following way:
 > that contain leading [white space](#).
 > Note that such a [more-indented](#) line may consist only of such leading
 > [white space](#).
-> 
+>
 > The combined effect of the _block line folding_ rules is that each "paragraph"
 > is interpreted as a line, [empty lines](#) are interpreted as a line feed, and
 > the formatting of [more-indented](#) lines is preserved.
@@ -2659,7 +2659,7 @@ Folding does distinguish between these cases in the following way:
 > detail](#) and must not be used to convey [content](#) information.
 > Once all such spaces have been discarded, all [line breaks](#) are folded,
 > without exception.
-> 
+>
 > The combined effect of the _flow line folding_ rules is that each "paragraph"
 > is interpreted as a line, [empty lines](#) are interpreted as line feeds, and
 > text can be freely [more-indented](#) without affecting the [content](#)
@@ -3066,7 +3066,7 @@ There are three tag handle variants:
 > By default, the prefix associated with this handle is ["**`!`**"](#).
 > Thus, by default, [shorthands](#) using this handle are interpreted as [local
 > tags](#).
-> 
+>
 > It is possible to override the default behavior by providing an explicit
 > "**`TAG`**" directive, associating a different prefix for this handle.
 > This provides smooth migration from using [local tags](#) to using [global
@@ -3107,7 +3107,7 @@ There are three tag handle variants:
 > By default, the prefix associated with this handle is
 > "**`tag:yaml.org,2002:`**".
 > This prefix is used by the [YAML tag repository](#).
-> 
+>
 > It is possible to override this default behavior by providing an explicit
 > "**`TAG`**" directive associating a different prefix for this handle.
 
@@ -3138,7 +3138,7 @@ There are three tag handle variants:
 > A _named tag handle_ surrounds a non-empty name with _"**`!`**"_ characters.
 > A handle name must not be used in a [tag shorthand](#) unless an explicit
 > "**`TAG`**" directive has associated some prefix with it.
-> 
+>
 > The name of the handle is a [presentation detail](#) and must not be used to
 > convey [content](#) information.
 > In particular, the YAML [processor](#) need not preserve the handle name once
@@ -3356,12 +3356,12 @@ ERROR:
 > The resulting [parsed](#) [tag](#) is the concatenation of the [prefix](#) and
 > the suffix, and must either begin with ["**`!`**"](#) (a [local tag](#)) or be
 > a valid URI (a [global tag](#)).
-> 
+>
 > The choice of [tag handle](#) is a [presentation detail](#) and must not be
 > used to convey [content](#) information.
 > In particular, the [tag handle](#) may be discarded once [parsing](#) is
 > completed.
-> 
+>
 > The suffix must not contain any ["**`!`**"](#) character.
 > This would cause the tag shorthand to be interpreted as having a [named tag
 > handle](#).
@@ -3424,14 +3424,14 @@ ERROR:
 > ["**`?`**"](#) for all other [nodes](#).
 > This is the only case where the [node style](#) has any effect on the
 > [content](#) information.
-> 
+>
 > It is possible for the tag property to be explicitly set to the ["**`!`**"
 > non-specific tag](#).
 > By [convention](#), this "disables" [tag resolution](#), forcing the [node](#)
 > to be interpreted as "**`tag:yaml.org,2002:seq`**",
 > "**`tag:yaml.org,2002:map`**", or "**`tag:yaml.org,2002:str`**", according to
 > its [kind](#).
-> 
+>
 > There is no way to explicitly specify the ["**`?`**" non-specific](#) tag.
 > This is intentional.
 
@@ -6337,12 +6337,12 @@ Pluto is a planet: !!bool false
 > [Represents](#) arbitrary sized finite mathematical integers.
 > Scalars of this type should be [bound](#) to a [native](#) integer data type,
 > if possible.
-> 
+>
 > Some languages (such as Perl) provide only a "number" type that allows for both
 > integer and floating-point values.
 > A YAML [processor](#) may use such a type for integers, as long as they
 > round-trip properly.
-> 
+>
 > In some languages (such as C), an integer may overflow the [native](#) type’s
 > storage capability.
 > A YAML [processor](#) may reject such a value as an error, truncate it with a
@@ -6383,12 +6383,12 @@ positive: !!int 34
 
 > [Represents](#) an approximation to real numbers, including three special
 > values (positive and negative infinity, and "not a number").
-> 
+>
 > Some languages (such as Perl) provide only a "number" type that allows for both
 > integer and floating-point values.
 > A YAML [processor](#) may use such a type for floating-point numbers, as long
 > as they round-trip properly.
-> 
+>
 > Not all floating-point values can be stored exactly in any given [native](#)
 > type.
 > Hence a float value may change by "a small amount" when round-tripped.
