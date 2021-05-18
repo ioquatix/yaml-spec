@@ -27,11 +27,22 @@ getRowData = (tr)->
     a.push _.trim(td.textContent) || ' '
   return a
 
-reformat_para = (para)->
-  text = para.replace /\ \ $/mg, '%%%'
-  text = text.replace /([\s\S]+?)(?:(\.)\ (?=[A-Z])|$)/g, (x, s, e)->
-    e ?= ''
-    wrap(s, width: 79) + "#{e}\n"
+reformat = (text)->
+  width = 79
+  out = reformat_para text, width
+
+reformat_para = (text, width)->
+  text = text.replace /\ \ $/mg, '%%%'
+  text = text.replace ///
+      ([\s\S]+?)
+      (?:
+        (\.)\ (?=[A-Z])
+      |
+        $
+      )
+    ///g,
+    (x, s, e='')->
+      wrap(s, width: width) + "#{e}\n"
   text = text.replace /%%%$/mg, '  '
   return text
 
@@ -63,8 +74,23 @@ class HtmlToMarkdown
 
     return markdown + "\n"
 
+  @H:
+    H1: '#'
+    H2: '##'
+    H3: '###'
+    H4: '####'
 
   @rules:
+    titlepage:
+      filter: (n, o)->
+        n.nodeName.match(/^H[1-4]$/) and
+        n.getAttribute('class') == 'title'
+      replacement: (m, n, o)->
+        return "# #{m}" unless m.match /\d+\.\s/
+        text = m.replace(/(\d+\.)+/, '#.')
+        name = n.nodeName
+        mark = HtmlToMarkdown.H[name]
+        return "#{mark} #{text}"
 
     link:
       filter: tag_and_class 'a', 'link'
@@ -74,7 +100,7 @@ class HtmlToMarkdown
     index:
       filter: tag_and_class 'div', 'index'
       replacement: (m, n, o)->
-        return "[%index%]\n"
+        return "::index\n"
 
     releaseinfo:
       filter: tag_and_class 'p', 'releaseinfo'
@@ -82,20 +108,38 @@ class HtmlToMarkdown
         return m
           .replace(/^\s+(.*)  $/mg, '* $1')
           .replace(/^_(.*)_  $/m, "**$1**\n")
-          .replace(/^_(.*)_(.*)  $/m, "{:.releaseinfo}\n\n**$1**$2")
+          .replace(
+            /^_(.*)_(.*)  $/m,
+            "{:.releaseinfo}\n\n**$1**$2")
 
     simplelist:
       filter: tag_and_class 'table', 'simplelist'
       replacement: (m, n, o)->
         return m unless m.match /\[\d+\]/
-        return m.replace /^[\s\S]*(```\n[\s\S]+\n```\n)\s*(\S[\s\S]+?\S)\s*$/,
+        return m.replace ///^
+          [\s\S]*
+          (
+            ```\n
+            [\s\S]+\n
+            ```\n
+          )
+          \s*
+          (\S[\s\S]+?\S)
+          \s*
+        $///,
           (m, m1, m2)->
-            "#{reformat_para m2}\n#{m1}\n"
+            """\
+            #{reformat m2}
+            #{m1}
+
+            """
 
     subtitle:
       filter: tag_and_class 'h2', 'subtitle'
       replacement: (m, n, o)->
-        return "**#{m}**\n"
+        return """\
+          **#{m}**
+          """
 
     authorgroup:
       filter: tag_and_class 'div', 'authorgroup'
@@ -105,7 +149,11 @@ class HtmlToMarkdown
           .replace(/\n\n</g, ' <')
           .replace(/>/g, '>**')
           .replace(/\n\n/g, "\n")
-        text + "{:.authorgroup}"
+          .replace(/^\s+/, '')
+        return """\
+          #{text}\
+          {:.authorgroup}
+          """
 
     indexdiv:
       filter: tag_and_class 'div', 'indexdiv'
@@ -115,7 +163,11 @@ class HtmlToMarkdown
     toc:
       filter: tag_and_class 'div', 'toc'
       replacement: (m, n, o)->
-        return "[%toc%]\n"
+        return """\
+          **Contents**
+
+          ::toc
+          """
 
     informaltable:
       filter: tag_and_class 'div', 'informaltable'
@@ -152,10 +204,10 @@ class HtmlToMarkdown
         rhs = rhs.replace /\s+$/, ''
 
         return """
-        ```
-        #{num} #{lhs} #{op}#{rhs}
-        ```\n\n
-        """
+          ```
+          #{num} #{lhs} #{op}#{rhs}
+          ```\n\n
+          """
 
     legend:
       filter: (n, o)->
@@ -231,17 +283,17 @@ class HtmlToMarkdown
           .replace(/\\\\/g, '\\')
           .replace(/\\_/g, '_')
         return """
-        ```
-        #{pre}
-        ```\n\n
-        """
+          ```
+          #{pre}
+          ```\n\n
+          """
 
     p:
       filter: (n, o)->
         n.nodeName == 'P' and
         n.getAttribute('class') != 'releaseinfo'
       replacement: (m, n, o)->
-        return reformat_para(m) + "\n\n"
+        return reformat(m) + "\n\n"
 
     dt:
       filter: 'dt'
@@ -253,7 +305,7 @@ class HtmlToMarkdown
     dd:
       filter: 'dd'
       replacement: (m, n, o)->
-        text = reformat_para(m)
+        text = reformat(m)
           .replace(/\n+$/, '')
           .replace(/^/mg, '> ')
         return text + "\n\n"

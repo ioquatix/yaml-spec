@@ -30,30 +30,58 @@ sub parse_sections {
   while ($_) {
     s/\A(#{1,4} .*\n)\n+//
       and push @s, {hx => $1} and next;
+
     s/\A(\*\*.*\*\*\n)\n+//
       and push @s, {hx => $1} and next;
-    s/\A((?:\* .*\n)+(?:\{:\.\S+\}\n)?)\n+//
+
+    s/\A
+      (
+        (::.*\n)?
+        (?:\*\ .*\n)+
+        (?:\{:\.\S+\}\n)?
+      )
+      \n+
+    //x
       and push @s, {ul => $1} and next;
-    s/\A((?:(?:\*\*|-1 |\[[\w\"\*]|[\w\"\(]).*\n)+)\n+//
+
+    s/\A
+      (
+        (?:
+          (?:\*\*|-1\ |\[[\w\"\*]|[\w\"\(])
+          .*\n
+        )+
+      )
+      \n+
+    //x
       and push @s, {p => $1} and next;
+
     s/\A(----\n)\n+//
       and push @s, {hr => $1} and next;
-    s/\A\[%toc%\]\n\n+//
+
+    s/\A\::toc\n\n+//
       and push @s, {toc => 1} and next;
-    s/\A\[%index%\]\n//
+
+    s/\A\::index\n//
       and push @s, {index => 1} and next;
+
     s/\A((?:>.*\n)+)\n+//
       and push @s, {ind => $1} and next;
+
     s/\A((?s:```.+?\n```\n))\n+//
       and push @s, {pre => $1} and next;
+
     s/\A(!\[.*\.png\)\n)\s+//
       and push @s, {img => $1} and next;
+
     s/\A(\* .*\n(?:  \S.*\n|\n(?=  \S))+)\n+//
       and push @s, {ul => $1} and next;
+
     s/\A(\`\w.*\n)\n+//
       and push @s, {p => $1} and next;
+
     s/\A((?:\| .*)+)\n+//
       and push @s, {tbl => $1} and next;
+
     s/\A((?:\* .*\n)(?:  .*\n|\n(?=  ))+)\n+//
       and push @s, {ul => $1} and next;
 
@@ -117,8 +145,6 @@ sub fmt_dates {
 
 sub fmt_toc {
   $_ = <<'...';
-**Contents**
-
 * TOC
 {:toc}
 ...

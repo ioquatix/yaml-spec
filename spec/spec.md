@@ -78,9 +78,11 @@ Version 1.2 and to create programs that process YAML information.
 
 ----
 
-[%toc%]
+**Contents**
 
-# Chapter 1. Introduction
+::toc
+
+# Chapter #. Introduction
 
 "YAML Ain’t Markup Language" (abbreviated YAML) is a data serialization
 language designed to be human-friendly and work well with modern programming
@@ -121,7 +123,7 @@ interprocess messaging, cross-language data sharing, object persistence, and
 debugging of complex data structures.
 When data is easy to view and understand, programming becomes a simpler task.
 
-## 1.1. Goals
+## #. Goals
 
 The design goals for YAML are, in decreasing priority:
 
@@ -133,7 +135,7 @@ The design goals for YAML are, in decreasing priority:
 1. YAML is expressive and extensible.
 1. YAML is easy to implement and use.
 
-## 1.2. Prior Art
+## #. Prior Art
 
 YAML’s initial direction was set by the data serialization and markup language
 discussions among [SML-DEV members](http://www.docuverse.com/smldev/).
@@ -208,7 +210,7 @@ Together, these enable YAML to support the processing of large [documents](#)
 (e.g. transaction logs) or continuous [streams](#) (e.g. feeds from a
 production machine).
 
-## 1.3. Relation to JSON
+## #. Relation to JSON
 
 Both JSON and YAML aim to be human readable data interchange formats.
 However, JSON and YAML have different priorities.
@@ -252,7 +254,7 @@ done either by enhancing the JSON specification or by restricting the YAML
 specification.
 Such a definition is beyond the scope of this specification.
 
-## 1.4. Relation to XML
+## #. Relation to XML
 
 Newcomers to YAML often search for its correlation to the eXtensible Markup
 Language (XML).
@@ -272,7 +274,7 @@ This generally requires that a subset of each language be used.
 For more information on using both XML and YAML, please visit
 [http://yaml.org/xml](http://yaml.org/xml).
 
-## 1.5. Terminology
+## #. Terminology
 
 This specification uses key words based on
 [RFC2119](http://www.ietf.org/rfc/rfc2119.txt) to indicate requirement level.
@@ -304,14 +306,14 @@ The bulk of the document, chapters [4](#) through [9](#), formally define this
 text format.
 Finally, chapter [10](#) recommends basic YAML schemas.
 
-# Chapter 2. Preview
+# Chapter #. Preview
 
 This section provides a quick glimpse into the expressive power of YAML.
 It is not expected that the first-time reader grok all of the examples.
 Rather, these selections are used as motivation for the remainder of the
 specification.
 
-## 2.1. Collections
+## #. Collections
 
 YAML’s [block collections](#) use [indentation](#) for scope and begin each
 entry on its own line. [Block sequences](#) indicate each entry with a dash and
@@ -385,7 +387,7 @@ Sammy Sosa: {
   }
 ```
 
-## 2.2. Structures
+## #. Structures
 
 YAML uses three dashes (["**`---`**"](#)) to separate [directives](#) from
 [document](#) [content](#).
@@ -486,7 +488,7 @@ following the [dash](#), [colon](#), or [question mark](#).
   quantity: 1
 ```
 
-## 2.3. Scalars
+## #. Scalars
 
 [Scalar content](#) can be written in [block](#) notation, using a [literal
 style](#) (indicated by ["**`|`**"](#)) where all [line breaks](#) are
@@ -568,7 +570,7 @@ quoted: "So does this
   quoted scalar.\n"
 ```
 
-## 2.4. Tags
+## #. Tags
 
 In YAML, [untagged nodes](#) are given a type depending on the [application](#).
 The examples in this specification generally use the [**`seq`**](#),
@@ -682,7 +684,7 @@ application specific tag: !something |
 - Ken Griffy: 58
 ```
 
-## 2.5. Full Length Example
+## #. Full Length Example
 
 Below are two full-length examples of YAML.
 On the left is a sample invoice; on the right is a sample log file.
@@ -752,7 +754,7 @@ Stack:
       foo = bar
 ```
 
-# Chapter 3. Processing YAML Information
+# Chapter #. Processing YAML Information
 
 YAML is both a text format and a method for [presenting](#) any [native data
 structure](#) in this format.
@@ -777,7 +779,7 @@ a serial form, that is, a form with sequential access constraints.
 [Presentation](#) deals with the formatting of a YAML [serialization](#) as a
 series of characters in a human-friendly manner.
 
-## 3.1. Processes
+## #. Processes
 
 Translating between [native data structures](#) and a character [stream](#) is
 done in several logically distinct stages, each with a well defined input and
@@ -797,7 +799,7 @@ structures](#) are [constructed](#) only from information available in the
 In particular, [mapping key order](#), [comments](#), and [tag handles](#)
 should not be referenced during [composition](#).
 
-### 3.1.1. Dump
+### #. Dump
 
 _Dumping_ native data structures to a character [stream](#) is done using the
 following three stages:
@@ -858,7 +860,7 @@ following three stages:
 > While some of this can be done with the help of the [application](#), in
 > general this process should be guided by the preferences of the user.
 
-### 3.1.2. Load
+### #. Load
 
 _Loading_ [native data structures](#) from a character [stream](#) is done
 using the following three stages:
@@ -890,7 +892,7 @@ using the following three stages:
 > Construction can fail due to the [unavailability](#) of the required [native
 > data types](#).
 
-## 3.2. Information Models
+## #. Information Models
 
 This section specifies the formal details of the results of the above processes.
 To maximize data portability between programming languages and implementations,
@@ -919,7 +921,7 @@ denotes [presentation](#) details.
 
 ![Information Models](img/model2.png)
 
-### 3.2.1. Representation Graph
+### #. Representation Graph
 
 YAML’s _representation_ of [native data structure](#) is a rooted, connected,
 directed graph of [tagged](#) [nodes](#).
@@ -940,7 +942,7 @@ are unordered and must be [unique](#).
 
 ![Representation Model](img/represent2.png)
 
-#### 3.2.1.1. Nodes
+#### #. Nodes
 
 A YAML _node_ [represents](#) a single [native data structure](#).
 Such nodes have _content_ of one of three _kinds_: scalar, sequence, or mapping.
@@ -975,7 +977,7 @@ Having a unified collections view for sequences and mappings is helpful both
 for theoretical analysis and for creating practical YAML tools and APIs.
 This strategy is also used by the Javascript programming language.
 
-#### 3.2.1.2. Tags
+#### #. Tags
 
 YAML [represents](#) type information of [native data structures](#) with a
 simple identifier, called a _tag_. _Global tags_ are
@@ -1012,7 +1014,7 @@ allowed [content](#) values for validation, a mechanism for [tag
 resolution](#), or any other data that is applicable to all of the tag’s
 [nodes](#).
 
-#### 3.2.1.3. Node Comparison
+#### #. Node Comparison
 
 **Equality**
 
@@ -1088,7 +1090,7 @@ The alternative [scalar](#) [representation](#) **`!object ''`** will not work
 as expected, as the YAML [processor](#) is not required to preserve the
 identity of such objects.
 
-### 3.2.2. Serialization Tree
+### #. Serialization Tree
 
 To express a YAML [representation](#) using a serial API, it is necessary to
 impose an [order](#) on [mapping keys](#) and employ [alias nodes](#) to
@@ -1103,7 +1105,7 @@ order](#) or [anchor names](#) for the preservation of [application](#) data.
 
 ![Serialization Model](img/serialize2.png)
 
-#### 3.2.2.1. Keys Order
+#### #. Keys Order
 
 In the [representation](#) model, [mapping keys](#) do not have an order.
 To [serialize](#) a [mapping](#), it is necessary to impose an _ordering_ on
@@ -1117,7 +1119,7 @@ For example, an ordered [mapping](#) can be [represented](#) as a [sequence](#)
 of [mappings](#), where each [mapping](#) is a single [key: value pair](#).
 YAML provides convenient [compact notation](#) for this case.
 
-#### 3.2.2.2. Anchors and Aliases
+#### #. Anchors and Aliases
 
 In the [representation graph](#), a [node](#) may appear in more than one
 [collection](#).
@@ -1135,7 +1137,7 @@ In addition, an anchor need not have an alias node referring to it.
 It is therefore possible to provide an anchor for all [nodes](#) in
 [serialization](#).
 
-### 3.2.3. Presentation Stream
+### #. Presentation Stream
 
 A YAML _presentation_ is a [stream](#) of Unicode characters making use of
 [styles](#), [scalar content formats](#), [comments](#), [directives](#) and
@@ -1153,7 +1155,7 @@ graph](#).
 
 ![Presentation Model](img/present2.png)
 
-#### 3.2.3.1. Node Styles
+#### #. Node Styles
 
 Each [node](#) is presented in some _style_, depending on its [kind](#).
 The node style is a [presentation detail](#) and is not reflected in the
@@ -1180,7 +1182,7 @@ These allow for a natural "ordered mapping" notation.
 
 ![Kind/Style Combinations](img/styles2.png)
 
-#### 3.2.3.2. Scalar Formats
+#### #. Scalar Formats
 
 YAML allows [scalars](#) to be [presented](#) in several _formats_.
 For example, the integer "**`11`**" might also be written as "**`0xB`**".
@@ -1189,7 +1191,7 @@ For example, the integer "**`11`**" might also be written as "**`0xB`**".
 Like [node style](#), the format is a [presentation detail](#) and is not
 reflected in the [serialization tree](#) and [representation graph](#).
 
-#### 3.2.3.3. Comments
+#### #. Comments
 
 [Comments](#) are a [presentation detail](#) and must not have any effect on
 the [serialization tree](#) or [representation graph](#).
@@ -1200,7 +1202,7 @@ A typical example is comments in a configuration file.
 Comments must not appear inside [scalars](#), but may be interleaved with such
 [scalars](#) inside [collections](#).
 
-#### 3.2.3.4. Directives
+#### #. Directives
 
 Each [document](#) may be associated with a set of [directives](#).
 A directive has a name and an optional sequence of parameters.
@@ -1211,7 +1213,7 @@ This version of YAML defines two directives, ["**`YAML`**"](#) and
 ["**`TAG`**"](#).
 All other directives are [reserved](#) for future versions of YAML.
 
-## 3.3. Loading Failure Points
+## #. Loading Failure Points
 
 The process of [loading](#) [native data structures](#) from a YAML [stream](#)
 has several potential _failure points_.
@@ -1236,7 +1238,7 @@ structures](#).
 
 ![Loading Failure Points](img/validity2.png)
 
-### 3.3.1. Well-Formed Streams and Identified Aliases
+### #. Well-Formed Streams and Identified Aliases
 
 A [well-formed](#) character [stream](#) must match the BNF productions
 specified in the following chapters.
@@ -1248,7 +1250,7 @@ A YAML [processor](#) may recover from syntax errors, possibly by ignoring
 certain parts of the input, but it must provide a mechanism for reporting such
 errors.
 
-### 3.3.2. Resolved Tags
+### #. Resolved Tags
 
 Typically, most [tags](#) are not explicitly specified in the character
 [stream](#).
@@ -1314,7 +1316,7 @@ In such a case, the YAML [processor](#) may [compose](#) a [partial
 representation](#), based on each [node’s kind](#) and allowing for
 non-specific tags.
 
-### 3.3.3. Recognized and Valid Tags
+### #. Recognized and Valid Tags
 
 To be _valid_, a [node](#) must have a [tag](#) which is _recognized_ by the
 YAML [processor](#) and its [content](#) must satisfy the constraints imposed
@@ -1328,7 +1330,7 @@ representation](#) for an unrecognized or an invalid [collection](#), since
 However, such a [complete representation](#) cannot be used to [construct](#) a
 [native data structure](#).
 
-### 3.3.4. Available Tags
+### #. Available Tags
 
 In a given processing environment, there need not be an _available_ native type
 corresponding to a given [tag](#).
@@ -1337,7 +1339,7 @@ to [construct](#) a [native data structure](#) for it.
 In this case, a [complete representation](#) may still be [composed](#), and an
 [application](#) may wish to use this [representation](#) directly.
 
-# Chapter 4. Syntax Conventions
+# Chapter #. Syntax Conventions
 
 The following chapters formally define the syntax of YAML character
 [streams](#), using parameterized BNF productions.
@@ -1363,7 +1365,7 @@ Reference) Haskell package.
 This reference implementation is also available as an interactive web
 application at [http://dev.yaml.org/ypaste](http://dev.yaml.org/ypaste).
 
-## 4.1. Production Parameters
+## #. Production Parameters
 
 YAML’s syntax is designed for maximal human readability.
 This requires [parsing](#) to depend on the surrounding text.
@@ -1415,7 +1417,7 @@ Productions use any of the following parameters:
 > Unlike the previous parameters, this only controls interpretation; the [line
 > breaks](#) are valid in all cases.
 
-## 4.2. Production Naming Conventions
+## #. Production Naming Conventions
 
 To make it easier to follow production combinations, production names use a
 Hungarian-style naming convention.
@@ -1460,9 +1462,9 @@ ends with.
 > A production as above, with the additional property that the matched content
 > [indentation](#) level is greater than the specified `n` parameter.
 
-# Chapter 5. Characters
+# Chapter #. Characters
 
-## 5.1. Character Set
+## #. Character Set
 
 To ensure readability, YAML [streams](#) use only the _printable_ subset of the
 Unicode character set.
@@ -1501,7 +1503,7 @@ Note that JSON [quoted scalars](#) cannot span multiple lines or contain
   #x9 | [#x20-#x10FFFF]
 ```
 
-## 5.2. Character Encodings
+## #. Character Encodings
 
 All characters mentioned in this specification are Unicode code points.
 Each such code point is written as one or more bytes depending on the
@@ -1591,7 +1593,7 @@ ERROR:
  inside a document.
 ```
 
-## 5.3. Indicator Characters
+## #. Indicator Characters
 
 _Indicators_ are characters that have special semantics.
 
@@ -1907,7 +1909,7 @@ This is handled on a case-by-case basis by the relevant productions.
   "," | "[" | "]" | "{" | "}"
 ```
 
-## 5.4. Line Break Characters
+## #. Line Break Characters
 
 YAML recognizes the following ASCII _line break_ characters.
 
@@ -1997,7 +1999,7 @@ for clarity.
 > **Legend:**
 > * [b-break](#rule-b-break)
 
-## 5.5. White Space Characters
+## #. White Space Characters
 
 YAML recognizes two _white space_ characters: _space_ and _tab_.
 
@@ -2055,7 +2057,7 @@ block:→|
 > * [s-space](#rule-s-space)
 > * [s-tab](#rule-s-tab)
 
-## 5.6. Miscellaneous Characters
+## #. Miscellaneous Characters
 
 The YAML syntax productions make use of the following additional character
 classes:
@@ -2115,7 +2117,7 @@ classes:
   ns-uri-char - "!" - c-flow-indicator
 ```
 
-## 5.7. Escaped Characters
+## #. Escaped Characters
 
 All non-[printable](#) characters must be _escaped_.
 YAML escape sequences use the _"**`\`**"_ notation common to most modern
@@ -2317,9 +2319,9 @@ ERROR:
 - q and - are invalid hex digits.
 ```
 
-# Chapter 6. Basic Structures
+# Chapter #. Basic Structures
 
-## 6.1. Indentation Spaces
+## #. Indentation Spaces
 
 In YAML [block styles](#), structure is determined by _indentation_.
 In general, indentation is defined as a zero or more [space](#) characters at
@@ -2429,7 +2431,7 @@ This is handled on a case-by-case basis by the relevant productions.
 > * [s-indent(n)](#rule-s-indent(n))
 > * Indicator as indentation
 
-## 6.2. Separation Spaces
+## #. Separation Spaces
 
 Outside [indentation](#) and [scalar content](#), YAML uses [white space](#)
 characters for _separation_ between tokens within a line.
@@ -2465,7 +2467,7 @@ Separation spaces are a [presentation detail](#) and must not be used to convey
 > **Legend:**
 > * [s-separate-in-line](#rule-s-separate-in-line)
 
-## 6.3. Line Prefixes
+## #. Line Prefixes
 
 Inside [scalar content](#), each line begins with a non-[content](#) _line
 prefix_.
@@ -2523,7 +2525,7 @@ block: |
 > * [s-block-line-prefix(n)](#rule-s-block-line-prefix(n))
 > * [s-indent(n)](#rule-s-indent(n))
 
-## 6.4. Empty Lines
+## #. Empty Lines
 
 An _empty line_ line consists of the non-[content](#) [prefix](#) followed by a
 [line break](#).
@@ -2563,7 +2565,7 @@ Chomping: |
 > **Legend:**
 > * [l-empty(n,c)](#rule-l-empty(n,c))
 
-## 6.5. Line Folding
+## #. Line Folding
 
 _Line folding_ allows long lines to be broken for readability, while retaining
 the semantics of the original long line.
@@ -2692,7 +2694,7 @@ Folding does distinguish between these cases in the following way:
 > * [s-flow-folded(n)](#rule-s-flow-folded(n))
 > * Non-content spaces
 
-## 6.6. Comments
+## #. Comments
 
 An explicit _comment_ is marked by a _"**`#`**" indicator_.
 Comments are a [presentation detail](#) and must not be used to convey
@@ -2802,7 +2804,7 @@ key:····# Comment↓
 > * [l-comment](#rule-l-comment)
 > * [s-l-comments](#rule-s-l-comments)
 
-## 6.7. Separation Lines
+## #. Separation Lines
 
 [Implicit keys](#) are restricted to a single line.
 In all other cases, YAML allows tokens to be separated by multi-line (possibly
@@ -2863,7 +2865,7 @@ Note that structures following multi-line comment separation must be properly
 > * [s-separate-lines(n)](#rule-s-separate-lines(n))
 > * [s-indent(n)](#rule-s-indent(n))
 
-## 6.8. Directives
+## #. Directives
 
 _Directives_ are instructions to the YAML [processor](#).
 This specification defines two directives, ["**`YAML`**"](#) and
@@ -2923,7 +2925,7 @@ warning.
 > * [ns-directive-name](#rule-ns-directive-name)
 > * [ns-directive-parameter](#rule-ns-directive-parameter)
 
-### 6.8.1. "**`YAML`**" Directives
+### #. "**`YAML`**" Directives
 
 The _"**`YAML`**" directive_ specifies the version of YAML the [document](#)
 conforms to.
@@ -2994,7 +2996,7 @@ The YAML directive must only be
 given at most once per document.
 ```
 
-### 6.8.2. "**`TAG`**" Directives
+### #. "**`TAG`**" Directives
 
 The _"**`TAG`**" directive_ establishes a [tag shorthand](#) notation for
 specifying [node tags](#).
@@ -3046,7 +3048,7 @@ be given at most once per
 handle in the same document.
 ```
 
-#### 6.8.2.1. Tag Handles
+#### #. Tag Handles
 
 The _tag handle_ exactly matches the prefix of the affected [tag shorthand](#).
 There are three tag handle variants:
@@ -3166,7 +3168,7 @@ There are three tag handle variants:
 > **Legend:**
 > * [c-named-tag-handle](#rule-c-named-tag-handle)
 
-#### 6.8.2.2. Tag Prefixes
+#### #. Tag Prefixes
 
 There are two _tag prefix_ variants:
 
@@ -3245,7 +3247,7 @@ There are two _tag prefix_ variants:
 > **Legend:**
 > * [ns-global-tag-prefix](#rule-ns-global-tag-prefix)
 
-## 6.9. Node Properties
+## #. Node Properties
 
 Each [node](#) may have two optional _properties_, [anchor](#) and [tag](#), in
 addition to its [content](#).
@@ -3284,7 +3286,7 @@ Either or both may be omitted.
 > * [c-ns-anchor-property](#rule-c-ns-anchor-property)
 > * [c-ns-tag-property](#rule-c-ns-tag-property)
 
-### 6.9.1. Node Tags
+### #. Node Tags
 
 The _tag property_ identifies the type of the [native data structure](#)
 [presented](#) by the [node](#).
@@ -3461,7 +3463,7 @@ ERROR:
 > **Legend:**
 > * [c-non-specific-tag](#rule-c-non-specific-tag)
 
-### 6.9.2. Node Anchors
+### #. Node Anchors
 
 An anchor is denoted by the _"**`&`**" indicator_.
 It marks a [node](#) for future reference.
@@ -3517,14 +3519,14 @@ Second occurrence: *anchor
 > * [c-ns-anchor-property](#rule-c-ns-anchor-property)
 > * [ns-anchor-name](#rule-ns-anchor-name)
 
-# Chapter 7. Flow Styles
+# Chapter #. Flow Styles
 
 YAML’s _flow styles_ can be thought of as the natural extension of JSON to
 cover [folding](#) long content lines for readability, [tagging](#) nodes to
 control [construction](#) of [native data structures](#), and using
 [anchors](#) and [aliases](#) to reuse [constructed](#) object instances.
 
-## 7.1. Alias Nodes
+## #. Alias Nodes
 
 Subsequent occurrences of a previously [serialized](#) node are [presented](#)
 as _alias nodes_.
@@ -3575,7 +3577,7 @@ Reuse anchor: *anchor``
 > * [c-ns-alias-node](#rule-c-ns-alias-node)
 > * [ns-anchor-name](#rule-ns-anchor-name)
 
-## 7.2. Empty Nodes
+## #. Empty Nodes
 
 YAML allows the [node content](#) to be omitted in many cases. [Nodes](#) with
 empty [content](#) are interpreted as if they were [plain scalars](#) with an
@@ -3643,7 +3645,7 @@ for their existence.
 > **Legend:**
 > * [e-node](#rule-e-node)
 
-## 7.3. Flow Scalar Styles
+## #. Flow Scalar Styles
 
 YAML provides three _flow scalar styles_: [double-quoted](#),
 [single-quoted](#) and [plain](#) (unquoted).
@@ -3653,7 +3655,7 @@ The [scalar style](#) is a [presentation detail](#) and must not be used to
 convey [content](#) information, with the exception that [plain scalars](#) are
 distinguished for the purpose of [tag resolution](#).
 
-### 7.3.1. Double-Quoted Style
+### #. Double-Quoted Style
 
 The _double-quoted style_ is specified by surrounding _"**`"`**" indicators_.
 This is the only [style](#) capable of expressing arbitrary strings, by using
@@ -3803,7 +3805,7 @@ Empty lines, if any, are consumed as part of the [line folding](#).
 > * [nb-ns-double-in-line](#rule-nb-ns-double-in-line)
 > * [s-double-next-line(n)](#rule-s-double-next-line(n))
 
-### 7.3.2. Single-Quoted Style
+### #. Single-Quoted Style
 
 The _single-quoted style_ is specified by surrounding _"**`'`**" indicators_.
 Therefore, within a single-quoted scalar, such characters need to be repeated.
@@ -3934,7 +3936,7 @@ Empty lines, if any, are consumed as part of the [line folding](#).
 > * [nb-ns-single-in-line(n)](#rule-nb-ns-single-in-line(n))
 > * [s-single-next-line(n)](#rule-s-single-next-line(n))
 
-### 7.3.3. Plain Style
+### #. Plain Style
 
 The _plain_ (unquoted) style has no identifying [indicators](#) and provides no
 form of escaping.
@@ -4117,7 +4119,7 @@ Empty lines, if any, are consumed as part of the [line folding](#).
 > * [nb-ns-plain-in-line(c)](#rule-nb-ns-plain-in-line(c))
 > * [s-ns-plain-next-line(n,c)](#rule-s-ns-plain-next-line(n,c))
 
-## 7.4. Flow Collection Styles
+## #. Flow Collection Styles
 
 A _flow collection_ may be nested within a [block collection](#)
 ([**`flow-out`** context](#)), nested within another flow collection
@@ -4136,7 +4138,7 @@ This does not cause ambiguity because flow collection entries can never be
   c = flow-key  ⇒ flow-key
 ```
 
-### 7.4.1. Flow Sequences
+### #. Flow Sequences
 
 _Flow sequence content_ is denoted by surrounding _"**`[`**"_ and _"**`]`**"_
 characters.
@@ -4226,7 +4228,7 @@ single: pair,
 > * [ns-flow-node(n,c)](#rule-ns-flow-node(n,c))
 > * [ns-flow-pair(n,c)](#rule-ns-flow-pair(n,c))
 
-### 7.4.2. Flow Mappings
+### #. Flow Mappings
 
 _Flow mappings_ are denoted by surrounding _"**`{`**"_ and _"**`}`**"_
 characters.
@@ -4586,7 +4588,7 @@ ERROR:
 - The foo...bar key is too long
 ```
 
-## 7.5. Flow Nodes
+## #. Flow Nodes
 
 _JSON-like_ [flow styles](#) all have explicit start and end [indicators](#).
 The only [flow style](#) that does not have this property is the [plain
@@ -4690,18 +4692,18 @@ for [alias nodes](#) which refer to the [anchored](#) [node properties](#).
 > * [c-flow-json-node(n,c)](#rule-c-flow-json-node(n,c))
 > * [ns-flow-yaml-node(n,c)](#rule-ns-flow-yaml-node(n,c))
 
-# Chapter 8. Block Styles
+# Chapter #. Block Styles
 
 YAML’s _block styles_ employ [indentation](#) rather than [indicators](#) to
 denote structure.
 This results in a more human readable (though less compact) notation.
 
-## 8.1. Block Scalar Styles
+## #. Block Scalar Styles
 
 YAML provides two _block scalar styles_, [literal](#) and [folded](#).
 Each provides a different trade-off between readability and expressive power.
 
-### 8.1.1. Block Scalar Headers
+### #. Block Scalar Headers
 
 [Block scalars](#) are controlled by a few [indicators](#) given in a _header_
 preceding the [content](#) itself.
@@ -4747,7 +4749,7 @@ This is the only case where a [comment](#) must not be followed by additional
 > **Legend:**
 > * [c-b-block-header(m,t)](#rule-c-b-block-header(m,t))
 
-#### 8.1.1.1. Block Indentation Indicator
+#### #. Block Indentation Indicator
 
 Typically, the [indentation](#) level of a [block scalar](#) is detected from
 its first non-[empty](#) line.
@@ -4828,7 +4830,7 @@ ERROR:
   than the indicated level.
 ```
 
-#### 8.1.1.2. Block Chomping Indicator
+#### #. Block Chomping Indicator
 
 _Chomping_ controls how final [line breaks](#) and trailing [empty lines](#)
 are interpreted.
@@ -5013,7 +5015,7 @@ keep: |+
 > * [l-strip-empty(n)](#rule-l-strip-empty(n))
 > * [l-keep-empty(n)](#rule-l-keep-empty(n))
 
-### 8.1.2. Literal Style
+### #. Literal Style
 
 The _literal style_ is denoted by the _"**`|`**" indicator_.
 It is the simplest, most restricted, and most readable [scalar style](#).
@@ -5097,7 +5099,7 @@ In addition, there is no way to break a long literal line.
 > * [b-chomped-last(t)](#rule-b-chomped-last(t))
 > *    [l-chomped-empty(n,t)](#rule-l-chomped-empty(n,t))
 
-### 8.1.3. Folded Style
+### #. Folded Style
 
 The _folded style_ is denoted by the _"**`>`**" indicator_.
 It is similar to the [literal style](#); however, folded scalars are subject to
@@ -5341,7 +5343,7 @@ The final [line break](#), and trailing [empty lines](#) if any, are subject to
 > * [b-chomped-last(t)](#rule-b-chomped-last(t))
 > * [l-chomped-empty(n,t)](#rule-l-chomped-empty(n,t))
 
-## 8.2. Block Collection Styles
+## #. Block Collection Styles
 
 For readability, _block collections styles_ are not denoted by any
 [indicator](#).
@@ -5349,7 +5351,7 @@ Instead, YAML uses a lookahead method, where a block collection is
 distinguished from a [plain scalar](#) only when a [key: value pair](#) or a
 [sequence entry](#) is seen.
 
-### 8.2.1. Block Sequences
+### #. Block Sequences
 
 A _block sequence_ is simply a series of [nodes](#), each denoted by a leading
 _"**`-`**" indicator_.
@@ -5455,7 +5457,7 @@ Note that it is not possible to specify [node properties](#) for such a
 > * [ns-l-compact-sequence(n)](#rule-ns-l-compact-sequence(n))
 > *   [ns-l-compact-mapping(n)](#rule-ns-l-compact-mapping(n))
 
-### 8.2.2. Block Mappings
+### #. Block Mappings
 
 A _Block mapping_ is a series of entries, each [presenting](#) a [key: value
 pair](#).
@@ -5652,7 +5654,7 @@ mapping.
 > **Legend:**
 > * [ns-l-compact-mapping(n)](#rule-ns-l-compact-mapping(n))
 
-### 8.2.3. Block Nodes
+### #. Block Nodes
 
 YAML allows [flow nodes](#) to be embedded inside [block collections](#) (but
 not vice-versa). [Flow nodes](#) must be [indented](#) by at least one more
@@ -5795,14 +5797,14 @@ mapping: !!map
 > * [l+block-mapping(n)](#rule-l+block-mapping(n))
 > * [s-l+block-collection(n,c)](#rule-s-l+block-collection(n,c))
 
-# Chapter 9. YAML Character Stream
+# Chapter #. YAML Character Stream
 
-## 9.1. Documents
+## #. Documents
 
 A YAML character [stream](#) may contain several _documents_.
 Each document is completely independent from the rest.
 
-### 9.1.1. Document Prefix
+### #. Document Prefix
 
 A document may be preceded by a _prefix_ specifying the [character
 encoding](#), and optional [comment](#) lines.
@@ -5837,7 +5839,7 @@ Document
 > **Legend:**
 > * [l-document-prefix](#rule-l-document-prefix)
 
-### 9.1.2. Document Markers
+### #. Document Markers
 
 Using [directives](#) creates a potential ambiguity.
 It is valid to have a ["**`%`**"](#) character at the start of a line (e.g. as
@@ -5906,7 +5908,7 @@ Document
 > * [c-document-end](#rule-c-document-end)
 > * [l-document-suffix](#rule-l-document-suffix)
 
-### 9.1.3. Bare Documents
+### #. Bare Documents
 
 A _bare document_ does not begin with any [directives](#) or [marker](#) lines.
 Such documents are very "clean" as they contain nothing other than the
@@ -5951,7 +5953,7 @@ document
 > **Legend:**
 > * [l-bare-document](#rule-l-bare-document)
 
-### 9.1.4. Explicit Documents
+### #. Explicit Documents
 
 An _explicit document_ begins with an explicit [directives end marker](#) line
 but no [directives](#).
@@ -5992,7 +5994,7 @@ Since the existence of the [document](#) is indicated by this [marker](#), the
 > **Legend:**
 > * [l-explicit-document](#rule-l-explicit-document)
 
-### 9.1.5. Directives Documents
+### #. Directives Documents
 
 A _directives document_ begins with some [directives](#) followed by an
 explicit [directives end marker](#) line.
@@ -6029,7 +6031,7 @@ explicit [directives end marker](#) line.
 > **Legend:**
 > * [l-explicit-document](#rule-l-explicit-document)
 
-## 9.2. Streams
+## #. Streams
 
 A YAML _stream_ consists of zero or more [documents](#).
 Subsequent [documents](#) require some sort of separation [marker](#) line.
@@ -6120,21 +6122,21 @@ Some common use case that can take advantage of the YAML stream structure are:
 > lines or repeated [document end markers](#) without signalling the start of the
 > next [document](#).
 
-# Chapter 10. Recommended Schemas
+# Chapter #. Recommended Schemas
 
 A YAML _schema_ is a combination of a set of [tags](#) and a mechanism for
 [resolving](#) [non-specific tags](#).
 
-## 10.1. Failsafe Schema
+## #. Failsafe Schema
 
 The _failsafe schema_ is guaranteed to work with any YAML [document](#).
 It is therefore the recommended [schema](#) for generic YAML tools.
 A YAML [processor](#) should therefore support this [schema](#), at least as an
 option.
 
-### 10.1.1. Tags
+### #. Tags
 
-#### 10.1.1.1. Generic Mapping
+#### #. Generic Mapping
 
 **URI:**
 
@@ -6168,7 +6170,7 @@ Block style: !!map
 Flow style: !!map { Clark: Evans, Ingy: döt Net, Oren: Ben-Kiki }
 ```
 
-#### 10.1.1.2. Generic Sequence
+#### #. Generic Sequence
 
 **URI:**
 
@@ -6199,7 +6201,7 @@ Block style: !!seq
 Flow style: !!seq [ Clark Evans, Ingy döt Net, Oren Ben-Kiki ]
 ```
 
-#### 10.1.1.3. Generic String
+#### #. Generic String
 
 **URI:**
 
@@ -6231,7 +6233,7 @@ Flow style: !!seq [ Clark Evans, Ingy döt Net, Oren Ben-Kiki ]
 String: !!str "Just a theory."
 ```
 
-### 10.1.2. Tag Resolution
+### #. Tag Resolution
 
 All [nodes](#) with the ["**`!`**" non-specific tag](#) are [resolved](#), by
 the standard [convention](#), to "**`tag:yaml.org,2002:seq`**",
@@ -6243,7 +6245,7 @@ All [nodes](#) with the ["**`?`**" non-specific tag](#) are left
 This constrains the [application](#) to deal with a [partial
 representation](#).
 
-## 10.2. JSON Schema
+## #. JSON Schema
 
 The _JSON schema_ is the lowest common denominator of most modern computer
 languages, and allows [parsing](#) JSON files.
@@ -6251,12 +6253,12 @@ A YAML [processor](#) should therefore support this [schema](#), at least as an
 option.
 It is also strongly recommended that other [schemas](#) should be based on it.
 
-### 10.2.1. Tags
+### #. Tags
 
 The JSON [schema](#) uses the following [tags](#) in addition to those defined
 by the [failsafe](#) schema:
 
-#### 10.2.1.1. Null
+#### #. Null
 
 **URI:**
 
@@ -6290,7 +6292,7 @@ by the [failsafe](#) schema:
 key with null value: !!null null
 ```
 
-#### 10.2.1.2. Boolean
+#### #. Boolean
 
 **URI:**
 
@@ -6322,7 +6324,7 @@ YAML is a superset of JSON: !!bool true
 Pluto is a planet: !!bool false
 ```
 
-#### 10.2.1.3. Integer
+#### #. Integer
 
 **URI:**
 
@@ -6369,7 +6371,7 @@ zero: !!int 0
 positive: !!int 34
 ```
 
-#### 10.2.1.4. Floating Point
+#### #. Floating Point
 
 **URI:**
 
@@ -6424,7 +6426,7 @@ infinity: !!float .inf
 not a number: !!float .nan
 ```
 
-### 10.2.2. Tag Resolution
+### #. Tag Resolution
 
 The [JSON schema](#) [tag resolution](#) is an extension of the [failsafe
 schema](#) [tag resolution](#).
@@ -6488,7 +6490,7 @@ Invalid: [ True, Null, 0o7, 0x3A, +12.3 ]
 ...
 ```
 
-## 10.3. Core Schema
+## #. Core Schema
 
 The _Core schema_ is an extension of the [JSON schema](#), allowing for more
 human-readable [presentation](#) of the same types.
@@ -6496,11 +6498,11 @@ This is the recommended default [schema](#) that YAML [processor](#) should use
 unless instructed otherwise.
 It is also strongly recommended that other [schemas](#) should be based on it.
 
-### 10.3.1. Tags
+### #. Tags
 
 The core [schema](#) uses the same [tags](#) as the [JSON schema](#).
 
-### 10.3.2. Tag Resolution
+### #. Tag Resolution
 
 The [core schema](#) [tag resolution](#) is an extension of the [JSON
 schema](#) [tag resolution](#).
@@ -6573,7 +6575,7 @@ Also floats: [ .inf, -.Inf, +.INF, .NAN ]
 ...
 ```
 
-## 10.4. Other Schemas
+## #. Other Schemas
 
 None of the above recommended [schemas](#) preclude the use of arbitrary
 explicit [tags](#).
@@ -6610,4 +6612,4 @@ The yaml-core mailing list at
 e.net/lists/listinfo/yaml-core) is the preferred method for such submissions,
 as well as raising any questions regarding this draft.
 
-[%index%]
+::index
