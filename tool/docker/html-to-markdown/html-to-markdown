@@ -82,9 +82,9 @@ class HtmlToMarkdown
         n.nodeName.match(/^H[1-4]$/) and
         n.getAttribute('class') == 'title'
       replacement: (m, n, o)->
-        return "# #{m}" unless m.match /\d+\.\s/
-        text = m.replace(/(\d+\.)+/, '#.')
         mark = HtmlToMarkdown.H[n.nodeName]
+        return "#{mark} #{m}" unless m.match /\d+\.\s/
+        text = m.replace(/(\d+\.)+/, '#.')
         return "#{mark} #{text}"
 
     link:
@@ -123,6 +123,8 @@ class HtmlToMarkdown
           \s*
         $///,
           (m, m1, m2)->
+            if m2.match /grave /
+              m2 = m2.replace /```/, '<code>&grave;</code>'
             """\
             #{reformat m2}
             #{m1}
@@ -212,18 +214,25 @@ class HtmlToMarkdown
       replacement: (m, n, o)->
         text = m.replace /```\n\s*Legend:\n([\s\S]+?)```\n\n/, ''
         legend = RegExp.$1
+
         text = text
           .replace(/^\s+/, '')
           .replace(/\s+$/, "\n")
           .replace(/([^`])`(?=[^`])/g, '$1')
+
         legend = legend
-          .replace(/^\s+`/, '')
-          .replace(/`\s+$/, '')
+          .replace(/^\s+/, '')
           .replace(/\s+$/, '')
-          .replace(/`\s+/g, "\n")
-          .replace(/`/g, '')
+          .replace(/\)\s+/g, ")\n")
+          .replace(/^\s+/mg, '')
           .replace(/^/mg, '> * ')
           .replace(/\[(.+?)\]\(#\)/g, '[$1](#rule-$1)')
+
+#         if count++ > 13
+#           warn '---'
+#           warn legend
+#           warn '---'
+#           xxx 42
 
         return """
           #{text}
@@ -231,14 +240,14 @@ class HtmlToMarkdown
           #{legend}\n\n
           """
 
-    example:
-      filter: (n, o)->
-        n.nodeName == 'DIV' and
-        n.getAttribute('class') == 'example-contents' and
-        not n.innerHTML.match /Legend:/
-      replacement: (m, n, o)->
-        return m
-          .replace(/([^`])`(?=[^`])/g, '$1')
+#     example:
+#       filter: (n, o)->
+#         n.nodeName == 'DIV' and
+#         n.getAttribute('class') == 'example-contents' and
+#         not n.innerHTML.match /Legend:/
+#       replacement: (m, n, o)->
+#         return m
+#           .replace(/([^`])`(?=[^`])/g, '$1')
 
     node_comparison:
       filter: (n, o)->
@@ -283,6 +292,8 @@ class HtmlToMarkdown
           .replace(/\ +$/mg, '')
           .replace(/\\\\/g, '\\')
           .replace(/\\_/g, '_')
+          .replace(/`(.*?)`/g, '$1')
+          .replace(/([^`])`(?=[^`])/g, '$1')
         return """
           ```
           #{pre}

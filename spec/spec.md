@@ -1867,8 +1867,8 @@ A ["**`%`**"](#) (**`#x25`**, percent) denotes a [directive](#) line.
 > **Legend:**
 > * [c-directive](#rule-c-directive)
 
-The _"**`@`**"_ (**`#x40`**, at) and _"**```**"_ (**`#x60`**, grave accent) are
-_reserved_ for future use.
+The _"**`@`**"_ (**`#x40`**, at) and _"**<code>&grave;</code>**"_ (**`#x60`**,
+grave accent) are _reserved_ for future use.
 
 ```
 [21] c-reserved ::=
@@ -1879,7 +1879,7 @@ _reserved_ for future use.
 
 ```
 commercial-at: @text
-grave-accent: ```text
+grave-accent: text
 ```
 
 ```
@@ -2035,7 +2035,7 @@ Space characters are sometimes displayed as the glyph "**`·`**" for clarity.
 quoted:·"Quoted →"
 block:→|
 ··void main() {
-··``→printf("Hello, world!\n");
+··→printf("Hello, world!\n");
 ··}
 ```
 
@@ -2372,7 +2372,7 @@ independently.
 Not indented:
 ·By one space: |
 ····By four
-····``··spaces
+······spaces
 ·Flow style: [    # Leading spaces
 ···By two,        # in flow style
 ··Also by two,    # are neither
@@ -2413,8 +2413,8 @@ This is handled on a case-by-case basis by the relevant productions.
 ```
 ?·a
 :·-→b
-``··-··-→c
-``·····-·d
+··-··-→c
+·····-·d
 ```
 
 ```
@@ -2652,8 +2652,7 @@ Folding does distinguish between these cases in the following way:
 
 > **Legend:**
 > * [b-l-folded(n,c)](#rule-b-l-folded(n,c))
-> * Non-content spaces
-> * Content spaces
+> * Non-content spaces Content spaces
 
 **Flow Folding**
 
@@ -2680,11 +2679,11 @@ Folding does distinguish between these cases in the following way:
 
 ```
 "↓
-··``foo``·↓
+··foo·↓
 ·↓
-··→·``bar↓
+··→·bar↓
 ↓
-··``baz↓ "
+··baz↓ "
 ```
 
 ```
@@ -2729,7 +2728,7 @@ However, as this confuses many tools, YAML [processors](#) should terminate the
 **Example 6.9. Separated Comment**
 
 ```
-key:····# Comment``↓
+key:····# Comment↓
   value_eof_
 ```
 
@@ -2760,9 +2759,9 @@ characters is taken to be a comment line.
 **Example 6.10. Comment Lines**
 
 ```
-··# Comment↓``
-···↓``
-``↓``
+··# Comment↓
+···↓
+↓
 ```
 
 ```
@@ -2912,7 +2911,7 @@ warning.
 **Example 6.13. Reserved Directives**
 
 ```
-%``FOO  bar baz # Should be ignored
+%FOO  bar baz # Should be ignored
                # with a warning.
 --- "foo"
 ```
@@ -2966,7 +2965,7 @@ if they were version 1.2, giving a warning on points of incompatibility
 **Example 6.14. "**`YAML`**" directive**
 
 ```
-%YAML 1.3`` # Attempt parsing
+%YAML 1.3 # Attempt parsing
            # with a warning
 ---
 "foo"
@@ -3268,9 +3267,9 @@ Either or both may be omitted.
 **Example 6.23. Node Properties**
 
 ```
-!!str &a1`` "foo":
+!!str &a1 "foo":
   !!str bar
-``&a2`` baz : *a1
+&a2 baz : *a1
 ```
 
 ```
@@ -3504,7 +3503,7 @@ These characters would cause ambiguity with [flow collection](#) structures.
 **Example 6.29. Node Anchors**
 
 ```
-First occurrence: &anchor`` Value
+First occurrence: &anchor Value
 Second occurrence: *anchor
 ```
 
@@ -3557,9 +3556,9 @@ as these were already specified at the first occurrence of the [node](#).
 
 ```
 First occurrence: &anchor Foo
-Second occurrence: *anchor``
+Second occurrence: *anchor
 Override anchor: &anchor Bar
-Reuse anchor: *anchor``
+Reuse anchor: *anchor
 ```
 
 ```
@@ -3791,10 +3790,10 @@ Empty lines, if any, are consumed as part of the [line folding](#).
 **Example 7.6. Double Quoted Lines**
 
 ```
-"·1st non-empty``↓
+"·1st non-empty↓
 ↓
-·2nd non-empty```·
-→3rd non-empty``·"
+·2nd non-empty·
+→3rd non-empty·"
 ```
 
 ```
@@ -3922,10 +3921,10 @@ Empty lines, if any, are consumed as part of the [line folding](#).
 **Example 7.9. Single Quoted Lines**
 
 ```
-'·1st non-empty``↓
+'·1st non-empty↓
 ↓
-·2nd non-empty```·
-→3rd non-empty``·'
+·2nd non-empty·
+→3rd non-empty·'
 ```
 
 ```
@@ -4001,13 +4000,13 @@ These characters would cause ambiguity with [flow collection](#) structures.
 
 ```
 # Outside flow collection:
-- :``:vector
+- ::vector
 - ": - ()"
 - Up, up, and away!
 - -123
 - http://example.com/foo#bar
 # Inside flow collection:
-- [ :``:vector,
+- [ ::vector,
   ": - ()",
   "Up, up and away!",
   -123,
@@ -4035,7 +4034,8 @@ These characters would cause ambiguity with [flow collection](#) structures.
 
 > **Legend:**
 > * [ns-plain-first(c)](#rule-ns-plain-first(c))
-> * Not ns-plain-first(c) [ns-plain-char(c)](#rule-ns-plain-char(c))
+> * Not ns-plain-first(c)
+> * [ns-plain-char(c)](#rule-ns-plain-char(c))
 > * Not ns-plain-char(c)
 
 Plain scalars are further restricted to a single line when contained inside an
@@ -4105,10 +4105,10 @@ Empty lines, if any, are consumed as part of the [line folding](#).
 **Example 7.12. Plain Lines**
 
 ```
-1st non-empty``↓
+1st non-empty↓
 ↓
-·2nd non-empty```·
-→3rd non-empty``
+·2nd non-empty·
+→3rd non-empty
 ```
 
 ```
@@ -4166,7 +4166,7 @@ Sequence entries are separated by a ["**`,`**"](#) character.
 
 ```
 - [ one, two, ]
-- [``three ,four``]
+- [three ,four]
 ```
 
 ```
@@ -4256,7 +4256,7 @@ Mapping entries are separated by a ["**`,`**"](#) character.
 
 ```
 - { one : two , three: four , }
-- {``five: six,seven : eight``}
+- {five: six,seven : eight}
 ```
 
 ```
@@ -4367,7 +4367,7 @@ indicated by the "**`:`**".
 {
 unquoted·:·"separate",
 http://foo.com,
-omitted value``:°,
+omitted value:°,
 °:·omitted key,
 }
 ```
@@ -4386,7 +4386,7 @@ omitted value``:°,
 > **Legend:**
 > * [ns-flow-yaml-node(n,c)](#rule-ns-flow-yaml-node(n,c))
 > * [e-node](#rule-e-node)
-> *   [c-ns-flow-map-separate-value(n,c)](#rule-c-ns-flow-map-separate-value(n,c))
+> * [c-ns-flow-map-separate-value(n,c)](#rule-c-ns-flow-map-separate-value(n,c))
 
 To ensure [JSON compatibility](#), if a [key](#) inside a flow mapping is
 [JSON-like](#), YAML allows the following [value](#) to be specified adjacent
@@ -4434,7 +4434,7 @@ However, as this greatly reduces readability, YAML [processors](#) should
 > **Legend:**
 > * [c-flow-json-node(n,c)](#rule-c-flow-json-node(n,c))
 > * [e-node](#rule-e-node)
-> *   [c-ns-flow-map-adjacent-value(n,c)](#rule-c-ns-flow-map-adjacent-value(n,c))
+> * [c-ns-flow-map-adjacent-value(n,c)](#rule-c-ns-flow-map-adjacent-value(n,c))
 
 A more compact notation is usable inside [flow sequences](#), if the
 [mapping](#) contains a _single key: value pair_.
@@ -4540,8 +4540,8 @@ have been impossible to implement.
 **Example 7.21. Single Pair Implicit Entries**
 
 ```
-- [ YAML·``: separate ]
-- [ °``: empty key entry ]
+- [ YAML·: separate ]
+- [ °: empty key entry ]
 - [ {JSON: like}:adjacent ]
 ```
 
@@ -4575,7 +4575,7 @@ have been impossible to implement.
 > **Legend:**
 > * [ns-s-implicit-yaml-key](#rule-ns-s-implicit-yaml-key)
 > * [c-s-implicit-json-key](#rule-c-s-implicit-json-key)
-> *   [e-node](#rule-e-node)
+> * [e-node](#rule-e-node)
 > * Value
 
 **Example 7.22. Invalid Implicit Keys**
@@ -5083,10 +5083,10 @@ In addition, there is no way to break a long literal line.
 |
 ·
 ··
-··literal``↓
-···```↓
+··literal↓
+···↓
 ··
-··text``↓
+··text↓
 ↓
 ·# Comment
 ```
@@ -5101,7 +5101,7 @@ In addition, there is no way to break a long literal line.
 > * [l-nb-literal-text(n)](#rule-l-nb-literal-text(n))
 > * [b-nb-literal-next(n)](#rule-b-nb-literal-next(n))
 > * [b-chomped-last(t)](#rule-b-chomped-last(t))
-> *    [l-chomped-empty(n,t)](#rule-l-chomped-empty(n,t))
+> * [l-chomped-empty(n,t)](#rule-l-chomped-empty(n,t))
 
 ### #. Folded Style
 
@@ -5151,18 +5151,18 @@ character separates two non-[space](#) characters.
 
 ```
 >
-``·folded↓
+·folded↓
 ·line↓
 ↓
 ·next
-·line``↓
+·line↓
    * bullet
 
    * list
    * lines
 
-``·last↓
-·line``↓
+·last↓
+·line↓
 
 # Comment
 ```
@@ -5217,10 +5217,10 @@ Lines starting with [white space](#) characters (_more-indented_ lines) are not
 
  next
  line
-``···* bullet↓
+···* bullet↓
 ↓
 ···* list↓
-···* lines``↓
+···* lines↓
 
  last
  line
@@ -5298,7 +5298,8 @@ are also not [folded](#).
 
 > **Legend:**
 > * [b-as-line-feed](#rule-b-as-line-feed)
-> * (separation) [l-empty(n,c)](#rule-l-empty(n,c))
+> * (separation)
+> * [l-empty(n,c)](#rule-l-empty(n,c))
 
 The final [line break](#), and trailing [empty lines](#) if any, are subject to
 [chomping](#) and are never [folded](#).
@@ -5459,7 +5460,7 @@ Note that it is not possible to specify [node properties](#) for such a
 > * Empty
 > * [s-l+block-node(n,c)](#rule-s-l+block-node(n,c))
 > * [ns-l-compact-sequence(n)](#rule-ns-l-compact-sequence(n))
-> *   [ns-l-compact-mapping(n)](#rule-ns-l-compact-mapping(n))
+> * [ns-l-compact-mapping(n)](#rule-ns-l-compact-mapping(n))
 
 ### #. Block Mappings
 
@@ -5476,7 +5477,7 @@ pair](#).
 
 ```
 block mapping:
-·``key: value↓
+·key: value↓
 ```
 
 ```
@@ -5592,9 +5593,9 @@ This prevents a potential ambiguity with multi-line [plain scalars](#).
 **Example 8.18. Implicit Block Mapping Entries**
 
 ```
-plain key``: in-line value
-°``:° # Both empty
-"quoted key"``:
+plain key: in-line value
+°:° # Both empty
+"quoted key":
 - entry
 ```
 
@@ -5632,7 +5633,7 @@ mapping.
 ```
 - sun: yellow↓
 - ? earth: blue↓
-  : moon: white↓``
+  : moon: white↓
 ```
 
 ```
