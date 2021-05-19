@@ -2110,7 +2110,11 @@ classes:
   | "_" | "." | "!" | "~" | "*" | "'" | "(" | ")" | "[" | "]"
 ```
 
-* The ["**`!`**"](#) character is used to indicate the end of a [named tag handle](#); hence its use in [tag shorthands](#) is restricted. In addition, such [shorthands](#) must not contain the ["**`[`**"](#), ["**`]`**"](#), ["**`{`**"](#), ["**`}`**"](#) and ["**`,`**"](#) characters. These characters would cause ambiguity with [flow collection](#) structures.
+* The ["**`!`**"](#) character is used to indicate the end of a [named tag
+  handle](#); hence its use in [tag shorthands](#) is restricted.
+  In addition, such [shorthands](#) must not contain the ["**`[`**"](#),
+  ["**`]`**"](#), ["**`{`**"](#), ["**`}`**"](#) and ["**`,`**"](#) characters.
+  These characters would cause ambiguity with [flow collection](#) structures.
 
 ```
 [40] ns-tag-char ::=

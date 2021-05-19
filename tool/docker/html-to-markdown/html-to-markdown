@@ -88,8 +88,7 @@ class HtmlToMarkdown
       replacement: (m, n, o)->
         return "# #{m}" unless m.match /\d+\.\s/
         text = m.replace(/(\d+\.)+/, '#.')
-        name = n.nodeName
-        mark = HtmlToMarkdown.H[name]
+        mark = HtmlToMarkdown.H[n.nodeName]
         return "#{mark} #{text}"
 
     link:
@@ -260,11 +259,17 @@ class HtmlToMarkdown
     itemizedlist:
       filter: tag_and_class 'div', 'itemizedlist'
       replacement: (m, n, o)->
-        m
+        text = m.replace /\s*$/, ''
+        if text.match /\. [A-Z]/
+          text = text.replace(/^\s*\*\s+/, '')
+          text = reformat_para(text, 77)
+            .replace(/^/mg, '  ')
+            .replace(/./, '*')
+        text
           .replace(/^\s+/, '')
           .replace(/^\*   /mg, '* ')
           .replace(/^    /mg, '  ')
-          .replace(/\s+$/g, "\n")
+          .replace(/\s*$/g, "\n")
 
     img:
       filter: 'img'
