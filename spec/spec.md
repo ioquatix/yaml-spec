@@ -817,8 +817,8 @@ following three stages:
 > The [scalar](#) represents strings, integers, dates, and other atomic data
 > types.
 >
-> Each YAML [node](#) requires, in addition to its [kind](#) and [content](#), a
-> [tag](#) specifying its data type.
+> Each YAML [node](#) requires, in addition to its [kind](#) and [content](#),
+> a [tag](#) specifying its data type.
 > Type specifiers are either [global](#) URIs, or are [local](#) in scope to a
 > single [application](#).
 > For example, an integer is represented in YAML with a [scalar](#) plus the
@@ -1018,8 +1018,8 @@ resolution](#), or any other data that is applicable to all of the tag’s
 
 **Equality**
 
-Since YAML [mappings](#) require [key](#) uniqueness, [representations](#) must
-include a mechanism for testing the equality of [nodes](#).
+Since YAML [mappings](#) require [key](#) uniqueness, [representations](#)
+must include a mechanism for testing the equality of [nodes](#).
 In general, it is impossible to ensure uniqueness for [presentations](#), for
 the following reasons:
 
@@ -1031,28 +1031,27 @@ the following reasons:
   duplicate [key](#) as an error.
 
 * The semantics of the [representation](#) may require that values with
-  different
-  [tags](#) be considered equal.
+  different [tags](#) be considered equal.
   For example, the integer one and the float one are considered equal.
   If both are used as [keys](#) in the same [mapping](#), only a YAML
   [processor](#) which recognizes integer and float [representations](#) would
   correctly flag the duplicate [key](#) as an error.
-  YAML therefore requires that each [tag](#) must specify a mechanism for testing
-  any of its values for _equality_ with any other value (including values of any
-  different [tag](#)).
-  This is often implemented directly by the [native data structure](#) instead of
-  the YAML [processor](#).
+  YAML therefore requires that each [tag](#) must specify a mechanism for
+  testing any of its values for _equality_ with any other value (including
+  values of any different [tag](#)).
+  This is often implemented directly by the [native data structure](#) instead
+  of the YAML [processor](#).
   That is, duplicate [keys](#) are often flagged as an error during the
   [construction](#) processing stage.
 
 In order to ensure greater compatibility and clarity, YAML allows the
 [processor](#) to flag obvious duplicate [keys](#) based on the
 [presentation](#).
-Specifically, two [scalar](#) [keys](#) in the same [mapping](#), with the same
-[tag](#) and the same [content](#), may be flagged as an error as soon as the
-[parsing](#) stage.
-Note that this tests also works for [non-specific tags](#) due to the way that
-[tag resolution](#) is defined.
+Specifically, two [scalar](#) [keys](#) in the same [mapping](#), with the
+same [tag](#) and the same [content](#), may be flagged as an error as soon
+as the [parsing](#) stage.
+Note that this tests also works for [non-specific tags](#) due to the way
+that [tag resolution](#) is defined.
 This allows a human reader to reasonably identify **`{ a: 1, a: 2 }`** as an
 error.
 Such constructs are silently accepted by many languages, but have no well
@@ -1083,11 +1082,11 @@ must be preserved.
 A common programming idiom is creating an empty object to obtain a value that
 is only equal to itself (for example, in order to generate a dynamic
 "enumerated type").
-The proper way to [represent](#) this in YAML would be **`!object {}`**, where
-the **`!object`** [tag](#) defines two objects to be equal only if they are
-identical.
-The alternative [scalar](#) [representation](#) **`!object ''`** will not work
-as expected, as the YAML [processor](#) is not required to preserve the
+The proper way to [represent](#) this in YAML would be **`!object {}`**,
+where the **`!object`** [tag](#) defines two objects to be equal only if they
+are identical.
+The alternative [scalar](#) [representation](#) **`!object ''`** will not
+work as expected, as the YAML [processor](#) is not required to preserve the
 identity of such objects.
 
 ### #. Serialization Tree
@@ -1403,12 +1402,12 @@ Productions use any of the following parameters:
 > In [flow styles](#), explicit [indicators](#) are used to delineate structure.
 > These styles can be viewed as the natural extension of JSON to cover
 > [tagged](#), [single-quoted](#) and [plain scalars](#).
-> Since the latter have no delineating [indicators](#), they are subject to some
-> restrictions to avoid ambiguities.
+> Since the latter have no delineating [indicators](#), they are subject to
+> some restrictions to avoid ambiguities.
 > These restrictions depend on where they appear: as implicit keys directly
 > inside a [block mapping](#) (_block-key_); as implicit keys inside a [flow
-> mapping](#) (_flow-key_); as values inside a [flow collection](#) (_flow-in_);
-> or as values outside one (_flow-out_).
+> mapping](#) (_flow-key_); as values inside a [flow collection](#)
+> (_flow-in_); or as values outside one (_flow-out_).
 
 **(Block) Chomping: `t`**
 
@@ -2097,11 +2096,11 @@ classes:
   [RFC2732](http://www.ietf.org/rfc/rfc2732.txt).
 
   By convention, any URI characters other than the allowed printable ASCII
-  characters are first _encoded_ in UTF-8, and then each byte is _escaped_ using
-  the _"**`%`**"_ character.
+  characters are first _encoded_ in UTF-8, and then each byte is _escaped_
+  using the _"**`%`**"_ character.
   The YAML [processor](#) must not expand such escaped characters. [Tag](#)
-  characters must be preserved and compared exactly as [presented](#) in the YAML
-  [stream](#), without any processing.
+  characters must be preserved and compared exactly as [presented](#) in the
+  YAML [stream](#), without any processing.
 
 ```
 [39] ns-uri-char ::=
@@ -2625,14 +2624,14 @@ Folding does distinguish between these cases in the following way:
 
 > In the [folded block style](#), the final [line break](#) and trailing [empty
 > lines](#) are subject to [chomping](#), and are never folded.
-> In addition, folding does not apply to [line breaks](#) surrounding text lines
-> that contain leading [white space](#).
+> In addition, folding does not apply to [line breaks](#) surrounding text
+> lines that contain leading [white space](#).
 > Note that such a [more-indented](#) line may consist only of such leading
 > [white space](#).
 >
-> The combined effect of the _block line folding_ rules is that each "paragraph"
-> is interpreted as a line, [empty lines](#) are interpreted as a line feed, and
-> the formatting of [more-indented](#) lines is preserved.
+> The combined effect of the _block line folding_ rules is that each
+> "paragraph" is interpreted as a line, [empty lines](#) are interpreted as a
+> line feed, and the formatting of [more-indented](#) lines is preserved.
 
 **Example 6.7. Block Folding**
 
@@ -3357,11 +3356,11 @@ ERROR:
 
 > A _tag shorthand_ consists of a valid [tag handle](#) followed by a non-empty
 > suffix.
-> The [tag handle](#) must be associated with a [prefix](#), either by default or
-> by using a ["**`TAG`**" directive](#).
-> The resulting [parsed](#) [tag](#) is the concatenation of the [prefix](#) and
-> the suffix, and must either begin with ["**`!`**"](#) (a [local tag](#)) or be
-> a valid URI (a [global tag](#)).
+> The [tag handle](#) must be associated with a [prefix](#), either by default
+> or by using a ["**`TAG`**" directive](#).
+> The resulting [parsed](#) [tag](#) is the concatenation of the [prefix](#)
+> and the suffix, and must either begin with ["**`!`**"](#) (a [local tag](#))
+> or be a valid URI (a [global tag](#)).
 >
 > The choice of [tag handle](#) is a [presentation detail](#) and must not be
 > used to convey [content](#) information.
@@ -3377,7 +3376,8 @@ ERROR:
 > If the suffix needs to specify any of the above restricted characters, they
 > must be [escaped](#) using the ["**`%`**"](#) character.
 > This behavior is consistent with the URI character escaping rules
-> (specifically, section 2.3 of [RFC2396](http://www.ietf.org/rfc/rfc2396.txt)).
+> (specifically, section 2.3 of
+> [RFC2396](http://www.ietf.org/rfc/rfc2396.txt)).
 
 ```
 [99] c-ns-shorthand-tag ::=
@@ -3424,8 +3424,8 @@ ERROR:
 
 **Non-Specific Tags**
 
-> If a [node](#) has no tag property, it is assigned a [non-specific tag](#) that
-> needs to be [resolved](#) to a [specific](#) one.
+> If a [node](#) has no tag property, it is assigned a [non-specific tag](#)
+> that needs to be [resolved](#) to a [specific](#) one.
 > This [non-specific tag](#) is ["**`!`**"](#) for non-[plain scalars](#) and
 > ["**`?`**"](#) for all other [nodes](#).
 > This is the only case where the [node style](#) has any effect on the
@@ -3433,8 +3433,8 @@ ERROR:
 >
 > It is possible for the tag property to be explicitly set to the ["**`!`**"
 > non-specific tag](#).
-> By [convention](#), this "disables" [tag resolution](#), forcing the [node](#)
-> to be interpreted as "**`tag:yaml.org,2002:seq`**",
+> By [convention](#), this "disables" [tag resolution](#), forcing the
+> [node](#) to be interpreted as "**`tag:yaml.org,2002:seq`**",
 > "**`tag:yaml.org,2002:map`**", or "**`tag:yaml.org,2002:str`**", according to
 > its [kind](#).
 >
@@ -6110,21 +6110,21 @@ Some common use case that can take advantage of the YAML stream structure are:
 > encoding](#).
 > In addition, it is necessary to separate the last [document](#) of the first
 > stream and the first [document](#) of the second stream.
-> This is easily ensured by inserting a [document end marker](#) between the two
-> streams.
+> This is easily ensured by inserting a [document end marker](#) between the
+> two streams.
 > Note that this is safe regardless of the content of either stream.
-> In particular, either or both may be empty, and the first stream may or may not
-> already contain such a marker.
+> In particular, either or both may be empty, and the first stream may or may
+> not already contain such a marker.
 
 **Communication Streams**
 
 > The [document end marker](#) allows signaling the end of a [document](#)
 > without closing the stream or starting the next [document](#).
-> This allows the receiver to complete processing a [document](#) without having
-> to wait for the next one to arrive.
-> The sender may also transmit "keep-alive" messages in the form of [comment](#)
-> lines or repeated [document end markers](#) without signalling the start of the
-> next [document](#).
+> This allows the receiver to complete processing a [document](#) without
+> having to wait for the next one to arrive.
+> The sender may also transmit "keep-alive" messages in the form of
+> [comment](#) lines or repeated [document end markers](#) without signalling
+> the start of the next [document](#).
 
 # Chapter #. Recommended Schemas
 
@@ -6152,8 +6152,8 @@ option.
 
 **Definition:**
 
-> [Represents](#) an associative container, where each [key](#) is [unique](#) in
-> the association and mapped to exactly one [value](#).
+> [Represents](#) an associative container, where each [key](#) is [unique](#)
+> in the association and mapped to exactly one [value](#).
 > YAML places no restrictions on the type of [keys](#); in particular, they are
 > not restricted to being [scalars](#).
 > Example [bindings](#) to [native](#) types include Perl’s hash, Python’s
@@ -6186,9 +6186,10 @@ Flow style: !!map { Clark: Evans, Ingy: döt Net, Oren: Ben-Kiki }
 
 **Definition:**
 
-> [Represents](#) a collection indexed by sequential integers starting with zero.
-> Example [bindings](#) to [native](#) types include Perl’s array, Python’s list
-> or tuple, and Java’s array or Vector.
+> [Represents](#) a collection indexed by sequential integers starting with
+> zero.
+> Example [bindings](#) to [native](#) types include Perl’s array, Python’s
+> list or tuple, and Java’s array or Vector.
 
 **Equality:**
 
@@ -6219,13 +6220,13 @@ Flow style: !!seq [ Clark Evans, Ingy döt Net, Oren Ben-Kiki ]
 
 > [Represents](#) a Unicode string, a sequence of zero or more Unicode
 > characters.
-> This type is usually [bound](#) to the [native](#) language’s string type, or,
-> for languages lacking one (such as C), to a character array.
+> This type is usually [bound](#) to the [native](#) language’s string type,
+> or, for languages lacking one (such as C), to a character array.
 
 **Equality:**
 
-> Two strings are [equal](#) if and only if they have the same length and contain
-> the same characters in the same order.
+> Two strings are [equal](#) if and only if they have the same length and
+> contain the same characters in the same order.
 
 **Canonical Form:**
 
@@ -6344,8 +6345,8 @@ Pluto is a planet: !!bool false
 > Scalars of this type should be [bound](#) to a [native](#) integer data type,
 > if possible.
 >
-> Some languages (such as Perl) provide only a "number" type that allows for both
-> integer and floating-point values.
+> Some languages (such as Perl) provide only a "number" type that allows for
+> both integer and floating-point values.
 > A YAML [processor](#) may use such a type for integers, as long as they
 > round-trip properly.
 >
@@ -6358,8 +6359,8 @@ Pluto is a planet: !!bool false
 
 **Equality:**
 
-> An integer value is [equal](#) to any other numeric value that evaluates to the
-> integer value.
+> An integer value is [equal](#) to any other numeric value that evaluates to
+> the integer value.
 > For example, the integer **`1`** is equal to the floating-point **`1.0`**.
 
 **Canonical Form:**
@@ -6390,8 +6391,8 @@ positive: !!int 34
 > [Represents](#) an approximation to real numbers, including three special
 > values (positive and negative infinity, and "not a number").
 >
-> Some languages (such as Perl) provide only a "number" type that allows for both
-> integer and floating-point values.
+> Some languages (such as Perl) provide only a "number" type that allows for
+> both integer and floating-point values.
 > A YAML [processor](#) may use such a type for floating-point numbers, as long
 > as they round-trip properly.
 >
@@ -6405,14 +6406,15 @@ positive: !!int 34
 
 **Equality:**
 
-> A floating-point value is [equal](#) to any other numeric value that evaluates
-> to the floating-point value.
-> For example, floating-point **`1.0`** is [equal](#) to the the integer **`1`**.
+> A floating-point value is [equal](#) to any other numeric value that
+> evaluates to the floating-point value.
+> For example, floating-point **`1.0`** is [equal](#) to the the integer
+> **`1`**.
 > Note that for the purpose of [key](#) [uniqueness](#), all **`.nan`** values
 > are considered to be [equal](#).
 > Note that in some languages (such as Ruby and Python) "not a number" has
-> [identity](#) semantics and therefore is not properly [represented](#) in YAML
-> as **`!!float .nan`**.
+> [identity](#) semantics and therefore is not properly [represented](#) in
+> YAML as **`!!float .nan`**.
 
 **Canonical Form:**
 

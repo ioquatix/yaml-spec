@@ -27,11 +27,7 @@ getRowData = (tr)->
     a.push _.trim(td.textContent) || ' '
   return a
 
-reformat = (text)->
-  width = 79
-  out = reformat_para text, width
-
-reformat_para = (text, width)->
+reformat = (text, width=79)->
   text = text.replace /\ \ $/mg, '%%%'
   text = text.replace ///
       ([\s\S]+?)
@@ -262,7 +258,7 @@ class HtmlToMarkdown
         text = m.replace /\s*$/, ''
         if text.match /\. [A-Z]/
           text = text.replace(/^\s*\*\s+/, '')
-          text = reformat_para(text, 77)
+          text = reformat(text, 77)
             .replace(/^/mg, '  ')
             .replace(/./, '*')
         text
@@ -298,7 +294,11 @@ class HtmlToMarkdown
         n.nodeName == 'P' and
         n.getAttribute('class') != 'releaseinfo'
       replacement: (m, n, o)->
-        return reformat(m) + "\n\n"
+        if n.parentNode.nodeName in ['LI', 'DD']
+          width = 77
+        else
+          width = 79
+        return reformat(m, width) + "\n\n"
 
     dt:
       filter: 'dt'
@@ -311,6 +311,7 @@ class HtmlToMarkdown
       filter: 'dd'
       replacement: (m, n, o)->
         text = reformat(m)
+        text = text
           .replace(/\n+$/, '')
           .replace(/^/mg, '> ')
         return text + "\n\n"
