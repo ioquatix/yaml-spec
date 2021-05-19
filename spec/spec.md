@@ -15,7 +15,8 @@
 * Errata: [http://yaml.org/spec/1.2/errata.html](http://yaml.org/spec/1.2/errata.html)
 {:.releaseinfo}
 
-**Previous (original) version:** [http://yaml.org/spec/1.2/2009-07-21/spec.html](http://yaml.org/spec/1.2/2009-07-21/spec.html)
+**Previous (original) version:**
+[http://yaml.org/spec/1.2/2009-07-21/spec.html](http://yaml.org/spec/1.2/2009-07-21/spec.html)
 
 Copyright © 2001-YYYY Oren Ben-Kiki, Clark Evans, Ingy döt Net
 

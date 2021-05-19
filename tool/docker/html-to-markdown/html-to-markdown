@@ -104,8 +104,8 @@ class HtmlToMarkdown
           .replace(/^\s+(.*)  $/mg, '* $1')
           .replace(/^_(.*)_  $/m, "**$1**\n")
           .replace(
-            /^_(.*)_(.*)  $/m,
-            "{:.releaseinfo}\n\n**$1**$2")
+            /^_(.*)_ (.*)  $/m,
+            "{:.releaseinfo}\n\n**$1**\n$2")
 
     simplelist:
       filter: tag_and_class 'table', 'simplelist'
@@ -228,26 +228,11 @@ class HtmlToMarkdown
           .replace(/^/mg, '> * ')
           .replace(/\[(.+?)\]\(#\)/g, '[$1](#rule-$1)')
 
-#         if count++ > 13
-#           warn '---'
-#           warn legend
-#           warn '---'
-#           xxx 42
-
         return """
           #{text}
           > **Legend:**
           #{legend}\n\n
           """
-
-#     example:
-#       filter: (n, o)->
-#         n.nodeName == 'DIV' and
-#         n.getAttribute('class') == 'example-contents' and
-#         not n.innerHTML.match /Legend:/
-#       replacement: (m, n, o)->
-#         return m
-#           .replace(/([^`])`(?=[^`])/g, '$1')
 
     node_comparison:
       filter: (n, o)->
