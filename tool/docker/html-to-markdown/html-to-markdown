@@ -4,8 +4,36 @@ require 'ingy-prelude'
 Turndown = require 'turndown'
 Node = require 'domino/lib/Node'
 wrap = require 'smartwrap'
+yaml = require 'yaml'
 
 count = 0
+anchor_index =
+  anchor: {}
+  text: {}
+
+add_to_index = (anchor, text, from)->
+  if anchor_index.text[text]?
+    warn "Skipping '#{from}'.\n> '#{text}' already added to index"
+    return
+  anchor_index.text[text] = anchor
+  anchor_index.anchor[anchor] = true
+
+clean_text = (text)->
+  text
+    .replace(/Chapter\s+\d+\.\s+/, '')
+    .replace(/^(\d+\.)+\s/, '')
+    .replace(/[\*\'\"\`]/g, '')
+    .toLowerCase()
+
+slugify = (text)->
+  slug = text
+    .replace(/[^a-z0-9]/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-/, '')
+    .replace(/-$/, '')
+  if not slug
+    throw "Can't slugify '#{text}'"
+  return slug
 
 tag_and_class = (tag, class_)->
   (n, o)->
@@ -43,8 +71,33 @@ reformat = (text, width=79)->
   return text
 
 
-class HtmlToMarkdown
+class IndexEntries
   constructor: ->
+    @turndown = new Turndown
+
+    for k, v of @constructor.rules
+      @turndown.addRule k, v
+
+  create_anchor_index: (html)->
+    @turndown.turndown html
+
+  @rules:
+    titlepage:
+      filter: (n, o)->
+        n.nodeName.match(/^H[1-4]$/) and
+        n.getAttribute('class') == 'title'
+      replacement: (m, n, o)->
+        return m unless m.match /\d+\.\s/
+        from = text = m
+        text = clean_text text
+        anchor = slugify text
+        add_to_index anchor, text, from
+        lower_text = text.toLowerCase()
+
+class HtmlToMarkdown
+  constructor: (links_file)->
+    @links = yaml.parse file_read links_file
+
     @turndown = new Turndown
       headingStyle: 'atx'
       preformattedCode: true
@@ -56,7 +109,14 @@ class HtmlToMarkdown
       @turndown.addRule k, v
 
   convert: (html)->
-    html = html.replace(/[“”]/g, '"')
+    html = html
+      .replace(/[“”]/g, '"')
+
+    (new IndexEntries).create_anchor_index(html)
+    for text, anchor of @links
+      anchor_index.text[text] = anchor
+    file_write '../www/_stage/links.yaml',
+      yaml.stringify anchor_index
 
     markdown = @turndown.turndown html
       .replace(/.*\n.*\n/, '')
@@ -84,13 +144,15 @@ class HtmlToMarkdown
       replacement: (m, n, o)->
         mark = HtmlToMarkdown.H[n.nodeName]
         return "#{mark} #{m}" unless m.match /\d+\.\s/
-        text = m.replace(/(\d+\.)+/, '#.')
-        return "#{mark} #{text}"
+        text = m
+          .replace(/(\d+\.)+\s/, '#. ')
+        "#{mark} #{text}"
 
     link:
       filter: tag_and_class 'a', 'link'
       replacement: (m, n, o)->
-        return "[#{m}](#)"
+        text = clean_text m
+        return "[#{m}]()"
 
     index:
       filter: tag_and_class 'div', 'index'
@@ -226,7 +288,9 @@ class HtmlToMarkdown
           .replace(/\)\s+/g, ")\n")
           .replace(/^\s+/mg, '')
           .replace(/^/mg, '> * ')
-          .replace(/\[(.+?)\]\(#\)/g, '[$1](#rule-$1)')
+
+        legend = legend.replace /\[(.+?)\]\(\)/g, (m, m1)->
+          "[#{m1}]()"
 
         return """
           #{text}
@@ -339,8 +403,8 @@ class HtmlToMarkdown
         return
 
 
-main = (spec)->
-  to_markdown = new HtmlToMarkdown
+main = (spec, links)->
+  to_markdown = new HtmlToMarkdown links
 
   html = file_read spec
 

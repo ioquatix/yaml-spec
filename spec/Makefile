@@ -18,8 +18,8 @@ force:
 force-all: force
 	make -C $(SPEC12) clean
 
-%.md: $(SPEC12)/%.html
-	html-to-markdown $< > $@
+%.md: $(SPEC12)/%.html links.yaml
+	html-to-markdown $^ > $@
 
 $(SPEC12)/%.html:
 	make -C $(SPEC12) $(@:$(SPEC12)/%=%) YAML_SPEC_DIR=

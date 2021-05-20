@@ -1,6 +1,7 @@
 #!/usr/bin/env perl
 
 use v5.18;
+use utf8;
 
 use XXX;  # XXX
 
@@ -28,6 +29,9 @@ sub parse_sections {
   while ($_) {
     s/\A(#{1,4} .*\n)\n+//
       and push @s, {hx => $1} and next;
+
+    s/\A(> \*\*Legend:\*\*.*?\n)\n+//s
+      and push @s, {legend => $1} and next;
 
     s/\A(\*\*.*\*\*\n)\n+//
       and push @s, {hx => $1} and next;
@@ -100,7 +104,7 @@ sub read_files {
 
 sub read_file {
   my ($file) = @_;
-  open my $fh, '<', $file;
+  open my $fh, '<:encoding(utf-8)', $file;
   local $/;
   <$fh>;
 }
@@ -116,27 +120,65 @@ sub set_vars {
   $DD = sprintf "%02d", $d;
 }
 
+sub slugify {
+  my ($slug) = @_;
+
+  $slug =~ s/#+\s+Chapter.\d\.\s+//;
+  $slug =~ s/^#+\s+(\d+\.)+//;
+  $slug = lc $slug;
+  $slug =~ s/[^a-z0-9]/-/g;
+  $slug =~ s/-+/-/g;
+  $slug =~ s/^-//;
+  $slug =~ s/-$//;
+
+  return $slug;
+}
+
 sub fmt_hx {
   fmt_dates();
   fmt_lvl();
+
+  return unless /\d\.\s/;
+
+  my $text = $_;
+  my $slug = slugify($text);
+  $_ = qq{<div id="$slug" />\n$text\n};
 }
+
+sub fmt_legend {
+  return;
+  s/\[([^\]]+)\]\(\)/"[$1](" . slugify($1) . ")"/ge;
+}
+
 sub fmt_ul {
   fmt_undefined_links();
 }
+
 sub fmt_p {
   fmt_dates();
   fmt_undefined_links();
 }
+
 sub fmt_hr {}
+
 sub fmt_ind {
   fmt_undefined_links();
 }
-sub fmt_pre {}
+
+sub fmt_pre {
+  my $pre = $_;
+  if (/(\S+)\s+::=/) {
+    my $slug = slugify($1);
+    $pre = qq{<div id="rule-$slug" />\n$pre};
+  }
+  $_ = $pre;
+}
+
 sub fmt_img {}
 sub fmt_tbl {}
 
 sub fmt_undefined_links {
-  s/(\[[^\]]*?\]\(#\))/~~$1~~/sg;
+  s/(\[[^\]]*?\])\(\)/~~$1(#undefined)~~/sg;
 }
 
 sub fmt_dates {
