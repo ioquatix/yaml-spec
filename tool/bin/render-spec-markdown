@@ -4,14 +4,18 @@ use v5.18;
 use utf8;
 
 use YAML::PP;
-use XXX;  # XXX
+use XXX;
 
 sub main {
-  my ($front, $markdown, $link_index) = read_files(@_);
-  set_vars($link_index);
+  my ($front, $markdown, $links_hash) = read_files(@_);
+
+  my $parsed = parse_sections($markdown);
+
+  set_vars();
+  make_link_index($parsed, $links_hash);
 
   my @sections;
-  for my $section (parse_sections($markdown)) {
+  for my $section (@$parsed) {
     my ($key) = keys %$section;
     my $method = "fmt_$key";
     $_ = $section->{$key};
@@ -93,7 +97,7 @@ sub parse_sections {
     die "------\n$_<<<";
   }
 
-  return @s;
+  return \@s;
 }
 
 sub read_files {
@@ -106,17 +110,16 @@ sub read_files {
 
 sub read_file {
   my ($file) = @_;
-  open my $fh, '<:encoding(utf-8)', $file;
+  open my $fh, '<', $file;
   local $/;
   <$fh>;
 }
 
 my ($YYYY, $MM, $DD);
 my (@lvl) = (0, 0, 0, 0);
-my $links;
+my $links = {};
 
 sub set_vars {
-  ($links) = @_;
   my ($d,$m,$y);
   ($_,$_,$_,$d,$m,$y) = localtime;
   $YYYY = 1900 + $y;
@@ -124,10 +127,29 @@ sub set_vars {
   $DD = sprintf "%02d", $d;
 }
 
+sub make_link_index {
+  my ($parsed, $overrides) = @_;
+  for my $section (@$parsed) {
+    my $from = $section->{hx};
+    my $text = lc($from);
+    chomp $text;
+    $text =~ /^#+\s+.*#\.\s/ or next;
+    $text =~ s/^#+\s+//;
+    $text =~ s/^chapter\s+//;
+    $text =~ s/^#\.\s+//;
+    $text =~ s/[\"\*\`]//g;
+    my $slug = slugify($text);
+    $links->{$text} = $slug;
+  }
+  for my $k (keys %$overrides) {
+    $links->{$k} = $overrides->{$k};
+  }
+}
+
 sub slugify {
   my ($slug) = @_;
 
-  $slug =~ s/#+\s+Chapter.\d\.\s+//;
+  $slug =~ s/#+\s+Chapter\s\d+\.\s+//;
   $slug =~ s/^#+\s+(\d+\.)+//;
   $slug = lc $slug;
   $slug =~ s/[^a-z0-9]/-/g;

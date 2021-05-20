@@ -7,7 +7,7 @@ PUBLISH_CNAME := spec.yaml.io
 SPEC := $(ROOT)/spec
 STAGE := _stage
 PAGES := _gh-pages
-LINKS := $(STAGE)/links.yaml
+LINKS := links.yaml
 
 DOCKER_BUILD_OPTS := \
     --user $(UID):$(GID) \
@@ -102,8 +102,6 @@ $(STAGE)/%.png: $(SPEC)/%.png
 
 $(STAGE)/%.css: %.css $(STAGE)
 	cp -r $< $@
-
-$(LINKS):
 
 $(STAGE):
 	mkdir $@

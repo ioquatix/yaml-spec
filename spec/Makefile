@@ -18,7 +18,7 @@ force:
 force-all: force
 	make -C $(SPEC12) clean
 
-%.md: $(SPEC12)/%.html links.yaml
+%.md: $(SPEC12)/%.html
 	html-to-markdown $^ > $@
 
 $(SPEC12)/%.html:

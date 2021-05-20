@@ -6,31 +6,8 @@ Node = require 'domino/lib/Node'
 wrap = require 'smartwrap'
 yaml = require 'yaml'
 
+
 count = 0
-anchor_index = {}
-
-add_to_index = (anchor, text, from)->
-  if anchor_index[text]?
-    warn "Skipping '#{from}'.\n> '#{text}' already added to index"
-    return
-  anchor_index[text] = anchor
-
-clean_text = (text)->
-  text
-    .replace(/Chapter\s+\d+\.\s+/, '')
-    .replace(/^(\d+\.)+\s/, '')
-    .replace(/[\*\'\"\`]/g, '')
-    .toLowerCase()
-
-slugify = (text)->
-  slug = text
-    .replace(/[^a-z0-9]/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-/, '')
-    .replace(/-$/, '')
-  if not slug
-    throw "Can't slugify '#{text}'"
-  return slug
 
 tag_and_class = (tag, class_)->
   (n, o)->
@@ -68,32 +45,8 @@ reformat = (text, width=79)->
   return text
 
 
-class IndexEntries
-  constructor: ->
-    @turndown = new Turndown
-
-    for k, v of @constructor.rules
-      @turndown.addRule k, v
-
-  create_anchor_index: (html)->
-    @turndown.turndown html
-
-  @rules:
-    titlepage:
-      filter: (n, o)->
-        n.nodeName.match(/^H[1-4]$/) and
-        n.getAttribute('class') == 'title'
-      replacement: (m, n, o)->
-        return m unless m.match /\d+\.\s/
-        from = text = m
-        text = clean_text text
-        anchor = slugify text
-        add_to_index anchor, text, from
-        lower_text = text.toLowerCase()
-
 class HtmlToMarkdown
   constructor: (links_file)->
-    @links = yaml.parse file_read links_file
 
     @turndown = new Turndown
       headingStyle: 'atx'
@@ -109,12 +62,6 @@ class HtmlToMarkdown
     html = html
       .replace(/[“”]/g, '"')
 
-    (new IndexEntries).create_anchor_index(html)
-    for text, anchor of @links
-      anchor_index[text] = anchor
-    file_write '../www/_stage/links.yaml',
-      yaml.stringify anchor_index
-
     markdown = @turndown.turndown html
       .replace(/.*\n.*\n/, '')
       .replace(/^(###.*)\n\n</gm, '$1 <')
@@ -124,6 +71,7 @@ class HtmlToMarkdown
       .replace(/\n\n\n+/g, "\n\n")
       .replace(/^> $/mg, '>')
       .replace(/^\d\.\ +/mg, '1. ')
+      .replace(/\xa0/g, ' ')
 
     return markdown + "\n"
 
@@ -148,7 +96,6 @@ class HtmlToMarkdown
     link:
       filter: tag_and_class 'a', 'link'
       replacement: (m, n, o)->
-        text = clean_text m
         return "[#{m}]()"
 
     index:
@@ -380,24 +327,6 @@ class HtmlToMarkdown
           return m
         else
           return "`#{m}`"
-
-    xxx:
-      filter: 'xxx'
-      replacement: (m, n, o)->
-        skip = [
-          'parentNode'
-          'ownerDocument'
-          '_nextSibling'
-          '_previousSibling'
-          '_attributeChangeHandlers'
-        ]
-        x = {}
-        for k, v of n
-          continue if k in skip
-          x[k] = v
-        www [m, x]
-        xxx 42 if count++ > 10
-        return
 
 
 main = (spec, links)->
