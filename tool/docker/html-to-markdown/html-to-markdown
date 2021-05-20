@@ -7,16 +7,13 @@ wrap = require 'smartwrap'
 yaml = require 'yaml'
 
 count = 0
-anchor_index =
-  anchor: {}
-  text: {}
+anchor_index = {}
 
 add_to_index = (anchor, text, from)->
-  if anchor_index.text[text]?
+  if anchor_index[text]?
     warn "Skipping '#{from}'.\n> '#{text}' already added to index"
     return
-  anchor_index.text[text] = anchor
-  anchor_index.anchor[anchor] = true
+  anchor_index[text] = anchor
 
 clean_text = (text)->
   text
@@ -114,7 +111,7 @@ class HtmlToMarkdown
 
     (new IndexEntries).create_anchor_index(html)
     for text, anchor of @links
-      anchor_index.text[text] = anchor
+      anchor_index[text] = anchor
     file_write '../www/_stage/links.yaml',
       yaml.stringify anchor_index
 

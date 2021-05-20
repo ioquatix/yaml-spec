@@ -3,11 +3,12 @@
 use v5.18;
 use utf8;
 
+use YAML::PP;
 use XXX;  # XXX
 
 sub main {
-  my ($front, $markdown) = read_files(@_);
-  set_vars();
+  my ($front, $markdown, $link_index) = read_files(@_);
+  set_vars($link_index);
 
   my @sections;
   for my $section (parse_sections($markdown)) {
@@ -96,10 +97,11 @@ sub parse_sections {
 }
 
 sub read_files {
-  my ($front_file, $markdown_file) = @_;
+  my ($front_file, $markdown_file, $links_file) = @_;
   my $front = read_file($front_file);
   my $markdown = read_file($markdown_file);
-  return ($front, $markdown)
+  my $links = YAML::PP::LoadFile($links_file);
+  return ($front, $markdown, $links)
 }
 
 sub read_file {
@@ -111,8 +113,10 @@ sub read_file {
 
 my ($YYYY, $MM, $DD);
 my (@lvl) = (0, 0, 0, 0);
+my $links;
 
 sub set_vars {
+  ($links) = @_;
   my ($d,$m,$y);
   ($_,$_,$_,$d,$m,$y) = localtime;
   $YYYY = 1900 + $y;
@@ -146,8 +150,7 @@ sub fmt_hx {
 }
 
 sub fmt_legend {
-  return;
-  s/\[([^\]]+)\]\(\)/"[$1](" . slugify($1) . ")"/ge;
+  s/\[([^\]]+)\]\(\)/"[$1](#rule-" . slugify($1) . ")"/ge;
 }
 
 sub fmt_ul {
@@ -177,8 +180,17 @@ sub fmt_pre {
 sub fmt_img {}
 sub fmt_tbl {}
 
+sub get_link {
+  my ($link) = @_;
+  if (my $anchor = $links->{lc($link)}) {
+    return "[$link](#$anchor)";
+  }
+  else {
+    return "~~[$link](#undefined)~~";
+  }
+}
 sub fmt_undefined_links {
-  s/(\[[^\]]*?\])\(\)/~~$1(#undefined)~~/sg;
+  s/\[([^\]]*?)\]\(\)/get_link($1)/sge;
 }
 
 sub fmt_dates {

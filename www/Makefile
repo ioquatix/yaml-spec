@@ -7,6 +7,7 @@ PUBLISH_CNAME := spec.yaml.io
 SPEC := $(ROOT)/spec
 STAGE := _stage
 PAGES := _gh-pages
+LINKS := $(STAGE)/links.yaml
 
 DOCKER_BUILD_OPTS := \
     --user $(UID):$(GID) \
@@ -93,7 +94,7 @@ $(STAGE)/%: jekyll/% $(STAGE)
 $(STAGE)/%.md: %.md $(STAGE)
 	cat $< > $@
 
-$(STAGE)/%.md: %.md.yaml $(SPEC)/%.md $(STAGE)
+$(STAGE)/%.md: %.md.yaml $(SPEC)/%.md $(LINKS) $(STAGE)
 	render-spec-markdown $^ > $@
 
 $(STAGE)/%.png: $(SPEC)/%.png
@@ -101,6 +102,8 @@ $(STAGE)/%.png: $(SPEC)/%.png
 
 $(STAGE)/%.css: %.css $(STAGE)
 	cp -r $< $@
+
+$(LINKS):
 
 $(STAGE):
 	mkdir $@
