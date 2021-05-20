@@ -6,7 +6,7 @@ declare -a docker_run_options
 run() (
   name=$(basename "${BASH_SOURCE[1]}")
 
-  if check; then
+  if check &>/dev/null; then
     run-local "$@"
   else
     run-docker "$@"

@@ -1,0 +1,256 @@
+#!/usr/bin/env perl
+
+use v5.18;
+use utf8;
+
+use YAML::PP;
+use XXX;
+
+sub main {
+  my ($front, $markdown, $links_hash) = read_files(@_);
+
+  my $parsed = parse_sections($markdown);
+
+  set_vars();
+  make_link_index($parsed, $links_hash);
+
+  my @sections;
+  for my $section (@$parsed) {
+    my ($key) = keys %$section;
+    my $method = "fmt_$key";
+    $_ = $section->{$key};
+    main->$method;
+    push @sections, $_;
+  }
+
+  print "$front";
+  print join "\n", @sections;
+}
+
+sub parse_sections {
+  ($_) = @_;
+
+  my @s;
+  while ($_) {
+    s/\A(#{1,4} .*\n)\n+//
+      and push @s, {hx => $1} and next;
+
+    s/\A(> \*\*Legend:\*\*.*?\n)\n+//s
+      and push @s, {legend => $1} and next;
+
+    s/\A(\*\*.*\*\*\n)\n+//
+      and push @s, {hx => $1} and next;
+
+    s/\A
+      (
+        (::.*\n)?
+        (?:\*\ .*\n)+
+        (?:\{:\.\S+\}\n)?
+      )
+      \n+
+    //x
+      and push @s, {ul => $1} and next;
+
+    s/\A
+      (
+        (?:
+          (?:\*\*|-1\ |\[[\w\"\*]|[\w\"\(])
+          .*\n
+        )+
+      )
+      \n+
+    //x
+      and push @s, {p => $1} and next;
+
+    s/\A(----\n)\n+//
+      and push @s, {hr => $1} and next;
+
+    s/\A\::toc\n\n+//
+      and push @s, {toc => 1} and next;
+
+    s/\A\::index\n//
+      and push @s, {index => 1} and next;
+
+    s/\A((?:>.*\n)+)\n+//
+      and push @s, {ind => $1} and next;
+
+    s/\A((?s:```.+?\n```\n))\n+//
+      and push @s, {pre => $1} and next;
+
+    s/\A(!\[.*\.png\)\n)\s+//
+      and push @s, {img => $1} and next;
+
+    s/\A(\* .*\n(?:  \S.*\n|\n(?=  \S))+)\n+//
+      and push @s, {ul => $1} and next;
+
+    s/\A(\`\w.*\n)\n+//
+      and push @s, {p => $1} and next;
+
+    s/\A((?:\| .*)+)\n+//
+      and push @s, {tbl => $1} and next;
+
+    s/\A((?:\* .*\n)(?:  .*\n|\n(?=  ))+)\n+//
+      and push @s, {ul => $1} and next;
+
+    s/((?:.*\n){20})(?s:.*)/$1/;
+    WWW(\@s);
+    die "------\n$_<<<";
+  }
+
+  return \@s;
+}
+
+sub read_files {
+  my ($front_file, $markdown_file, $links_file) = @_;
+  my $front = read_file($front_file);
+  my $markdown = read_file($markdown_file);
+  my $links = YAML::PP::LoadFile($links_file);
+  return ($front, $markdown, $links)
+}
+
+sub read_file {
+  my ($file) = @_;
+  open my $fh, '<', $file;
+  local $/;
+  <$fh>;
+}
+
+my ($YYYY, $MM, $DD);
+my (@lvl) = (0, 0, 0, 0);
+my $links = {};
+
+sub set_vars {
+  my ($d,$m,$y);
+  ($_,$_,$_,$d,$m,$y) = localtime;
+  $YYYY = 1900 + $y;
+  $MM = sprintf "%02d", $m + 1;
+  $DD = sprintf "%02d", $d;
+}
+
+sub make_link_index {
+  my ($parsed, $overrides) = @_;
+  for my $section (@$parsed) {
+    my $from = $section->{hx};
+    my $text = lc($from);
+    chomp $text;
+    $text =~ /^#+\s+.*#\.\s/ or next;
+    $text =~ s/^#+\s+//;
+    $text =~ s/^chapter\s+//;
+    $text =~ s/^#\.\s+//;
+    $text =~ s/[\"\*\`]//g;
+    my $slug = slugify($text);
+    $links->{$text} = $slug;
+  }
+  for my $k (keys %$overrides) {
+    $links->{$k} = $overrides->{$k};
+  }
+}
+
+sub slugify {
+  my ($slug) = @_;
+
+  $slug =~ s/#+\s+Chapter\s\d+\.\s+//;
+  $slug =~ s/^#+\s+(\d+\.)+//;
+  $slug = lc $slug;
+  $slug =~ s/[^a-z0-9]/-/g;
+  $slug =~ s/-+/-/g;
+  $slug =~ s/^-//;
+  $slug =~ s/-$//;
+
+  return $slug;
+}
+
+sub fmt_hx {
+  fmt_dates();
+  fmt_lvl();
+
+  return unless /\d\.\s/;
+
+  my $text = $_;
+  my $slug = slugify($text);
+  $_ = qq{<div id="$slug" />\n$text\n};
+}
+
+sub fmt_legend {
+  s/\[([^\]]+)\]\(\)/"[$1](#rule-" . slugify($1) . ")"/ge;
+}
+
+sub fmt_ul {
+  fmt_undefined_links();
+}
+
+sub fmt_p {
+  fmt_dates();
+  fmt_undefined_links();
+}
+
+sub fmt_hr {}
+
+sub fmt_ind {
+  fmt_undefined_links();
+}
+
+sub fmt_pre {
+  my $pre = $_;
+  if (/(\S+)\s+::=/) {
+    my $slug = slugify($1);
+    $pre = qq{<div id="rule-$slug" />\n$pre};
+    # $pre =~ s/(\b(?:ns|nb|s)-\S*)/<a href="rule-$1">$1<\/a>/g;
+  }
+  $_ = $pre;
+}
+
+sub fmt_img {}
+sub fmt_tbl {}
+
+sub get_link {
+  my ($link) = @_;
+  if (my $anchor = $links->{lc($link)}) {
+    return "[$link](#$anchor)";
+  }
+  else {
+    return "~~[$link](#undefined)~~";
+  }
+}
+sub fmt_undefined_links {
+  s/\[([^\]]*?)\]\(\)/get_link($1)/sge;
+}
+
+sub fmt_dates {
+  s/YYYY/$YYYY/g;
+  s/MM/$MM/g;
+  s/DD/$DD/g;
+}
+
+sub fmt_lvl {
+  /^(#+)\ .*#\./ or return;
+  my $lvl = length $1;
+  my $txt = '';
+  for (my $i = 0; $i < 4; $i++) {
+    if ($i < $lvl) {
+      if ($i == $lvl - 1) {
+        $lvl[$i]++;
+      }
+      $txt .= $lvl[$i] . '.';
+    }
+    else {
+      $lvl[$i] = 0;
+    }
+  }
+  s/#\./$txt/;
+}
+
+sub fmt_toc {
+  $_ = <<'...';
+* TOC
+{:toc}
+...
+}
+
+sub fmt_index {
+  $_ = <<'...';
+# Index
+...
+}
+
+main @ARGV;

@@ -1,0 +1,23 @@
+#!/usr/bin/env yaml-to-dockerfile
+
+- from: ubuntu:20.04
+
+- run:
+  - apt-get update
+  - DEBIAN_FRONTEND=noninteractive apt-get install -y
+      build-essential
+      cpanminus
+
+- run:
+  - cpanm -n YAML::PP XXX
+
+- copy: [ render-spec-markdown, /bin ]
+
+# - !import ../common/dev-tools.yaml
+- run:
+    apt-get install -y
+      git
+      silversearcher-ag
+      tig
+      tmux
+      vim
