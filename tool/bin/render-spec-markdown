@@ -173,6 +173,7 @@ sub fmt_pre {
   if (/(\S+)\s+::=/) {
     my $slug = slugify($1);
     $pre = qq{<div id="rule-$slug" />\n$pre};
+    # $pre =~ s/(\b(?:ns|nb|s)-\S*)/<a href="rule-$1">$1<\/a>/g;
   }
   $_ = $pre;
 }

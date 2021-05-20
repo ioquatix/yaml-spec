@@ -1,1 +1,18 @@
+break: line-break-characters
+double-quoted-scalars: double-quoted style
+formatted content: scalar-formats
+key: nodes
 literal block scalar: literal-style
+mapping keys: nodes
+mappings: nodes
+presentation: presentation-stream
+printable: character-set
+processor: processing-yaml-information
+scalar content: nodes
+scalar: nodes
+separated: separation-spaces
+sequences: nodes
+styles: node-styles
+tag: tags
+unique: node-comparison
+white space: white-space-characters
