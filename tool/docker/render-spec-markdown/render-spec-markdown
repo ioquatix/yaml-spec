@@ -72,7 +72,7 @@ sub parse_sections {
       and push @s, {index => 1} and next;
 
     s/\A((?:>.*\n)+)\n+//
-      and push @s, {ind => $1} and next;
+      and push @s, {indent => $1} and next;
 
     s/\A((?s:```.+?\n```\n))\n+//
       and push @s, {pre => $1} and next;
@@ -86,8 +86,8 @@ sub parse_sections {
     s/\A(\`\w.*\n)\n+//
       and push @s, {p => $1} and next;
 
-    s/\A((?:\| .*)+)\n+//
-      and push @s, {tbl => $1} and next;
+    s/\A((?:\| .*\n)+)\n+//
+      and push @s, {table => $1} and next;
 
     s/\A((?:\* .*\n)(?:  .*\n|\n(?=  ))+)\n+//
       and push @s, {ul => $1} and next;
@@ -186,7 +186,7 @@ sub fmt_p {
 
 sub fmt_hr {}
 
-sub fmt_ind {
+sub fmt_indent {
   fmt_undefined_links();
 }
 
@@ -194,14 +194,15 @@ sub fmt_pre {
   my $pre = $_;
   if (/(\S+)\s+::=/) {
     my $slug = slugify($1);
+    $pre =~ s/(\b(?:ns|nb|s|l)-\S*)/<a href="rule-$1">$1<\/a>/g;
     $pre = qq{<div id="rule-$slug" />\n$pre};
-    # $pre =~ s/(\b(?:ns|nb|s)-\S*)/<a href="rule-$1">$1<\/a>/g;
+    $pre .= "{:.rule}\n";
   }
   $_ = $pre;
 }
 
 sub fmt_img {}
-sub fmt_tbl {}
+sub fmt_table {}
 
 sub get_link {
   my ($link) = @_;

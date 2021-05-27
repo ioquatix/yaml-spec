@@ -7,7 +7,7 @@ PUBLISH_CNAME := spec.yaml.io
 SPEC := $(ROOT)/spec
 STAGE := _stage
 PAGES := _gh-pages
-LINKS := links.yaml
+LINKS := $(ROOT)/spec/links.yaml
 
 DOCKER_BUILD_OPTS := \
     --user $(UID):$(GID) \
@@ -36,7 +36,7 @@ FILES := \
     Gemfile \
     _config.yml \
     _layouts \
-    spec.css \
+    spec.scss \
 
 FILES := $(FILES:%=$(STAGE)/%)
 
