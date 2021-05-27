@@ -1,6 +1,6 @@
 SHELL := bash
 
-SITE := gh-pages
+default:
 
 docker-build-all docker-push-all:
 	make -C tool/docker $@
@@ -11,4 +11,3 @@ serve publish:
 clean:
 	make -C 1.2 $@
 	make -C www $@
-	rm -fr $(SITE)

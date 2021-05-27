@@ -4,6 +4,7 @@ include $(ROOT)/tool/make/spec-1.2-files.mk
 
 PUBLISH_CNAME := spec.yaml.io
 
+SPEC12 := $(ROOT)/1.2
 SPEC := $(ROOT)/spec
 STAGE := _stage
 PAGES := _gh-pages
@@ -82,8 +83,11 @@ force-all: force
 clean:
 	rm -fr $(STAGE) $(PAGES)
 
-$(SPEC)/spec.md:
+$(SPEC)/spec.md: $(SPEC12)/spec.html
 	make -C $(SPEC) spec.md YAML_SPEC_DIR=
+
+$(SPEC12)/spec.html:
+	make -C $(SPEC12) spec.html YAML_SPEC_DIR=
 
 $(STAGE)/%: % $(STAGE)
 	cp -r $< $@

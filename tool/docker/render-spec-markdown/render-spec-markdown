@@ -32,14 +32,14 @@ sub parse_sections {
 
   my @s;
   while ($_) {
-    s/\A(#{1,4} .*\n)\n+//
+    s/\A(#{1,5} .*\n)\n+//
       and push @s, {hx => $1} and next;
+
+#     s/\A(\*\*.*\*\*\n)\n+//
+#       and push @s, {h5 => $1} and next;
 
     s/\A(> \*\*Legend:\*\*.*?\n)\n+//s
       and push @s, {legend => $1} and next;
-
-    s/\A(\*\*.*\*\*\n)\n+//
-      and push @s, {hx => $1} and next;
 
     s/\A
       (

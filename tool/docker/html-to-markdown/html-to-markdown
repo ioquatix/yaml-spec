@@ -34,7 +34,7 @@ reformat = (text, width=79)->
   text = text.replace ///
       ([\s\S]+?)
       (?:
-        (\.)\ (?=[A-Z])
+        ([^\#]\.)\ (?=[A-Z])
       |
         $
       )
@@ -298,17 +298,20 @@ class HtmlToMarkdown
         n.nodeName == 'P' and
         n.getAttribute('class') != 'releaseinfo'
       replacement: (m, n, o)->
+        text = m
+          .replace /^(\*\*(?:Figure|Example)\s)(?:\d+\.)+\s+(.*\*\*)\s*$/, (m, m1, m2)->
+            "#{m1}#. #{m2}"
         if n.parentNode.nodeName in ['LI', 'DD']
           width = 77
         else
           width = 79
-        return reformat(m, width) + "\n\n"
+        return reformat(text, width) + "\n\n"
 
     dt:
       filter: 'dt'
       replacement: (m, n, o)->
         text = m
-        text = "**#{text.replace(/\s+$/, '')}**" unless text.match /\*\*/
+        text = "##### #{text.replace(/\s+$/, '')}" unless text.match /\*\*/
         return "#{text}\n\n"
 
     dd:
