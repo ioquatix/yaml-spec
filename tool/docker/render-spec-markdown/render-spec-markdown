@@ -194,7 +194,7 @@ sub fmt_pre {
   my $pre = $_;
   if (/(\S+)\s+::=/) {
     my $slug = slugify($1);
-    $pre =~ s/(\b(?:ns|nb|s|l)-\S*)/<a href="rule-$1">$1<\/a>/g;
+    # $pre =~ s/(\b(?:ns|nb|s|l)-\S*)/<a href="rule-$1">$1<\/a>/g;
     $pre = qq{<div id="rule-$slug" />\n$pre};
     $pre .= "{:.rule}\n";
   }
@@ -214,7 +214,7 @@ sub get_link {
   }
 }
 sub fmt_undefined_links {
-  s/\[([^\]]*?)\]\(\)/get_link($1)/sge;
+  s/\[([^-0-9\`\]][^\]]*?)\](?=[^\(\`])/get_link($1)/sge;
 }
 
 sub fmt_dates {

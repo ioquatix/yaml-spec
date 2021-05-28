@@ -96,7 +96,7 @@ class HtmlToMarkdown
     link:
       filter: tag_and_class 'a', 'link'
       replacement: (m, n, o)->
-        return "[#{m}]()"
+        return "[#{m}]"
 
     index:
       filter: tag_and_class 'div', 'index'

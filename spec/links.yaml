@@ -2,7 +2,6 @@ application: processing-yaml-information
 applications: processing-yaml-information
 break: line-break-characters
 content: nodes
-document: document
 documents: document
 double-quoted-scalars: double-quoted style
 formatted content: scalar-formats
@@ -13,7 +12,7 @@ line break: line-break-characters
 line breaks: line-break-characters
 literal block scalar: literal-style
 mapping keys: nodes
-mappings: nodes
+mappings: mapping
 node: nodes
 presentation: presentation-stream
 printable: character-set
@@ -21,10 +20,10 @@ processor: processing-yaml-information
 representation: representation-graph
 representation graph: representation-graph
 representations: representation-graph
-scalar content: nodes
-scalar: nodes
+scalar content: scalar
+scalar: scalar
 separated: separation-spaces
-sequences: nodes
+sequences: sequence
 serialization: serialization-tree
 space: white-space-characters
 spaces: white-space-characters
