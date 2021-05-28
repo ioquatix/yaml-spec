@@ -2863,9 +2863,9 @@ warning.
 "foo"
 ```
 **Legend:**
-* [ns-reserved-directive] <!-- 1:2,12 -->
-* [ns-directive-name] <!-- 1:2,3 -->
-* [ns-directive-parameter] <!-- 1:7,3 1:11,3 -->
+* [ns-reserved-directive]   <!-- 1:2,12 -->
+* [ns-directive-name]       <!-- 1:2,3 -->
+* [ns-directive-parameter]  <!-- 1:7,3 1:11,3 -->
 
 ### #. "**`YAML`**" Directives
 
