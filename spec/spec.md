@@ -2857,7 +2857,6 @@ warning.
                # with a warning.
 --- "foo"
 ```
----
 ```
 %YAML 1.2
 --- !!str
