@@ -6,6 +6,10 @@ use utf8;
 use YAML::PP;
 use XXX;
 
+my ($YYYY, $MM, $DD);
+my (@lvl) = (0, 0, 0, 0);
+my $links = {};
+
 sub main {
   my ($front, $markdown, $links_hash) = read_files(@_);
 
@@ -27,19 +31,35 @@ sub main {
   print join "\n", @sections;
 }
 
+#------------------------------------------------------------------------------
+my $re_pre = qr/
+  ```\n
+  (?:.*\n)+?
+  ```\n
+/x;
+my $re_legend = qr/
+  \*\*Legend:\*\*\n
+  (?:\*\ .*\n)+
+/x;
+
 sub parse_sections {
   ($_) = @_;
 
   my @s;
   while ($_) {
+    # Headings:
     s/\A(#{1,5} .*\n)\n+//
-      and push @s, {hx => $1} and next;
+      and push @s, {heading => $1} and next;
 
-#     s/\A(\*\*.*\*\*\n)\n+//
-#       and push @s, {h5 => $1} and next;
-
-    s/\A(> \*\*Legend:\*\*.*?\n)\n+//s
-      and push @s, {legend => $1} and next;
+    # Example section:
+    s/\A
+      (\*\*Example\ \# [\s\S]*?\*\*)\n
+      ($re_pre)
+      ($re_pre)?
+      ($re_legend)?
+      \n+
+    //x
+      and push @s, {example => [$1, $2, $3, $4]} and next;
 
     s/\A
       (
@@ -100,6 +120,114 @@ sub parse_sections {
   return \@s;
 }
 
+#------------------------------------------------------------------------------
+sub fmt_heading {
+  set_dates();
+  set_heading_level();
+
+  return unless /\d\.\s/;
+
+  my $text = $_;
+  my $slug = slugify($text);
+
+  $_ = qq{<div id="$slug" />\n$text\n};
+}
+
+sub fmt_example {
+  my ($title, $yaml1, $yaml2, $legend) = @$_;
+
+  my $id = $title;
+  $id =~ s/\s*\(.*//s;
+  $id = slugify($id);
+
+  my $out = set_example_level($title) . "\n\n";
+
+  if ($legend) {
+    $yaml1 = apply_legend($yaml1, $legend);
+  }
+  $yaml1 = format_pre($yaml1);
+
+  if ($yaml2) {
+    $yaml2 = format_pre($yaml2);
+    $out .= <<"...";
+<table width="100%">
+<tr>
+<td class="side-by-side">
+$yaml1
+</td>
+<td class="side-by-side">
+$yaml2
+</td>
+</tr>
+</table>
+...
+  }
+  else {
+    $out .= "$yaml1\n";
+  }
+
+  if ($legend) {
+    $_ = format_legend($legend);
+    $out .= <<"...";
+<div class="legend">
+$_
+</div>
+...
+  }
+
+  chomp $out;
+
+  $_ = <<"...";
+<div id="$id" class="example">
+$out
+</div>
+...
+}
+
+sub fmt_ul {
+  undefined_links();
+}
+
+sub fmt_p {
+  set_dates();
+  undefined_links();
+}
+
+sub fmt_hr {}
+
+sub fmt_indent {
+  undefined_links();
+}
+
+sub fmt_pre {
+  my $pre = $_;
+  if (/(\S+)\s+::=/) {
+    my $slug = slugify($1);
+    # $pre =~ s/(\b(?:ns|nb|s|l)-\S*)/<a href="rule-$1">$1<\/a>/g;
+    $pre = qq{<div id="rule-$slug" />\n$pre};
+    $pre .= "{:.rule}\n";
+  }
+  $_ = $pre;
+}
+
+sub fmt_img {}
+
+sub fmt_table {}
+
+sub fmt_toc {
+  $_ = <<'...';
+* TOC
+{:toc}
+...
+}
+
+sub fmt_index {
+  $_ = <<'...';
+# Index
+...
+}
+
+#------------------------------------------------------------------------------
 sub read_files {
   my ($front_file, $markdown_file, $links_file) = @_;
   my $front = read_file($front_file);
@@ -114,10 +242,6 @@ sub read_file {
   local $/;
   <$fh>;
 }
-
-my ($YYYY, $MM, $DD);
-my (@lvl) = (0, 0, 0, 0);
-my $links = {};
 
 sub set_vars {
   my ($d,$m,$y);
@@ -160,50 +284,6 @@ sub slugify {
   return $slug;
 }
 
-sub fmt_hx {
-  fmt_dates();
-  fmt_lvl();
-
-  return unless /\d\.\s/;
-
-  my $text = $_;
-  my $slug = slugify($text);
-  $_ = qq{<div id="$slug" />\n$text\n};
-}
-
-sub fmt_legend {
-  s/\[([^\]]+)\]\(\)/"[$1](#rule-" . slugify($1) . ")"/ge;
-}
-
-sub fmt_ul {
-  fmt_undefined_links();
-}
-
-sub fmt_p {
-  fmt_dates();
-  fmt_undefined_links();
-}
-
-sub fmt_hr {}
-
-sub fmt_indent {
-  fmt_undefined_links();
-}
-
-sub fmt_pre {
-  my $pre = $_;
-  if (/(\S+)\s+::=/) {
-    my $slug = slugify($1);
-    # $pre =~ s/(\b(?:ns|nb|s|l)-\S*)/<a href="rule-$1">$1<\/a>/g;
-    $pre = qq{<div id="rule-$slug" />\n$pre};
-    $pre .= "{:.rule}\n";
-  }
-  $_ = $pre;
-}
-
-sub fmt_img {}
-sub fmt_table {}
-
 sub get_link {
   my ($link) = @_;
   if (my $anchor = $links->{lc($link)}) {
@@ -213,17 +293,19 @@ sub get_link {
     return "~~[$link](#undefined)~~";
   }
 }
-sub fmt_undefined_links {
+
+sub undefined_links {
   s/\[([^-0-9\`\]][^\]]*?)\](?=[^\(\`])/get_link($1)/sge;
 }
 
-sub fmt_dates {
+sub set_dates {
   s/YYYY/$YYYY/g;
   s/MM/$MM/g;
   s/DD/$DD/g;
 }
 
-sub fmt_lvl {
+my $example_number;
+sub set_heading_level {
   /^(#+)\ .*#\./ or return;
   my $lvl = length $1;
   my $txt = '';
@@ -239,19 +321,55 @@ sub fmt_lvl {
     }
   }
   s/#\./$txt/;
+
+  $example_number = 0 if $lvl == 1;
 }
 
-sub fmt_toc {
-  $_ = <<'...';
-* TOC
-{:toc}
+sub set_example_level {
+  my ($title) = @_;
+  my $chapter = $lvl[0];
+  $example_number++;
+  $title =~ s/\#\./$chapter.$example_number/;
+  return $title;
+}
+
+sub apply_legend {
+  my ($yaml, $legend) = @_;
+  return $yaml;
+}
+
+sub format_pre {
+  $_ = $_[0];
+
+  s/\A```\n//;
+  s/\n```\n\z//;
+  s/&/&amp;/g;
+  s/</&lt;/g;
+  s/>/&gt;/g;
+
+  return <<"...";
+<pre>
+$_
+</pre>
 ...
 }
 
-sub fmt_index {
-  $_ = <<'...';
-# Index
-...
+sub format_legend {
+  $_ = $_[0];
+  chomp;
+  s/\s*<!--.*-->//g;
+  my @lines = split /\n/, $_;
+  my $i = 0;
+  for (@lines) {
+    if (/\[/) {
+      $i++;
+      s{\[([^\]]+)\]}{<code class="legend-$i">[$1]</code>}g;
+    }
+  }
+  $_ = join "\n", @lines;
+  s{\[([^\]]+)\]}{<a href="#rule-$1">$1</a>}g;
+  s/^/> /mg;
+  return $_;
 }
 
 main @ARGV;

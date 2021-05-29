@@ -11,11 +11,12 @@ tag_and_class = (tag, class_)->
     n.nodeName == tag.toUpperCase() and
     n.getAttribute('class') == class_
 
-re = (re)-> HtmlToMarkdown.re[re].toString()[1...-1]
+r = (re)-> HtmlToMarkdown.re[re].toString()[1...-1]
 
 
 class HtmlToMarkdown
-  constructor: (links_file)->
+  constructor: (legend_file)->
+    HtmlToMarkdown.legend = yaml.parse file_read legend_file
 
     @turndown = new Turndown
       headingStyle: 'atx'
@@ -94,10 +95,10 @@ class HtmlToMarkdown
       replacement: (m, n, o)=>
         return m unless m.match /\[\d+\]/
         return m.replace ///^
-          #{re'A'}*
-          ( #{re'pre_block'} )
+          #{r'A'}*
+          ( #{r'pre_block'} )
           \s*
-          (\S#{re'A'}+?\S)
+          (\S#{r'A'}+?\S)
           \s*
         $///,
           (m, m1, m2)=>
@@ -158,34 +159,50 @@ class HtmlToMarkdown
           """
 
     example:
-      filter: (n, o)->
-        n.nodeName == 'DIV' and
-        n.getAttribute('class') == 'example-contents' and
-        n.innerHTML.match /Legend:/
-      replacement: (m, n, o)->
-        text = m.replace /```\n\s*Legend:\n([\s\S]+?)```\n\n/, ''
-        legend = RegExp.$1
+      filter: tag_and_class 'div', 'example'
+      replacement: (m, n, o)=>
+        text = m
 
-        text = text
-          .replace(/^\s+/, '')
-          .replace(/\s+$/, "\n")
-          .replace(/([^`])`(?=[^`])/g, '$1')
+        RegExp.$1 = ''
 
-        legend = legend
-          .replace(/^\s+/, '')
-          .replace(/\s+$/, '')
-          .replace(/\)\s+/g, ")\n")
-          .replace(/^\s+/mg, '')
-          .replace(/^/mg, '> * ')
+        re = /^(\*\*(?:[\s\S](?!```))*\*\*)\n/
+        if text.match re
+          text = text.replace re, ''
+          title = RegExp.$1 or
+            XXX ['no title', m]
 
-        legend = legend.replace /\[(.+?)\]\(\)/g, (m, m1)->
-          "[#{m1}]()"
+        legend = ''
+        re = /```\n\s*Legend:\n([\s\S]+?)\n```\n\n/
+        if text.match re
+          text = text.replace re, ''
+          legend = @fmt_legend RegExp.$1
 
-        return """
-          #{text}
-          > **Legend:**
-          #{legend}\n\n
-          """
+        re = /```\n([\s\S]+?)\n```\n\n/
+        if text.match re
+          text = text.replace re, ''
+          yaml1 = @fmt_pre RegExp.$1 or
+            XXX ['no yaml1', text, m]
+
+        yaml2 = ''
+        if text.match re
+          text = text.replace re, ''
+          yaml2 = @fmt_pre RegExp.$1
+
+        if text.match /\S/
+          XXX
+            _: 'Bad Example'
+            input: m
+            title: title
+            yaml1: yaml1
+            yaml2: yaml2
+            legend: legend
+
+        out = "#{title}\n#{yaml1}"
+        out += yaml2 if yaml2
+        out += legend if legend
+        out += "\n"
+
+        return out
 
     example_break:
       filter: tag_and_class 'br', 'example-break'
@@ -208,9 +225,11 @@ class HtmlToMarkdown
         n.nodeName == 'P' and
         n.getAttribute('class') != 'releaseinfo'
       replacement: (m, n, o)=>
-        text = m
-          .replace /^(\*\*(?:Figure|Example)\s)(?:\d+\.)+\s+(.*\*\*)\s*$/, (m, m1, m2)->
-            "#{m1}#. #{m2}"
+        text = m.replace(
+          /^(\*\*(?:Figure|Example)\s)(?:\d+\.)+\s+([\s\S]*\*\*)\s*$/,
+          (m, m1, m2)->
+            "#{m1}#. #{m2.replace /\s+/g, ' '}"
+        )
         if n.parentNode.nodeName in ['LI', 'DD']
           width = 77
         else
@@ -335,9 +354,35 @@ class HtmlToMarkdown
       text = text.replace /%%%$/mg, '  '
       return text
 
+  @fmt_pre: (text)->
+    return '' unless text
+    text = text
+      .replace(/^\s+/, '')
+      .replace(/\s+$/, "\n")
+      .replace(/([^`])`(?=[^`])/g, '$1')
+      .replace(/^`/, '')
+      .replace(/`$/, '')
+    return "```\n#{text}\n```\n"
 
-main = (spec, links)->
-  to_markdown = new HtmlToMarkdown links
+  @fmt_legend: (text)->
+    return '' unless text
+    text = text
+      .replace(/^\s+/, '')
+      .replace(/\s+$/, '')
+      .replace(/\]\s+/g, "]\n")
+      .replace(/\)\s+\[/g, ")\n[")
+      .replace(/\]\s+(Not|Value)/g, "] $1")
+      .replace(/(\[c-sequence-start\])\s+(\[c-sequence-end\])/, "$1 $2")
+      .replace(/(\[c-mapping-start\])\s+(\[c-mapping-end\])/, "$1 $2")
+      .replace(/^\s*/mg, '* ')
+    return """
+      **Legend:**
+      #{text}\n
+      """
+
+
+main = (spec, links, legend)->
+  to_markdown = new HtmlToMarkdown links, legend
 
   html = file_read spec
 

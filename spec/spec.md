@@ -317,24 +317,21 @@ its own line. [Block sequences] indicate each entry with a dash and space (
 [key: value pair]. [Comments] begin with an octothorpe (also called a "hash",
 "sharp", "pound", or "number sign" - ["**`#`**"]).
 
-**Example 2.1.  Sequence of Scalars(ball players)**
-
+**Example #. Sequence of Scalars (ball players)**
 ```
 - Mark McGwire
 - Sammy Sosa
 - Ken Griffey
 ```
 
-**Example 2.2.  Mapping Scalars to Scalars(player statistics)**
-
+**Example #. Mapping Scalars to Scalars (player statistics)**
 ```
 hr:  65    # Home runs
 avg: 0.278 # Batting average
 rbi: 147   # Runs Batted In
 ```
 
-**Example 2.3.  Mapping Scalars to Sequences(ball clubs in each league)**
-
+**Example #. Mapping Scalars to Sequences (ball clubs in each league)**
 ```
 american:
   - Boston Red Sox
@@ -346,8 +343,7 @@ national:
   - Atlanta Braves
 ```
 
-**Example 2.4.  Sequence of Mappings(players’ statistics)**
-
+**Example #. Sequence of Mappings (players’ statistics)**
 ```
 -
   name: Mark McGwire
@@ -366,7 +362,6 @@ The [flow sequence] is written as a [comma] separated list within [square]
 In a similar manner, the [flow mapping] uses [curly] [braces].
 
 **Example #. Sequence of Sequences**
-
 ```
 - [name        , hr, avg  ]
 - [Mark McGwire, 65, 0.278]
@@ -374,7 +369,6 @@ In a similar manner, the [flow mapping] uses [curly] [braces].
 ```
 
 **Example #. Mapping of Mappings**
-
 ```
 Mark McGwire: {hr: 65, avg: 0.278}
 Sammy Sosa: {
@@ -392,8 +386,7 @@ present.
 Three dots ( ["**`...`**"]) indicate the end of a document without starting a
 new one, for use in communication channels.
 
-**Example 2.7.  Two Documents in a Stream(each with a leading comment)**
-
+**Example #. Two Documents in a Stream (each with a leading comment)**
 ```
 # Ranking of 1998 home runs
 ---
@@ -407,8 +400,7 @@ new one, for use in communication channels.
 - St Louis Cardinals
 ```
 
-**Example 2.8.  Play by Play Feedfrom a Game**
-
+**Example #. Play by Play Feed from a Game**
 ```
 ---
 time: 20:03:20
@@ -426,8 +418,7 @@ Repeated [nodes] (objects) are first [identified] by an [anchor] (marked with
 the ampersand - ["**`&`**"]), and are then [aliased] (referenced with an
 asterisk - ["**`*`**"]) thereafter.
 
-**Example 2.9.  Single Document withTwo Comments**
-
+**Example #. Single Document with Two Comments**
 ```
 ---
 hr: # 1998 hr ranking
@@ -439,8 +430,7 @@ rbi:
   - Ken Griffey
 ```
 
-**Example 2.10.  Node for "**`Sammy Sosa`**"appears twice in this document**
-
+**Example #. Node for "**`Sammy Sosa`**" appears twice in this document**
 ```
 ---
 hr:
@@ -457,7 +447,6 @@ Within a [block collection], [key: value pairs] can start immediately following
 the [dash], [colon], or [question mark].
 
 **Example #. Mapping between Sequences**
-
 ```
 ? - Detroit Tigers
   - Chicago cubs
@@ -471,7 +460,6 @@ the [dash], [colon], or [question mark].
 ```
 
 **Example #. Compact Nested Mapping**
-
 ```
 ---
 # Products purchased
@@ -491,8 +479,7 @@ Alternatively, they can be written with the [folded style] [(denoted by
 "**`>`**"]) where each [line break] is [folded] to a [space] unless it ends an
 [empty] or a [more-indented] line.
 
-**Example 2.13.  In literals,newlines are preserved**
-
+**Example #. In literals, newlines are preserved**
 ```
 # ASCII Art
 --- |
@@ -500,8 +487,7 @@ Alternatively, they can be written with the [folded style] [(denoted by
   // ||  ||__
 ```
 
-**Example 2.14.  In the folded scalars,newlines become spaces**
-
+**Example #. In the folded scalars, newlines become spaces**
 ```
 --- >
   Mark McGwire's
@@ -509,8 +495,8 @@ Alternatively, they can be written with the [folded style] [(denoted by
   by a knee injury.
 ```
 
-**Example 2.15.  Folded newlines are preservedfor "more indented" and blank lines**
-
+**Example #. Folded newlines are preserved for "more indented" and blank
+lines**
 ```
 >
  Sammy Sosa completed another
@@ -523,7 +509,6 @@ Alternatively, they can be written with the [folded style] [(denoted by
 ```
 
 **Example #. Indentation determines scope**
-
 ```
 name: Mark McGwire
 accomplishment: >
@@ -541,7 +526,6 @@ The [single-quoted style] is useful when [escaping] is not needed.
 All [flow scalars] can span multiple lines; [line breaks] are always [folded].
 
 **Example #. Quoted Scalars**
-
 ```
 unicode: "Sosa did fine.\u263A"
 control: "\b1998\t1999\t2000\n"
@@ -553,7 +537,6 @@ tie-fighter: '|\-*-/|'
 ```
 
 **Example #. Multi-line Flow Scalars**
-
 ```
 plain:
   This unquoted scalar
@@ -576,7 +559,6 @@ The [repository] includes additional types such as
 [**`set`**](http://yaml.org/type/set.html) and others.
 
 **Example #. Integers**
-
 ```
 canonical: 12345
 decimal: +12345
@@ -585,7 +567,6 @@ hexadecimal: 0xC
 ```
 
 **Example #. Floating Point**
-
 ```
 canonical: 1.23015e+3
 exponential: 12.3015e+02
@@ -595,7 +576,6 @@ not a number: .NaN
 ```
 
 **Example #. Miscellaneous**
-
 ```
 null:
 booleans: [ true, false ]
@@ -603,7 +583,6 @@ string: '012345'
 ```
 
 **Example #. Timestamps**
-
 ```
 canonical: 2001-12-15T02:59:43.1Z
 iso8601: 2001-12-14t21:59:43.10-05:00
@@ -617,7 +596,6 @@ shorthand] notation using a [handle]. [Application]\-specific [local tags] may
 also be used.
 
 **Example #. Various Explicit Tags**
-
 ```
 ---
 not-date: !!str 2002-04-28
@@ -635,7 +613,6 @@ application specific tag: !something |
 ```
 
 **Example #. Global Tags**
-
 ```
 %TAG ! tag:clarkevans.com,2002:
 --- !shape
@@ -654,7 +631,6 @@ application specific tag: !something |
 ```
 
 **Example #. Unordered Sets**
-
 ```
 # Sets are represented as a
 # Mapping where each key is
@@ -666,7 +642,6 @@ application specific tag: !something |
 ```
 
 **Example #. Ordered Mappings**
-
 ```
 # Ordered maps are represented as
 # A sequence of mappings, with
@@ -683,7 +658,6 @@ Below are two full-length examples of YAML.
 On the left is a sample invoice; on the right is a sample log file.
 
 **Example #. Invoice**
-
 ```
 --- !<tag:clarkevans.com,2002:invoice>
 invoice: 34843
@@ -717,7 +691,6 @@ comments:
 ```
 
 **Example #. Log File**
-
 ```
 ---
 Time: 2001-11-23 15:01:42 -5
@@ -1530,28 +1503,23 @@ FAQ](http://www.unicode.org/unicode/faq/utf_bom.html).
 In the examples, byte order mark characters are displayed as "**`⇔`**".
 
 **Example #. Byte Order Mark**
-
 ```
 ⇔\# Comment only.
 
 ```
-
 ```
 # This stream contains no
 # documents, only comments.
 ```
-
-> **Legend:**
-> * [c-byte-order-mark]
+**Legend:**
+* [c-byte-order-mark]
 
 **Example #. Invalid Byte Order Mark**
-
 ```
 - Invalid use of BOM
 ⇔
 - Inside a document.
 ```
-
 ```
 ERROR:
  A BOM must not appear
@@ -1581,7 +1549,6 @@ A ["**`:`**"] (**`#x3A`**, colon) denotes a [mapping value].
 ```
 
 **Example #. Block Structure Indicators**
-
 ```
 sequence:
 - one
@@ -1591,7 +1558,6 @@ mapping:
   : blue
   sea : green
 ```
-
 ```
 %YAML 1.2
 ---
@@ -1605,10 +1571,10 @@ mapping:
   },
 }
 ```
-
-> **Legend:**
-> * [c-sequence-entry]
-> * [c-mapping-key] [c-mapping-value]
+**Legend:**
+* [c-sequence-entry]
+* [c-mapping-key]
+* [c-mapping-value]
 
 A ["**`,`**"] (**`#x2C`**, comma) ends a [flow collection] entry.
 
@@ -1641,12 +1607,10 @@ A ["**`}`**"] (**`#x7D`**, right brace) ends a [flow mapping].
 ```
 
 **Example #. Flow Collection Indicators**
-
 ```
 sequence: [ one, two, ]
 mapping: { sky: blue, sea: green }
 ```
-
 ```
 %YAML 1.2
 ---
@@ -1660,11 +1624,10 @@ mapping: { sky: blue, sea: green }
   },
 }
 ```
-
-> **Legend:**
-> * [c-sequence-start] [c-sequence-end]
-> * [c-mapping-start]  [c-mapping-end]
-> * [c-collect-entry]
+**Legend:**
+* [c-sequence-start] [c-sequence-end]
+* [c-mapping-start] [c-mapping-end]
+* [c-collect-entry]
 
 An ["**`#`**"] (**`#x23`**, octothorpe, hash, sharp, pound, number sign)
 denotes a [comment].
@@ -1674,19 +1637,16 @@ denotes a [comment].
 ```
 
 **Example #. Comment Indicator**
-
 ```
 # Comment only.
 
 ```
-
 ```
 # This stream contains no
 # documents, only comments.
 ```
-
-> **Legend:**
-> * [c-comment]
+**Legend:**
+* [c-comment]
 
 An ["**`&`**"] (**`#x26`**, ampersand) denotes a [node’s anchor property].
 
@@ -1711,12 +1671,10 @@ non-[plain scalars].
 ```
 
 **Example #. Node Property Indicators**
-
 ```
 anchored: !local &anchor value
 alias: *anchor
 ```
-
 ```
 %YAML 1.2
 ---
@@ -1727,9 +1685,10 @@ alias: *anchor
   : *A1,
 }
 ```
-
-> **Legend:**
-> * [c-tag] [c-anchor] [c-alias]
+**Legend:**
+* [c-tag]
+* [c-anchor]
+* [c-alias]
 
 A ["**`|`**"] (**`7C`**, vertical bar) denotes a [literal block scalar].
 
@@ -1744,7 +1703,6 @@ A ["**`>`**"] (**`#x3E`**, greater than) denotes a [folded block scalar].
 ```
 
 **Example #. Block Scalar Indicators**
-
 ```
 literal: |
   some
@@ -1753,7 +1711,6 @@ folded: >
   some
   text
 ```
-
 ```
 %YAML 1.2
 ---
@@ -1764,9 +1721,9 @@ folded: >
   : !!str "some text\n",
 }
 ```
-
-> **Legend:**
-> * [c-literal] [c-folded]
+**Legend:**
+* [c-literal]
+* [c-folded]
 
 An ["**`'`**"] (**`#x27`**, apostrophe, single quote) surrounds a
 [single-quoted flow scalar].
@@ -1783,12 +1740,10 @@ scalar].
 ```
 
 **Example #. Quoted Scalar Indicators**
-
 ```
 single: 'text'
 double: "text"
 ```
-
 ```
 %YAML 1.2
 ---
@@ -1799,9 +1754,9 @@ double: "text"
   : !!str "text",
 }
 ```
-
-> **Legend:**
-> * [c-single-quote] [c-double-quote]
+**Legend:**
+* [c-single-quote]
+* [c-double-quote]
 
 A ["**`%`**"] (**`#x25`**, percent) denotes a [directive] line.
 
@@ -1810,20 +1765,17 @@ A ["**`%`**"] (**`#x25`**, percent) denotes a [directive] line.
 ```
 
 **Example #. Directive Indicator**
-
 ```
 %YAML 1.2
 --- text
 ```
-
 ```
 %YAML 1.2
 ---
 !!str "text"
 ```
-
-> **Legend:**
-> * [c-directive]
+**Legend:**
+* [c-directive]
 
 The _"**`@`**"_ (**`#x40`**, at) and _"**<code>&grave;</code>**"_ (**`#x60`**,
 grave accent) are _reserved_ for future use.
@@ -1834,12 +1786,10 @@ grave accent) are _reserved_ for future use.
 ```
 
 **Example #. Invalid use of Reserved Indicators**
-
 ```
 commercial-at: @text
 grave-accent: text
 ```
-
 ```
 ERROR:
  Reserved indicators can't
@@ -1937,22 +1887,19 @@ In the examples, line breaks are sometimes displayed using the "**`↓`**" glyph
 for clarity.
 
 **Example #. Line Break Characters**
-
 ```
 |
   Line break (no glyph)
   Line break (glyphed)↓
 ```
-
 ```
 %YAML 1.2
 ---
 !!str "line break (no glyph)\n\
       line break (glyphed)\n"
 ```
-
-> **Legend:**
-> * [b-break]
+**Legend:**
+* [b-break]
 
 ## #. White Space Characters
 
@@ -1985,7 +1932,6 @@ In the examples, tab characters are displayed as the glyph "**`→`**".
 Space characters are sometimes displayed as the glyph "**`·`**" for clarity.
 
 **Example #. Tabs and Spaces**
-
 ```
 # Tabs and spaces
 quoted:·"Quoted →"
@@ -1994,7 +1940,6 @@ block:→|
 ··→printf("Hello, world!\n");
 ··}
 ```
-
 ```
 %YAML 1.2
 ---
@@ -2007,9 +1952,9 @@ block:→|
     }\n",
 }
 ```
-
-> **Legend:**
-> * [s-space] [s-tab]
+**Legend:**
+* [s-space]
+* [s-tab]
 
 ## #. Miscellaneous Characters
 
@@ -2241,7 +2186,6 @@ Any escaped character:
 ```
 
 **Example #. Escaped Characters**
-
 ```
 "Fun with \
 \" \a \b \e \f \↓
@@ -2249,7 +2193,6 @@ Any escaped character:
 \  _ \N \L \P \↓
 \x41 \u0041 \U00000041"
 ```
-
 ```
 %YAML 1.2
 ---
@@ -2259,18 +2202,15 @@ Any escaped character:
 \x20 \xA0 \x85 \u2028 \u2029
 A A A"
 ```
-
-> **Legend:**
-> * [c-ns-esc-char]
+**Legend:**
+* [c-ns-esc-char]
 
 **Example #. Invalid Escaped Characters**
-
 ```
 Bad escapes:
   "\c
   \xq-"
 ```
-
 ```
 ERROR:
 - c is an invalid escaped character.
@@ -2319,7 +2259,6 @@ However the [content] of each sibling [node] may be further indented
 independently.
 
 **Example #. Indentation Spaces**
-
 ```
 ··\# Leading comment line spaces are
 ···\# neither content nor indentation.
@@ -2334,7 +2273,6 @@ Not indented:
 ··→Still by two   # content nor
 ····]             # indentation.
 ```
-
 ```
 %YAML 1.2
 - - -
@@ -2352,24 +2290,22 @@ Not indented:
     }
 }
 ```
-
-> **Legend:**
-> * [s-indent(n)] Content
-> * Neither content nor indentation
+**Legend:**
+* [s-indent(n)]
+* Content
+* Neither content nor indentation
 
 The ["**`-`**"], ["**`?`**"] and ["**`:`**"] characters used to denote [block
 collection] entries are perceived by people to be part of the indentation.
 This is handled on a case-by-case basis by the relevant productions.
 
 **Example #. Indentation Indicators**
-
 ```
 ?·a
 :·-→b
 ··-··-→c
 ·····-·d
 ```
-
 ```
 %YAML 1.2
 ---
@@ -2381,10 +2317,10 @@ This is handled on a case-by-case basis by the relevant productions.
   ],
 }
 ```
-
-> **Legend:**
-> * Total Indentation
-> * [s-indent(n)] Indicator as indentation
+**Legend:**
+* Total Indentation
+* [s-indent(n)]
+* Indicator as indentation
 
 ## #. Separation Spaces
 
@@ -2401,13 +2337,11 @@ Separation spaces are a [presentation detail] and must not be used to convey
 ```
 
 **Example #. Separation Spaces**
-
 ```
 -·foo:→·bar
 - -·baz
   -→baz
 ```
-
 ```
 %YAML 1.2
 ---
@@ -2418,9 +2352,8 @@ Separation spaces are a [presentation detail] and must not be used to convey
   !!seq [ !!str "baz", !!str "baz" ],
 ]
 ```
-
-> **Legend:**
-> * [s-separate-in-line]
+**Legend:**
+* [s-separate-in-line]
 
 ## #. Line Prefixes
 
@@ -2450,7 +2383,6 @@ Line prefixes are a [presentation detail] and must not be used to convey
 ```
 
 **Example #. Line Prefixes**
-
 ```
 plain: text
 ··lines
@@ -2460,7 +2392,6 @@ block: |
 ··text
 ···→lines
 ```
-
 ```
 %YAML 1.2
 ---
@@ -2473,9 +2404,10 @@ block: |
   : !!str "text\n·→lines\n",
 }
 ```
-
-> **Legend:**
-> * [s-flow-line-prefix(n)] [s-block-line-prefix(n)] [s-indent(n)]
+**Legend:**
+* [s-flow-line-prefix(n)]
+* [s-block-line-prefix(n)]
+* [s-indent(n)]
 
 ## #. Empty Lines
 
@@ -2492,7 +2424,6 @@ The semantics of empty lines depend on the [scalar style] they appear in.
 This is handled on a case-by-case basis by the relevant productions.
 
 **Example #. Empty Lines**
-
 ```
 Folding:
   "Empty line
@@ -2502,7 +2433,6 @@ Chomping: |
   Clipped empty lines
 ·
 ```
-
 ```
 %YAML 1.2
 ---
@@ -2513,9 +2443,8 @@ Chomping: |
   : !!str "Clipped empty lines\n",
 }
 ```
-
-> **Legend:**
-> * [l-empty(n,c)]
+**Legend:**
+* [l-empty(n,c)]
 
 ## #. Line Folding
 
@@ -2544,7 +2473,6 @@ A folded non-[empty line] may end with either of the above [line breaks].
 ```
 
 **Example #. Line Folding**
-
 ```
 >-
   trimmed↓
@@ -2554,16 +2482,14 @@ A folded non-[empty line] may end with either of the above [line breaks].
   as↓
   space
 ```
-
 ```
 %YAML 1.2
 ---
 !!str "trimmed\n\n\nas space"
 ```
-
-> **Legend:**
-> * [b-l-trimmed(n,c)]
-> * [b-as-space]
+**Legend:**
+* [b-l-trimmed(n,c)]
+* [b-as-space]
 
 The above rules are common to both the [folded block style] and the [scalar
 flow styles].
@@ -2583,7 +2509,6 @@ Folding does distinguish between these cases in the following way:
 > feed, and the formatting of [more-indented] lines is preserved.
 
 **Example #. Block Folding**
-
 ```
 >
 ··foo·↓
@@ -2592,16 +2517,14 @@ Folding does distinguish between these cases in the following way:
 ↓
 ··baz↓
 ```
-
 ```
 %YAML 1.2
 --- !!str
 "foo \n\n\t bar\n\nbaz\n"
 ```
-
-> **Legend:**
-> * [b-l-folded(n,c)]
-> * Non-content spaces Content spaces
+**Legend:**
+* [b-l-folded(n,c)]
+* Non-content spaces Content spaces
 
 ##### Flow Folding
 
@@ -2625,7 +2548,6 @@ Folding does distinguish between these cases in the following way:
 ```
 
 **Example #. Flow Folding**
-
 ```
 "↓
 ··foo·↓
@@ -2634,16 +2556,14 @@ Folding does distinguish between these cases in the following way:
 ↓
 ··baz↓ "
 ```
-
 ```
 %YAML 1.2
 --- !!str
 " foo\nbar\nbaz "
 ```
-
-> **Legend:**
-> * [s-flow-folded(n)]
-> * Non-content spaces
+**Legend:**
+* [s-flow-folded(n)]
+* Non-content spaces
 
 ## #. Comments
 
@@ -2674,12 +2594,10 @@ However, as this confuses many tools, YAML [processors] should terminate the
 ```
 
 **Example #. Separated Comment**
-
 ```
 key:····# Comment↓
   value_eof_
 ```
-
 ```
 %YAML 1.2
 ---
@@ -2688,10 +2606,10 @@ key:····# Comment↓
   : !!str "value",
 }
 ```
-
-> **Legend:**
-> * [c-nb-comment-text] [b-comment]
-> * [s-b-comment]
+**Legend:**
+* [c-nb-comment-text]
+* [b-comment]
+* [s-b-comment]
 
 Outside [scalar content], comments may appear on a line of their own,
 independent of the [indentation] level.
@@ -2704,20 +2622,18 @@ characters is taken to be a comment line.
 ```
 
 **Example #. Comment Lines**
-
 ```
 ··# Comment↓
 ···↓
 ↓
 ```
-
 ```
 # This stream contains no
 # documents, only comments.
 ```
-
-> **Legend:**
-> * [s-b-comment] [l-comment]
+**Legend:**
+* [s-b-comment]
+* [l-comment]
 
 In most cases, when a line may end with a comment, YAML allows it to be
 followed by additional comment lines.
@@ -2730,14 +2646,12 @@ The only exception is a comment ending a [block scalar header].
 ```
 
 **Example #. Multi-Line Comments**
-
 ```
 key:····# Comment↓
 ········# lines↓
   value↓
 ↓
 ```
-
 ```
 %YAML 1.2
 ---
@@ -2746,9 +2660,10 @@ key:····# Comment↓
   : !!str "value",
 }
 ```
-
-> **Legend:**
-> * [s-b-comment] [l-comment] [s-l-comments]
+**Legend:**
+* [s-b-comment]
+* [l-comment]
+* [s-l-comments]
 
 ## #. Separation Lines
 
@@ -2777,7 +2692,6 @@ Note that structures following multi-line comment separation must be properly
 ```
 
 **Example #. Separation Spaces**
-
 ```
 {·first:·Sammy,·last:·Sosa·}:↓
 # Statistics:
@@ -2786,7 +2700,6 @@ Note that structures following multi-line comment separation must be properly
 ··avg:·# Average
 ···0.278
 ```
-
 ```
 %YAML 1.2
 ---
@@ -2805,11 +2718,10 @@ Note that structures following multi-line comment separation must be properly
   },
 }
 ```
-
-> **Legend:**
-> * [s-separate-in-line]
-> * [s-separate-lines(n)]
-> * [s-indent(n)]
+**Legend:**
+* [s-separate-in-line]
+* [s-separate-lines(n)]
+* [s-indent(n)]
 
 ## #. Directives
 
@@ -2852,21 +2764,20 @@ warning.
 ```
 
 **Example #. Reserved Directives**
-
 ```
 %FOO  bar baz # Should be ignored
                # with a warning.
 --- "foo"
 ```
-
 ```
 %YAML 1.2
 --- !!str
 "foo"
 ```
-
-> **Legend:**
-> * [ns-reserved-directive] [ns-directive-name] [ns-directive-parameter]
+**Legend:**
+* [ns-reserved-directive]
+* [ns-directive-name]
+* [ns-directive-parameter]
 
 ### #. "**`YAML`**" Directives
 
@@ -2904,34 +2815,30 @@ of [non-ASCII line breaks], as described [above]).
 ```
 
 **Example #. "**`YAML`**" directive**
-
 ```
 %YAML 1.3 # Attempt parsing
            # with a warning
 ---
 "foo"
 ```
-
 ```
 %YAML 1.2
 ---
 !!str "foo"
 ```
-
-> **Legend:**
-> * [ns-yaml-directive] [ns-yaml-version]
+**Legend:**
+* [ns-yaml-directive]
+* [ns-yaml-version]
 
 It is an error to specify more than one "**`YAML`**" directive for the same
 document, even if both occurrences give the same version number.
 
 **Example #. Invalid Repeated YAML directive**
-
 ```
 %YAML 1.2
 %YAML 1.1
 foo
 ```
-
 ```
 ERROR:
 The YAML directive must only be
@@ -2953,33 +2860,30 @@ This allows for compact and readable [tag] notation.
 ```
 
 **Example #. "**`TAG`**" directive**
-
 ```
 %TAG !yaml! tag:yaml.org,2002:
 ---
 !yaml!str "foo"
 ```
-
 ```
 %YAML 1.2
 ---
 !!str "foo"
 ```
-
-> **Legend:**
-> * [ns-tag-directive] [c-tag-handle] [ns-tag-prefix]
+**Legend:**
+* [ns-tag-directive]
+* [c-tag-handle]
+* [ns-tag-prefix]
 
 It is an error to specify more than one "**`TAG`**" directive for the same
 [handle] in the same document, even if both occurrences give the same [prefix].
 
 **Example #. Invalid Repeated TAG directive**
-
 ```
 %TAG ! !foo
 %TAG ! !foo
 bar
 ```
-
 ```
 ERROR:
 The TAG directive must only
@@ -3018,7 +2922,6 @@ There are three tag handle variants:
 ```
 
 **Example #. Primary Tag Handle**
-
 ```
 # Private
 !foo "bar"
@@ -3028,7 +2931,6 @@ There are three tag handle variants:
 ---
 !foo "bar"
 ```
-
 ```
 %YAML 1.2
 ---
@@ -3037,9 +2939,8 @@ There are three tag handle variants:
 ---
 !<tag:example.com,2000:app/foo> "bar"
 ```
-
-> **Legend:**
-> * [c-primary-tag-handle]
+**Legend:**
+* [c-primary-tag-handle]
 
 ##### Secondary Handle
 
@@ -3058,21 +2959,18 @@ There are three tag handle variants:
 ```
 
 **Example #. Secondary Tag Handle**
-
 ```
 %TAG !! tag:example.com,2000:app/
 ---
 !!int 1 - 3 # Interval, not integer
 ```
-
 ```
 %YAML 1.2
 ---
 !<tag:example.com,2000:app/int> "1 - 3"
 ```
-
-> **Legend:**
-> * [c-secondary-tag-handle]
+**Legend:**
+* [c-secondary-tag-handle]
 
 ##### Named Handles
 
@@ -3091,21 +2989,18 @@ There are three tag handle variants:
 ```
 
 **Example #. Tag Handles**
-
 ```
 %TAG !e! tag:example.com,2000:app/
 ---
 !e!foo "bar"
 ```
-
 ```
 %YAML 1.2
 ---
 !<tag:example.com,2000:app/foo> "bar"
 ```
-
-> **Legend:**
-> * [c-named-tag-handle]
+**Legend:**
+* [c-named-tag-handle]
 
 #### #. Tag Prefixes
 
@@ -3131,7 +3026,6 @@ There are two _tag prefix_ variants:
 ```
 
 **Example #. Local Tag Prefix**
-
 ```
 %TAG !m! !my-
 --- # Bulb here
@@ -3141,7 +3035,6 @@ There are two _tag prefix_ variants:
 --- # Color here
 !m!light green
 ```
-
 ```
 %YAML 1.2
 ---
@@ -3151,9 +3044,8 @@ There are two _tag prefix_ variants:
 ---
 !<!my-light> "green"
 ```
-
-> **Legend:**
-> * [c-ns-local-tag-prefix]
+**Legend:**
+* [c-ns-local-tag-prefix]
 
 ##### Global Tag Prefix
 
@@ -3170,21 +3062,18 @@ There are two _tag prefix_ variants:
 ```
 
 **Example #. Global Tag Prefix**
-
 ```
 %TAG !e! tag:example.com,2000:app/
 ---
 - !e!foo "bar"
 ```
-
 ```
 %YAML 1.2
 ---
 !<tag:example.com,2000:app/foo> "bar"
 ```
-
-> **Legend:**
-> * [ns-global-tag-prefix]
+**Legend:**
+* [ns-global-tag-prefix]
 
 ## #. Node Properties
 
@@ -3202,13 +3091,11 @@ Either or both may be omitted.
 ```
 
 **Example #. Node Properties**
-
 ```
 !!str &a1 "foo":
   !!str bar
 &a2 baz : *a1
 ```
-
 ```
 %YAML 1.2
 ---
@@ -3219,11 +3106,10 @@ Either or both may be omitted.
   : *B1,
 }
 ```
-
-> **Legend:**
-> * [c-ns-properties(n,c)]
-> * [c-ns-anchor-property]
-> * [c-ns-tag-property]
+**Legend:**
+* [c-ns-properties(n,c)]
+* [c-ns-anchor-property]
+* [c-ns-tag-property]
 
 ### #. Node Tags
 
@@ -3254,12 +3140,10 @@ A tag is denoted by the _"**`!`**" indicator_.
 ```
 
 **Example #. Verbatim Tags**
-
 ```
 !<tag:yaml.org,2002:str> foo :
   !<!bar> baz
 ```
-
 ```
 %YAML 1.2
 ---
@@ -3268,17 +3152,14 @@ A tag is denoted by the _"**`!`**" indicator_.
   : !<!bar> "baz",
 }
 ```
-
-> **Legend:**
-> * [c-verbatim-tag]
+**Legend:**
+* [c-verbatim-tag]
 
 **Example #. Invalid Verbatim Tags**
-
 ```
 - !<!\> foo
 - !<$:?\> bar
 ```
-
 ```
 ERROR:
 - Verbatim tags aren't resolved,
@@ -3320,7 +3201,6 @@ ERROR:
 ```
 
 **Example #. Tag Shorthands**
-
 ```
 %TAG !e! tag:example.com,2000:app/
 ---
@@ -3328,7 +3208,6 @@ ERROR:
 - !!str bar
 - !e!tag%21 baz
 ```
-
 ```
 %YAML 1.2
 ---
@@ -3338,19 +3217,16 @@ ERROR:
   !<tag:example.com,2000:app/tag!> "baz"
 ]
 ```
-
-> **Legend:**
-> * [c-ns-shorthand-tag]
+**Legend:**
+* [c-ns-shorthand-tag]
 
 **Example #. Invalid Tag Shorthands**
-
 ```
 %TAG !e! tag:example,2000:app/
 ---
 - !e! foo
 - !h!bar baz
 ```
-
 ```
 ERROR:
 - The !o! handle has no suffix.
@@ -3380,14 +3256,12 @@ ERROR:
 ```
 
 **Example #. Non-Specific Tags**
-
 ```
 # Assuming conventional resolution:
 - "12"
 - 12
 - ! 12
 ```
-
 ```
 %YAML 1.2
 ---
@@ -3397,9 +3271,8 @@ ERROR:
   !<tag:yaml.org,2002:str> "12",
 ]
 ```
-
-> **Legend:**
-> * [c-non-specific-tag]
+**Legend:**
+* [c-non-specific-tag]
 
 ### #. Node Anchors
 
@@ -3436,12 +3309,10 @@ These characters would cause ambiguity with [flow collection] structures.
 ```
 
 **Example #. Node Anchors**
-
 ```
 First occurrence: &anchor Value
 Second occurrence: *anchor
 ```
-
 ```
 %YAML 1.2
 ---
@@ -3452,9 +3323,9 @@ Second occurrence: *anchor
   : *A,
 }
 ```
-
-> **Legend:**
-> * [c-ns-anchor-property] [ns-anchor-name]
+**Legend:**
+* [c-ns-anchor-property]
+* [ns-anchor-name]
 
 # Chapter #. Flow Styles
 
@@ -3485,14 +3356,12 @@ these were already specified at the first occurrence of the [node].
 ```
 
 **Example #. Alias Nodes**
-
 ```
 First occurrence: &anchor Foo
 Second occurrence: *anchor
 Override anchor: &anchor Bar
 Reuse anchor: *anchor
 ```
-
 ```
 %YAML 1.2
 ---
@@ -3507,9 +3376,9 @@ Reuse anchor: *anchor
   : *B,
 }
 ```
-
-> **Legend:**
-> * [c-ns-alias-node] [ns-anchor-name]
+**Legend:**
+* [c-ns-alias-node]
+* [ns-anchor-name]
 
 ## #. Empty Nodes
 
@@ -3528,14 +3397,12 @@ Note that this glyph corresponds to a position in the characters [stream]
 rather than to an actual character.
 
 **Example #. Empty Content**
-
 ```
 {
   foo : !!str°,
   !!str° : bar,
 }
 ```
-
 ```
 %YAML 1.2
 ---
@@ -3544,9 +3411,8 @@ rather than to an actual character.
   ? !!str ""    : !!str "bar",
 }
 ```
-
-> **Legend:**
-> * [e-scalar]
+**Legend:**
+* [e-scalar]
 
 Both the [node’s properties] and [node content] are optional.
 This allows for a _completely empty node_.
@@ -3558,14 +3424,12 @@ for their existence.
 ```
 
 **Example #. Completely Empty Flow Nodes**
-
 ```
 {
   ? foo :°,
   °: bar,
 }
 ```
-
 ```
 %YAML 1.2
 ---
@@ -3574,9 +3438,8 @@ for their existence.
   ? !!null ""   : !!str "bar",
 }
 ```
-
-> **Legend:**
-> * [e-node]
+**Legend:**
+* [e-node]
 
 ## #. Flow Scalar Styles
 
@@ -3627,13 +3490,11 @@ Double-quoted scalars are restricted to a single line when contained inside an
 ```
 
 **Example #. Double Quoted Implicit Keys**
-
 ```
 "implicit block key" : [
   "implicit flow key" : value,
  ]
 ```
-
 ```
 %YAML 1.2
 ---
@@ -3647,10 +3508,9 @@ Double-quoted scalars are restricted to a single line when contained inside an
   ]
 }
 ```
-
-> **Legend:**
-> * [nb-double-one-line]
-> * [c-double-quoted(n,c)]
+**Legend:**
+* [nb-double-one-line]
+* [c-double-quoted(n,c)]
 
 In a multi-line double-quoted scalar, [line breaks] are subject to [flow line
 folding], which discards any trailing [white space] characters.
@@ -3672,7 +3532,6 @@ double-quoted lines to be broken at arbitrary positions.
 ```
 
 **Example #. Double Quoted Line Breaks**
-
 ```
 "folded·↓
 to a space,→↓
@@ -3680,7 +3539,6 @@ to a space,→↓
 to a line feed, or·→\↓
 ·\·→non-content"
 ```
-
 ```
 %YAML 1.2
 ---
@@ -3688,9 +3546,9 @@ to a line feed, or·→\↓
       to a line feed, \
       or \t \tnon-content"
 ```
-
-> **Legend:**
-> * [s-flow-folded(n)] [s-double-escaped(n)]
+**Legend:**
+* [s-flow-folded(n)]
+* [s-double-escaped(n)]
 
 All leading and trailing [white space] characters are excluded from the
 [content].
@@ -3716,14 +3574,12 @@ Empty lines, if any, are consumed as part of the [line folding].
 ```
 
 **Example #. Double Quoted Lines**
-
 ```
 "·1st non-empty↓
 ↓
 ·2nd non-empty·
 →3rd non-empty·"
 ```
-
 ```
 %YAML 1.2
 ---
@@ -3731,9 +3587,9 @@ Empty lines, if any, are consumed as part of the [line folding].
       2nd non-empty \
       3rd non-empty "
 ```
-
-> **Legend:**
-> * [nb-ns-double-in-line] [s-double-next-line(n)]
+**Legend:**
+* [nb-ns-double-in-line]
+* [s-double-next-line(n)]
 
 ### #. Single-Quoted Style
 
@@ -3761,19 +3617,16 @@ In addition, it is only possible to break a long single-quoted line where a
 ```
 
 **Example #. Single Quoted Characters**
-
 ```
- 'here''s to "quotes"'
+'here''s to "quotes"'
 ```
-
 ```
 %YAML 1.2
 ---
 !!str "here's to \"quotes\""
 ```
-
-> **Legend:**
-> * [c-quoted-quote]
+**Legend:**
+* [c-quoted-quote]
 
 Single-quoted scalars are restricted to a single line when contained inside a
 [implicit key].
@@ -3796,13 +3649,11 @@ Single-quoted scalars are restricted to a single line when contained inside a
 ```
 
 **Example #. Single Quoted Implicit Keys**
-
 ```
 'implicit block key' : [
   'implicit flow key' : value,
  ]
 ```
-
 ```
 %YAML 1.2
 ---
@@ -3816,10 +3667,9 @@ Single-quoted scalars are restricted to a single line when contained inside a
   ]
 }
 ```
-
-> **Legend:**
-> * [nb-single-one-line]
-> * [c-single-quoted(n,c)]
+**Legend:**
+* [nb-single-one-line]
+* [c-single-quoted(n,c)]
 
 All leading and trailing [white space] characters are excluded from the
 [content].
@@ -3845,14 +3695,12 @@ Empty lines, if any, are consumed as part of the [line folding].
 ```
 
 **Example #. Single Quoted Lines**
-
 ```
 '·1st non-empty↓
 ↓
 ·2nd non-empty·
 →3rd non-empty·'
 ```
-
 ```
 %YAML 1.2
 ---
@@ -3860,9 +3708,9 @@ Empty lines, if any, are consumed as part of the [line folding].
       2nd non-empty \
       3rd non-empty "
 ```
-
-> **Legend:**
-> * [nb-ns-single-in-line(n)] [s-single-next-line(n)]
+**Legend:**
+* [nb-ns-single-in-line(n)]
+* [s-single-next-line(n)]
 
 ### #. Plain Style
 
@@ -3922,7 +3770,6 @@ These characters would cause ambiguity with [flow collection] structures.
 ```
 
 **Example #. Plain Characters**
-
 ```
 # Outside flow collection:
 - ::vector
@@ -3937,7 +3784,6 @@ These characters would cause ambiguity with [flow collection] structures.
   -123,
   http://example.com/foo#bar ]
 ```
-
 ```
 %YAML 1.2
 ---
@@ -3956,10 +3802,9 @@ These characters would cause ambiguity with [flow collection] structures.
   ],
 ]
 ```
-
-> **Legend:**
-> * [ns-plain-first(c)] Not ns-plain-first(c)
-> * [ns-plain-char(c)] Not ns-plain-char(c)
+**Legend:**
+* [ns-plain-first(c)] Not ns-plain-first(c)
+* [ns-plain-char(c)] Not ns-plain-char(c)
 
 Plain scalars are further restricted to a single line when contained inside an
 [implicit key].
@@ -3983,13 +3828,11 @@ Plain scalars are further restricted to a single line when contained inside an
 ```
 
 **Example #. Plain Implicit Keys**
-
 ```
 implicit block key : [
   implicit flow key : value,
  ]
 ```
-
 ```
 %YAML 1.2
 ---
@@ -4003,9 +3846,8 @@ implicit block key : [
   ]
 }
 ```
-
-> **Legend:**
-> * [ns-plain-one-line(c)]
+**Legend:**
+* [ns-plain-one-line(c)]
 
 All leading and trailing [white space] characters are excluded from the
 [content].
@@ -4025,14 +3867,12 @@ Empty lines, if any, are consumed as part of the [line folding].
 ```
 
 **Example #. Plain Lines**
-
 ```
 1st non-empty↓
 ↓
 ·2nd non-empty·
 →3rd non-empty
 ```
-
 ```
 %YAML 1.2
 ---
@@ -4040,9 +3880,9 @@ Empty lines, if any, are consumed as part of the [line folding].
       2nd non-empty \
       3rd non-empty"
 ```
-
-> **Legend:**
-> * [nb-ns-plain-in-line(c)] [s-ns-plain-next-line(n,c)]
+**Legend:**
+* [nb-ns-plain-in-line(c)]
+* [s-ns-plain-next-line(n,c)]
 
 ## #. Flow Collection Styles
 
@@ -4084,12 +3924,10 @@ Sequence entries are separated by a ["**`,`**"] character.
 ```
 
 **Example #. Flow Sequence**
-
 ```
 - [ one, two, ]
 - [three ,four]
 ```
-
 ```
 %YAML 1.2
 ---
@@ -4104,10 +3942,9 @@ Sequence entries are separated by a ["**`,`**"] character.
   ],
 ]
 ```
-
-> **Legend:**
-> * [c-sequence-start] [c-sequence-end]
-> * [ns-flow-seq-entry(n,c)]
+**Legend:**
+* [c-sequence-start] [c-sequence-end]
+* [ns-flow-seq-entry(n,c)]
 
 Any [flow node] may be used as a flow sequence entry.
 In addition, YAML provides a [compact notation] for the case where a flow
@@ -4119,7 +3956,6 @@ sequence entry is a [mapping] with a [single key: value pair].
 ```
 
 **Example #. Flow Sequence Entries**
-
 ```
 [
 "double
@@ -4130,7 +3966,6 @@ plain
 single: pair,
 ]
 ```
-
 ```
 %YAML 1.2
 ---
@@ -4147,9 +3982,9 @@ single: pair,
   },
 ]
 ```
-
-> **Legend:**
-> * [ns-flow-node(n,c)] [ns-flow-pair(n,c)]
+**Legend:**
+* [ns-flow-node(n,c)]
+* [ns-flow-pair(n,c)]
 
 ### #. Flow Mappings
 
@@ -4172,12 +4007,10 @@ Mapping entries are separated by a ["**`,`**"] character.
 ```
 
 **Example #. Flow Mappings**
-
 ```
 - { one : two , three: four , }
 - {five: six,seven : eight}
 ```
-
 ```
 %YAML 1.2
 ---
@@ -4192,10 +4025,9 @@ Mapping entries are separated by a ["**`,`**"] character.
   },
 ]
 ```
-
-> **Legend:**
-> * [c-mapping-start] [c-mapping-end]
-> * [ns-flow-map-entry(n,c)]
+**Legend:**
+* [c-mapping-start] [c-mapping-end]
+* [ns-flow-map-entry(n,c)]
 
 If the optional _"**`?`**" mapping key indicator_ is specified, the rest of the
 entry may be [completely empty].
@@ -4215,7 +4047,6 @@ entry may be [completely empty].
 ```
 
 **Example #. Flow Mapping Entries**
-
 ```
 {
 ? explicit: entry,
@@ -4223,7 +4054,6 @@ implicit: entry,
 ?°°
 }
 ```
-
 ```
 %YAML 1.2
 ---
@@ -4233,11 +4063,10 @@ implicit: entry,
   ? !!null "" : !!null "",
 }
 ```
-
-> **Legend:**
-> * [ns-flow-map-explicit-entry(n,c)]
-> * [ns-flow-map-implicit-entry(n,c)]
-> * [e-node]
+**Legend:**
+* [ns-flow-map-explicit-entry(n,c)]
+* [ns-flow-map-implicit-entry(n,c)]
+* [e-node]
 
 Normally, YAML insists the _"**`:`**" mapping value indicator_ be [separated]
 from the [value] by [white space].
@@ -4280,7 +4109,6 @@ indicated by the "**`:`**".
 ```
 
 **Example #. Flow Mapping Separate Values**
-
 ```
 {
 unquoted·:·"separate",
@@ -4289,7 +4117,6 @@ omitted value:°,
 °:·omitted key,
 }
 ```
-
 ```
 %YAML 1.2
 ---
@@ -4300,10 +4127,10 @@ omitted value:°,
   ? !!null "" : !!str "omitted key",
 }
 ```
-
-> **Legend:**
-> * [ns-flow-yaml-node(n,c)] [e-node]
-> * [c-ns-flow-map-separate-value(n,c)]
+**Legend:**
+* [ns-flow-yaml-node(n,c)]
+* [e-node]
+* [c-ns-flow-map-separate-value(n,c)]
 
 To ensure [JSON compatibility], if a [key] inside a flow mapping is
 [JSON-like], YAML allows the following [value] to be specified adjacent to the
@@ -4329,7 +4156,6 @@ However, as this greatly reduces readability, YAML [processors] should
 ```
 
 **Example #. Flow Mapping Adjacent Values**
-
 ```
 {
 "adjacent":value,
@@ -4337,7 +4163,6 @@ However, as this greatly reduces readability, YAML [processors] should
 "empty":°
 }
 ```
-
 ```
 %YAML 1.2
 ---
@@ -4347,10 +4172,10 @@ However, as this greatly reduces readability, YAML [processors] should
   ? !!str "empty"    : !!null "",
 }
 ```
-
-> **Legend:**
-> * [c-flow-json-node(n,c)] [e-node]
-> * [c-ns-flow-map-adjacent-value(n,c)]
+**Legend:**
+* [c-flow-json-node(n,c)]
+* [e-node]
+* [c-ns-flow-map-adjacent-value(n,c)]
 
 A more compact notation is usable inside [flow sequences], if the [mapping]
 contains a _single key: value pair_.
@@ -4360,13 +4185,11 @@ Note that it is not possible to specify any [node properties] for the [mapping]
 in this case.
 
 **Example #. Single Pair Flow Mappings**
-
 ```
 [
 foo: bar
 ]
 ```
-
 ```
 %YAML 1.2
 ---
@@ -4374,9 +4197,8 @@ foo: bar
   !!map { ? !!str "foo" : !!str "bar" }
 ]
 ```
-
-> **Legend:**
-> * [ns-flow-pair(n,c)]
+**Legend:**
+* [ns-flow-pair(n,c)]
 
 If the "**`?`**" indicator is explicitly specified, [parsing] is unambiguous,
 and the syntax is identical to the general case.
@@ -4389,14 +4211,12 @@ and the syntax is identical to the general case.
 ```
 
 **Example #. Single Pair Explicit Entry**
-
 ```
 [
 ? foo
  bar : baz
 ]
 ```
-
 ```
 %YAML 1.2
 ---
@@ -4407,9 +4227,8 @@ and the syntax is identical to the general case.
   },
 ]
 ```
-
-> **Legend:**
-> * [ns-flow-map-explicit-entry(n,c)]
+**Legend:**
+* [ns-flow-map-explicit-entry(n,c)]
 
 If the "**`?`**" indicator is omitted, [parsing] needs to see past the
 _implicit key_ to recognize it as such.
@@ -4454,13 +4273,11 @@ been impossible to implement.
 ```
 
 **Example #. Single Pair Implicit Entries**
-
 ```
 - [ YAML·: separate ]
 - [ °: empty key entry ]
 - [ {JSON: like}:adjacent ]
 ```
-
 ```
 %YAML 1.2
 ---
@@ -4487,20 +4304,17 @@ been impossible to implement.
   ],
 ]
 ```
-
-> **Legend:**
-> * [ns-s-implicit-yaml-key]
-> * [c-s-implicit-json-key]
-> * [e-node] Value
+**Legend:**
+* [ns-s-implicit-yaml-key]
+* [c-s-implicit-json-key]
+* [e-node] Value
 
 **Example #. Invalid Implicit Keys**
-
 ```
 [ foo
  bar: invalid,
  "foo_...>1K characters..._bar": invalid ]
 ```
-
 ```
 ERROR:
 - The foo bar key spans multiple lines
@@ -4530,7 +4344,6 @@ Even the [double-quoted style] is a superset of the JSON string format.
 ```
 
 **Example #. Flow Content**
-
 ```
 - [ a, b ]
 - { a: b }
@@ -4538,7 +4351,6 @@ Even the [double-quoted style] is a superset of the JSON string format.
 - 'b'
 - c
 ```
-
 ```
 %YAML 1.2
 ---
@@ -4550,10 +4362,9 @@ Even the [double-quoted style] is a superset of the JSON string format.
   !!str "c",
 ]
 ```
-
-> **Legend:**
-> * [c-flow-json-content(n,c)]
-> * [ns-flow-yaml-content(n,c)]
+**Legend:**
+* [c-flow-json-content(n,c)]
+* [ns-flow-yaml-content(n,c)]
 
 A complete [flow] [node] also has optional [node properties], except for [alias
 nodes] which refer to the [anchored] [node properties].
@@ -4585,7 +4396,6 @@ nodes] which refer to the [anchored] [node properties].
 ```
 
 **Example #. Flow Nodes**
-
 ```
 - !!str "a"
 - 'b'
@@ -4593,7 +4403,6 @@ nodes] which refer to the [anchored] [node properties].
 - *anchor
 - !!str°
 ```
-
 ```
 %YAML 1.2
 ---
@@ -4605,10 +4414,9 @@ nodes] which refer to the [anchored] [node properties].
   !!str "",
 ]
 ```
-
-> **Legend:**
-> * [c-flow-json-node(n,c)]
-> * [ns-flow-yaml-node(n,c)]
+**Legend:**
+* [c-flow-json-node(n,c)]
+* [ns-flow-yaml-node(n,c)]
 
 # Chapter #. Block Styles
 
@@ -4639,7 +4447,6 @@ This is the only case where a [comment] must not be followed by additional
 ```
 
 **Example #. Block Scalar Header**
-
 ```
 - | # Empty header↓
  literal
@@ -4651,7 +4458,6 @@ This is the only case where a [comment] must not be followed by additional
 - >1- # Both indicators↓
  ·strip
 ```
-
 ```
 %YAML 1.2
 ---
@@ -4662,9 +4468,8 @@ This is the only case where a [comment] must not be followed by additional
   !!str "·strip",
 ]
 ```
-
-> **Legend:**
-> * [c-b-block-header(m,t)]
+**Legend:**
+* [c-b-block-header(m,t)]
 
 #### #. Block Indentation Indicator
 
@@ -4693,7 +4498,6 @@ indicator for cases where detection will fail.
 ```
 
 **Example #. Block Indentation Indicator**
-
 ```
 - |°
 ·detected
@@ -4707,7 +4511,6 @@ indicator for cases where detection will fail.
 ·→
 ·detected
 ```
-
 ```
 %YAML 1.2
 ---
@@ -4718,13 +4521,11 @@ indicator for cases where detection will fail.
   !!str "\t·detected\n",
 ]
 ```
-
-> **Legend:**
-> * [c-indentation-indicator(m)]
-> * [s-indent(n)]
+**Legend:**
+* [c-indentation-indicator(m)]
+* [s-indent(n)]
 
 **Example #. Invalid Block Scalar Indentation Indicators**
-
 ```
 - |
 ··
@@ -4735,7 +4536,6 @@ indicator for cases where detection will fail.
 - |2
 ·text
 ```
-
 ```
 ERROR:
 - A leading all-space line must
@@ -4794,7 +4594,6 @@ by the chomping indicator specified in the [block scalar header].
 ```
 
 **Example #. Chomping Final Line Break**
-
 ```
 strip: |-
   text↓
@@ -4803,7 +4602,6 @@ clip: |
 keep: |+
   text↓
 ```
-
 ```
 %YAML 1.2
 ---
@@ -4816,9 +4614,9 @@ keep: |+
   : !!str "text\n",
 }
 ```
-
-> **Legend:**
-> * [b-non-content] [b-as-line-feed]
+**Legend:**
+* [b-non-content]
+* [b-as-line-feed]
 
 The interpretation of the trailing [empty lines] following a [block scalar] is
 also controlled by the chomping indicator specified in the [block scalar
@@ -4857,9 +4655,8 @@ constrained.
 ```
 
 **Example #. Chomping Trailing Lines**
-
 ```
- # Strip
+# Strip
   # Comments:
 strip: |-
   # text↓
@@ -4879,7 +4676,6 @@ keep: |+
 ·# Trail
 ··# comments.
 ```
-
 ```
 %YAML 1.2
 ---
@@ -4892,17 +4688,15 @@ keep: |+
   : !!str "# text\n\n",
 }
 ```
-
-> **Legend:**
-> * [l-strip-empty(n)]
-> * [l-keep-empty(n)]
-> * [l-trail-comments(n)]
+**Legend:**
+* [l-strip-empty(n)]
+* [l-keep-empty(n)]
+* [l-trail-comments(n)]
 
 If a [block scalar] consists only of [empty lines], then these lines are
 considered as trailing lines and hence are affected by chomping.
 
 **Example #. Empty Scalar Chomping**
-
 ```
 strip: >-
 ↓
@@ -4911,7 +4705,6 @@ clip: >
 keep: |+
 ↓
 ```
-
 ```
 %YAML 1.2
 ---
@@ -4924,9 +4717,9 @@ keep: |+
   : !!str "\n",
 }
 ```
-
-> **Legend:**
-> * [l-strip-empty(n)] [l-keep-empty(n)]
+**Legend:**
+* [l-strip-empty(n)]
+* [l-keep-empty(n)]
 
 ### #. Literal Style
 
@@ -4940,22 +4733,19 @@ It is the simplest, most restricted, and most readable [scalar style].
 ```
 
 **Example #. Literal Scalar**
-
 ```
 |↓
 ·literal↓
 ·→text↓
 ↓
 ```
-
 ```
 %YAML 1.2
 ---
 !!str "literal\n\ttext\n"
 ```
-
-> **Legend:**
-> * [c-l+literal(n)]
+**Legend:**
+* [c-l+literal(n)]
 
 Inside literal scalars, all ([indented]) characters are considered to be
 [content], including [white space] characters.
@@ -4987,7 +4777,6 @@ In addition, there is no way to break a long literal line.
 ```
 
 **Example #. Literal Content**
-
 ```
 |
 ·
@@ -4999,18 +4788,16 @@ In addition, there is no way to break a long literal line.
 ↓
 ·# Comment
 ```
-
 ```
 %YAML 1.2
 ---
 !!str "\n\nliteral\n·\n\ntext\n"
 ```
-
-> **Legend:**
-> * [l-nb-literal-text(n)]
-> * [b-nb-literal-next(n)]
-> * [b-chomped-last(t)]
-> * [l-chomped-empty(n,t)]
+**Legend:**
+* [l-nb-literal-text(n)]
+* [b-nb-literal-next(n)]
+* [b-chomped-last(t)]
+* [l-chomped-empty(n,t)]
 
 ### #. Folded Style
 
@@ -5025,22 +4812,19 @@ It is similar to the [literal style]; however, folded scalars are subject to
 ```
 
 **Example #. Folded Scalar**
-
 ```
 >↓
 ·folded↓
 ·text↓
 ↓
 ```
-
 ```
 %YAML 1.2
 ---
 !!str "folded text\n"
 ```
-
-> **Legend:**
-> * [c-l+folded(n)]
+**Legend:**
+* [c-l+folded(n)]
 
 [Folding] allows long lines to be broken anywhere a single [space] character
 separates two non-[space] characters.
@@ -5057,7 +4841,6 @@ separates two non-[space] characters.
 ```
 
 **Example #. Folded Lines**
-
 ```
 >
 ·folded↓
@@ -5075,7 +4858,6 @@ separates two non-[space] characters.
 
 # Comment
 ```
-
 ```
 %YAML 1.2
 ---
@@ -5089,10 +4871,9 @@ separates two non-[space] characters.
       \n\
       last line\n"
 ```
-
-> **Legend:**
-> * [s-nb-folded-text(n)]
-> * [l-nb-folded-lines(n)]
+**Legend:**
+* [s-nb-folded-text(n)]
+* [l-nb-folded-lines(n)]
 
 (The following three examples duplicate this example, each highlighting
 different productions.)
@@ -5118,7 +4899,6 @@ Lines starting with [white space] characters (_more-indented_ lines) are not
 ```
 
 **Example #. More Indented Lines**
-
 ```
 >
  folded
@@ -5136,7 +4916,6 @@ Lines starting with [white space] characters (_more-indented_ lines) are not
 
 # Comment
 ```
-
 ```
 %YAML 1.2
 ---
@@ -5150,10 +4929,9 @@ Lines starting with [white space] characters (_more-indented_ lines) are not
       \n\
       last line\n"
 ```
-
-> **Legend:**
-> * [s-nb-spaced-text(n)]
-> * [l-nb-spaced-lines(n)]
+**Legend:**
+* [s-nb-spaced-text(n)]
+* [l-nb-spaced-lines(n)]
 
 [Line breaks] and [empty lines] separating folded and more-indented lines are
 also not [folded].
@@ -5171,7 +4949,6 @@ also not [folded].
 ```
 
 **Example #. Empty Separation Lines**
-
 ```
 >
 ↓
@@ -5190,7 +4967,6 @@ also not [folded].
 
 # Comment
 ```
-
 ```
 %YAML 1.2
 ---
@@ -5204,11 +4980,10 @@ also not [folded].
       \n\
       last line\n"
 ```
-
-> **Legend:**
-> * [b-as-line-feed]
-> * (separation)
-> * [l-empty(n,c)]
+**Legend:**
+* [b-as-line-feed]
+* (separation)
+* [l-empty(n,c)]
 
 The final [line break], and trailing [empty lines] if any, are subject to
 [chomping] and are never [folded].
@@ -5220,7 +4995,6 @@ The final [line break], and trailing [empty lines] if any, are subject to
 ```
 
 **Example #. Final Empty Lines**
-
 ```
 >
  folded
@@ -5238,7 +5012,6 @@ The final [line break], and trailing [empty lines] if any, are subject to
 ↓
 # Comment
 ```
-
 ```
 %YAML 1.2
 ---
@@ -5252,9 +5025,9 @@ The final [line break], and trailing [empty lines] if any, are subject to
       \n\
       last line\n"
 ```
-
-> **Legend:**
-> * [b-chomped-last(t)] [l-chomped-empty(n,t)]
+**Legend:**
+* [b-chomped-last(t)]
+* [l-chomped-empty(n,t)]
 
 ## #. Block Collection Styles
 
@@ -5284,13 +5057,11 @@ followed by a non-space character (e.g. "**`-1`**").
 ```
 
 **Example #. Block Sequence**
-
 ```
 block sequence:
 ··- one↓
   - two : three↓
 ```
-
 ```
 %YAML 1.2
 ---
@@ -5305,10 +5076,9 @@ block sequence:
   ],
 }
 ```
-
-> **Legend:**
-> * [c-l-block-seq-entry(n)]
-> * auto-detected [s-indent(n)]
+**Legend:**
+* [c-l-block-seq-entry(n)]
+* auto-detected [s-indent(n)]
 
 The entry [node] may be either [completely empty], be a nested [block node], or
 use a _compact in-line notation_.
@@ -5335,7 +5105,6 @@ Note that it is not possible to specify [node properties] for such a
 ```
 
 **Example #. Block Sequence Entry Types**
-
 ```
 -° # Empty
 - |
@@ -5344,7 +5113,6 @@ Note that it is not possible to specify [node properties] for such a
 ··- two # sequence
 - one: two # Compact mapping
 ```
-
 ```
 %YAML 1.2
 ---
@@ -5361,12 +5129,11 @@ Note that it is not possible to specify [node properties] for such a
   },
 ]
 ```
-
-> **Legend:**
-> * Empty
-> * [s-l+block-node(n,c)]
-> * [ns-l-compact-sequence(n)]
-> * [ns-l-compact-mapping(n)]
+**Legend:**
+* Empty
+* [s-l+block-node(n,c)]
+* [ns-l-compact-sequence(n)]
+* [ns-l-compact-mapping(n)]
 
 ### #. Block Mappings
 
@@ -5380,12 +5147,10 @@ pair].
 ```
 
 **Example #. Block Mappings**
-
 ```
 block mapping:
 ·key: value↓
 ```
-
 ```
 %YAML 1.2
 ---
@@ -5397,10 +5162,9 @@ block mapping:
   },
 }
 ```
-
-> **Legend:**
-> * [ns-l-block-map-entry(n)]
-> * auto-detected [s-indent(n)]
+**Legend:**
+* [ns-l-block-map-entry(n)]
+* auto-detected [s-indent(n)]
 
 If the ["**`?`**"] indicator is specified, the optional value node must be
 specified on a separate line, denoted by the ["**`:`**"] indicator.
@@ -5432,7 +5196,6 @@ for [block sequence] entries.
 ```
 
 **Example #. Explicit Block Mapping Entries**
-
 ```
 ? explicit key # Empty value↓°
 ? |
@@ -5440,7 +5203,6 @@ for [block sequence] entries.
 :·- one # Explicit compact
 ··- two # block value↓
 ```
-
 ```
 %YAML 1.2
 ---
@@ -5454,11 +5216,10 @@ for [block sequence] entries.
   ],
 }
 ```
-
-> **Legend:**
-> * [c-l-block-map-explicit-key(n)]
-> * [l-block-map-explicit-value(n)]
-> * [e-node]
+**Legend:**
+* [c-l-block-map-explicit-key(n)]
+* [l-block-map-explicit-value(n)]
+* [e-node]
 
 If the "**`?`**" indicator is omitted, [parsing] needs to see past the
 [implicit key], in the same way as in the [single key: value pair] [flow
@@ -5497,14 +5258,12 @@ This prevents a potential ambiguity with multi-line [plain scalars].
 ```
 
 **Example #. Implicit Block Mapping Entries**
-
 ```
 plain key: in-line value
 °:° # Both empty
 "quoted key":
 - entry
 ```
-
 ```
 %YAML 1.2
 ---
@@ -5517,10 +5276,9 @@ plain key: in-line value
   : !!seq [ !!str "entry" ],
 }
 ```
-
-> **Legend:**
-> * [ns-s-block-map-implicit-key]
-> * [c-l-block-map-implicit-value(n)]
+**Legend:**
+* [ns-s-block-map-implicit-key]
+* [c-l-block-map-implicit-value(n)]
 
 A [compact in-line notation] is also available.
 This compact notation may be nested inside [block sequences] and explicit block
@@ -5535,13 +5293,11 @@ mapping.
 ```
 
 **Example #. Compact Block Mappings**
-
 ```
 - sun: yellow↓
 - ? earth: blue↓
   : moon: white↓
 ```
-
 ```
 %YAML 1.2
 ---
@@ -5561,9 +5317,8 @@ mapping.
   }
 ]
 ```
-
-> **Legend:**
-> * [ns-l-compact-mapping(n)]
+**Legend:**
+* [ns-l-compact-mapping(n)]
 
 ### #. Block Nodes
 
@@ -5587,7 +5342,6 @@ scalar] and an [implicit key] starting a nested [block mapping].
 ```
 
 **Example #. Block Node Types**
-
 ```
 -↓
 ··"flow in block"↓
@@ -5596,7 +5350,6 @@ scalar] and an [implicit key] starting a nested [block mapping].
 -·!!map # Block collection
   foo : bar↓
 ```
-
 ```
 %YAML 1.2
 ---
@@ -5609,10 +5362,9 @@ scalar] and an [implicit key] starting a nested [block mapping].
   },
 ]
 ```
-
-> **Legend:**
-> * [s-l+flow-in-block(n)]
-> * [s-l+block-in-block(n,c)]
+**Legend:**
+* [s-l+flow-in-block(n)]
+* [s-l+block-in-block(n,c)]
 
 The block [node’s properties] may span across several lines.
 In this case, they must be [indented] by at least one more [space] than the
@@ -5632,7 +5384,6 @@ entries.
 ```
 
 **Example #. Block Scalar Nodes**
-
 ```
 literal: |2
 ··value
@@ -5641,7 +5392,6 @@ folded:↓
 ··>1
 ·value
 ```
-
 ```
 %YAML 1.2
 ---
@@ -5652,9 +5402,9 @@ folded:↓
   : !<!foo> "value\n",
 }
 ```
-
-> **Legend:**
-> * [c-l+literal(n)] [c-l+folded(n)]
+**Legend:**
+* [c-l+literal(n)]
+* [c-l+folded(n)]
 
 Since people perceive the ["**`-`**" indicator] as [indentation], nested [block
 sequences] may be [indented] by one less [space] to compensate, except, of
@@ -5676,7 +5426,6 @@ vs. [**`block-in`** context]).
 ```
 
 **Example #. Block Collection Nodes**
-
 ```
 sequence: !!seq
 - entry
@@ -5685,7 +5434,6 @@ sequence: !!seq
 mapping: !!map
  foo: bar
 ```
-
 ```
 %YAML 1.2
 ---
@@ -5701,11 +5449,10 @@ mapping: !!map
   },
 }
 ```
-
-> **Legend:**
-> * [l+block-sequence(n)]
-> * [l+block-mapping(n)]
-> * [s-l+block-collection(n,c)]
+**Legend:**
+* [l+block-sequence(n)]
+* [l+block-mapping(n)]
+* [s-l+block-collection(n,c)]
 
 # Chapter #. YAML Character Stream
 
@@ -5732,21 +5479,18 @@ existence of an actual [document].
 ```
 
 **Example #. Document Prefix**
-
 ```
 ⇔# Comment
 # lines
 Document
 ```
-
 ```
 %YAML 1.2
 ---
 !!str "Document"
 ```
-
-> **Legend:**
-> * [l-document-prefix]
+**Legend:**
+* [l-document-prefix]
 
 ### #. Document Markers
 
@@ -5797,23 +5541,21 @@ either of these markers.
 ```
 
 **Example #. Document Markers**
-
 ```
 %YAML 1.2
 ---
 Document
 ... # Suffix
 ```
-
 ```
 %YAML 1.2
 ---
 !!str "Document"
 ```
-
-> **Legend:**
-> * [c-directives-end] [c-document-end]
-> * [l-document-suffix]
+**Legend:**
+* [c-directives-end]
+* [c-document-end]
+* [l-document-suffix]
 
 ### #. Bare Documents
 
@@ -5834,7 +5576,6 @@ document’s [node] to be [indented] at zero or more [spaces].
 ```
 
 **Example #. Bare Documents**
-
 ```
 Bare
 document
@@ -5844,7 +5585,6 @@ document
 |
 %!PS-Adobe-2.0 # Not the first line
 ```
-
 ```
 %YAML 1.2
 ---
@@ -5854,9 +5594,8 @@ document
 ---
 !!str "%!PS-Adobe-2.0 # Not the first line\n"
 ```
-
-> **Legend:**
-> * [l-bare-document]
+**Legend:**
+* [l-bare-document]
 
 ### #. Explicit Documents
 
@@ -5873,7 +5612,6 @@ Since the existence of the [document] is indicated by this [marker], the
 ```
 
 **Example #. Explicit Documents**
-
 ```
 ---
 { matches
@@ -5883,7 +5621,6 @@ Since the existence of the [document] is indicated by this [marker], the
 # Empty
 ...
 ```
-
 ```
 %YAML 1.2
 ---
@@ -5895,9 +5632,8 @@ Since the existence of the [document] is indicated by this [marker], the
 ---
 !!null ""
 ```
-
-> **Legend:**
-> * [l-explicit-document]
+**Legend:**
+* [l-explicit-document]
 
 ### #. Directives Documents
 
@@ -5911,7 +5647,6 @@ A _directives document_ begins with some [directives] followed by an explicit
 ```
 
 **Example #. Directives Documents**
-
 ```
 %YAML 1.2
 --- |
@@ -5922,7 +5657,6 @@ A _directives document_ begins with some [directives] followed by an explicit
 # Empty
 ...
 ```
-
 ```
 %YAML 1.2
 ---
@@ -5932,9 +5666,8 @@ A _directives document_ begins with some [directives] followed by an explicit
 ---
 !!null ""
 ```
-
-> **Legend:**
-> * [l-explicit-document]
+**Legend:**
+* [l-explicit-document]
 
 ## #. Streams
 
@@ -5961,7 +5694,6 @@ such as stream concatenation.
 ```
 
 **Example #. Stream**
-
 ```
 Document
 ---
@@ -5971,7 +5703,6 @@ Document
 ---
 matches %: 20
 ```
-
 ```
 %YAML 1.2
 ---
@@ -5987,11 +5718,10 @@ matches %: 20
   !!str "matches %": !!int "20"
 }
 ```
-
-> **Legend:**
-> * [l-any-document]
-> * [l-document-suffix]
-> * [l-explicit-document]
+**Legend:**
+* [l-any-document]
+* [l-document-suffix]
+* [l-explicit-document]
 
 A sequence of bytes is a _well-formed stream_ if, taken as a whole, it complies
 with the above **`l-yaml-stream`** production.
@@ -6065,7 +5795,6 @@ option.
 > Two mappings are [equal] if and only if they are [identical].
 
 **Example #. `!!map` Examples**
-
 ```
 Block style: !!map
   Clark : Evans
@@ -6096,7 +5825,6 @@ Flow style: !!map { Clark: Evans, Ingy: döt Net, Oren: Ben-Kiki }
 > Two sequences are [equal] if and only if they are [identical].
 
 **Example #. `!!seq` Examples**
-
 ```
 Block style: !!seq
 - Clark Evans
@@ -6132,7 +5860,6 @@ Flow style: !!seq [ Clark Evans, Ingy döt Net, Oren Ben-Kiki ]
 > The obvious.
 
 **Example #. `!!str` Examples**
-
 ```
 String: !!str "Just a theory."
 ```
@@ -6187,7 +5914,6 @@ The JSON [schema] uses the following [tags] in addition to those defined by the
 > **`null`**.
 
 **Example #. `!!null` Examples**
-
 ```
 !!null null: value for null key
 key with null value: !!null null
@@ -6219,7 +5945,6 @@ key with null value: !!null null
 > Either **`true`** or **`false`**.
 
 **Example #. `!!bool` Examples**
-
 ```
 YAML is a superset of JSON: !!bool true
 Pluto is a planet: !!bool false
@@ -6265,7 +5990,6 @@ Pluto is a planet: !!bool false
 > values, matching the regular expression **`0 | -? [1-9] [0-9]*`**
 
 **Example #. `!!int` Examples**
-
 ```
 negative: !!int -12
 zero: !!int 0
@@ -6317,7 +6041,6 @@ positive: !!int 34
 > **`-? [1-9] ( \. [0-9]* [1-9] )? ( e [-+] [1-9] [0-9]* )?`**.
 
 **Example #. `!!float` Examples**
-
 ```
 negative: !!float -1
 zero: !!float 0
@@ -6356,7 +6079,6 @@ Hence the YAML [processor] should consider them to be an error.
 | * | Error
 
 **Example #. JSON Tag Resolution**
-
 ```
 A null: null
 Booleans: [ true, false ]
@@ -6364,7 +6086,6 @@ Integers: [ 0, -0, 3, -19 ]
 Floats: [ 0., -0.0, 12e03, -2E+05 ]
 Invalid: [ True, Null, 0o7, 0x3A, +12.3 ]
 ```
-
 ```
 %YAML 1.2
 ---
@@ -6435,7 +6156,6 @@ string).
 | * | tag:yaml.org,2002:str (Default)
 
 **Example #. Core Tag Resolution**
-
 ```
 A null: null
 Also a null: # Empty
@@ -6445,7 +6165,6 @@ Integers: [ 0, 0o7, 0x3A, -19 ]
 Floats: [ 0., -0.0, .5, +12e03, -2E+05 ]
 Also floats: [ .inf, -.Inf, +.INF, .NAN ]
 ```
-
 ```
 %YAML 1.2
 ---
