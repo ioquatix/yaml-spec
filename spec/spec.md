@@ -1512,7 +1512,7 @@ In the examples, byte order mark characters are displayed as "**`⇔`**".
 # documents, only comments.
 ```
 **Legend:**
-* [c-byte-order-mark]
+* [c-byte-order-mark] <!-- 1:1 -->
 
 **Example #. Invalid Byte Order Mark**
 ```
@@ -1572,9 +1572,9 @@ mapping:
 }
 ```
 **Legend:**
-* [c-sequence-entry]
-* [c-mapping-key]
-* [c-mapping-value]
+* [c-sequence-entry] <!-- - -->
+* [c-mapping-key] <!-- ? -->
+* [c-mapping-value] <!-- : -->
 
 A ["**`,`**"] (**`#x2C`**, comma) ends a [flow collection] entry.
 
@@ -1625,9 +1625,9 @@ mapping: { sky: blue, sea: green }
 }
 ```
 **Legend:**
-* [c-sequence-start] [c-sequence-end]
-* [c-mapping-start] [c-mapping-end]
-* [c-collect-entry]
+* [c-sequence-start] [c-sequence-end] <!-- [ ] -->
+* [c-mapping-start] [c-mapping-end] <!-- { } -->
+* [c-collect-entry] <!-- , -->
 
 An ["**`#`**"] (**`#x23`**, octothorpe, hash, sharp, pound, number sign)
 denotes a [comment].
@@ -1646,7 +1646,7 @@ denotes a [comment].
 # documents, only comments.
 ```
 **Legend:**
-* [c-comment]
+* [c-comment] <!-- # -->
 
 An ["**`&`**"] (**`#x26`**, ampersand) denotes a [node’s anchor property].
 
@@ -1686,9 +1686,9 @@ alias: *anchor
 }
 ```
 **Legend:**
-* [c-tag]
-* [c-anchor]
-* [c-alias]
+* [c-tag] <!-- ! -->
+* [c-anchor] <!-- & -->
+* [c-alias] <!-- * -->
 
 A ["**`|`**"] (**`7C`**, vertical bar) denotes a [literal block scalar].
 
@@ -1722,8 +1722,8 @@ folded: >
 }
 ```
 **Legend:**
-* [c-literal]
-* [c-folded]
+* [c-literal] <!-- | -->
+* [c-folded] <!-- > -->
 
 An ["**`'`**"] (**`#x27`**, apostrophe, single quote) surrounds a
 [single-quoted flow scalar].
@@ -1755,8 +1755,8 @@ double: "text"
 }
 ```
 **Legend:**
-* [c-single-quote]
-* [c-double-quote]
+* [c-single-quote] <!-- ' -->
+* [c-double-quote] <!-- " -->
 
 A ["**`%`**"] (**`#x25`**, percent) denotes a [directive] line.
 
@@ -1775,7 +1775,7 @@ A ["**`%`**"] (**`#x25`**, percent) denotes a [directive] line.
 !!str "text"
 ```
 **Legend:**
-* [c-directive]
+* [c-directive] <!-- % -->
 
 The _"**`@`**"_ (**`#x40`**, at) and _"**<code>&grave;</code>**"_ (**`#x60`**,
 grave accent) are _reserved_ for future use.
@@ -1899,7 +1899,7 @@ for clarity.
       line break (glyphed)\n"
 ```
 **Legend:**
-* [b-break]
+* [b-break] <!-- ↓ -->
 
 ## #. White Space Characters
 
@@ -1953,8 +1953,8 @@ block:→|
 }
 ```
 **Legend:**
-* [s-space]
-* [s-tab]
+* [s-space] <!-- ·· · -->
+* [s-tab] <!-- → -->
 
 ## #. Miscellaneous Characters
 
@@ -2203,7 +2203,7 @@ Any escaped character:
 A A A"
 ```
 **Legend:**
-* [c-ns-esc-char]
+* [c-ns-esc-char] <!-- \ -->
 
 **Example #. Invalid Escaped Characters**
 ```
@@ -2291,7 +2291,7 @@ Not indented:
 }
 ```
 **Legend:**
-* [s-indent(n)]
+* [s-indent(n)] <!-- 5:1 6:1,4 7:1,4 8:1 9:1,2 10:1,2 11:1,2 12:1,2 -->
 * Content
 * Neither content nor indentation
 
@@ -2319,7 +2319,7 @@ This is handled on a case-by-case basis by the relevant productions.
 ```
 **Legend:**
 * Total Indentation
-* [s-indent(n)]
+* [s-indent(n)] <!-- 1:1 2:1,3 3:1,6 4:1,6 -->
 * Indicator as indentation
 
 ## #. Separation Spaces
@@ -2353,7 +2353,7 @@ Separation spaces are a [presentation detail] and must not be used to convey
 ]
 ```
 **Legend:**
-* [s-separate-in-line]
+* [s-separate-in-line] <!-- →· · → -->
 
 ## #. Line Prefixes
 
@@ -2405,9 +2405,9 @@ block: |
 }
 ```
 **Legend:**
-* [s-flow-line-prefix(n)]
-* [s-block-line-prefix(n)]
-* [s-indent(n)]
+* [s-flow-line-prefix(n)] <!-- 2:1,2 4:1,3 -->
+* [s-block-line-prefix(n)] <!-- 6:1,2 7:1,2 -->
+* [s-indent(n)] <!-- 2:1 4:1 6:1,2 7:1,2 -->
 
 ## #. Empty Lines
 
@@ -2444,7 +2444,7 @@ Chomping: |
 }
 ```
 **Legend:**
-* [l-empty(n,c)]
+* [l-empty(n,c)] <!-- 3 7 -->
 
 ## #. Line Folding
 
@@ -2488,8 +2488,8 @@ A folded non-[empty line] may end with either of the above [line breaks].
 !!str "trimmed\n\n\nas space"
 ```
 **Legend:**
-* [b-l-trimmed(n,c)]
-* [b-as-space]
+* [b-l-trimmed(n,c)] <!-- 2:10 3 4 5 -->
+* [b-as-space] <!-- 6:5 -->
 
 The above rules are common to both the [folded block style] and the [scalar
 flow styles].
@@ -2523,7 +2523,7 @@ Folding does distinguish between these cases in the following way:
 "foo \n\n\t bar\n\nbaz\n"
 ```
 **Legend:**
-* [b-l-folded(n,c)]
+* [b-l-folded(n,c)] <!-- 2:7 3:1,2 4:8 5:1 -->
 * Non-content spaces Content spaces
 
 ##### Flow Folding
@@ -2562,7 +2562,7 @@ Folding does distinguish between these cases in the following way:
 " foo\nbar\nbaz "
 ```
 **Legend:**
-* [s-flow-folded(n)]
+* [s-flow-folded(n)] <!-- 1:2 2:1,2 2:6,2 3:1,2 4:1,4 4:8 5:1 6:1,2 6:6 -->
 * Non-content spaces
 
 ## #. Comments
@@ -2607,9 +2607,9 @@ key:····# Comment↓
 }
 ```
 **Legend:**
-* [c-nb-comment-text]
-* [b-comment]
-* [s-b-comment]
+* [c-nb-comment-text] <!-- # Comment -->
+* [b-comment] <!-- ↓ eof -->
+* [s-b-comment] <!-- 1:4, 2:8,3 -->
 
 Outside [scalar content], comments may appear on a line of their own,
 independent of the [indentation] level.
@@ -2632,8 +2632,8 @@ characters is taken to be a comment line.
 # documents, only comments.
 ```
 **Legend:**
-* [s-b-comment]
-* [l-comment]
+* [s-b-comment] <!-- 1:3, 2:4 3 -->
+* [l-comment] <!-- 1 2 3 -->
 
 In most cases, when a line may end with a comment, YAML allows it to be
 followed by additional comment lines.
@@ -2661,9 +2661,9 @@ key:····# Comment↓
 }
 ```
 **Legend:**
-* [s-b-comment]
-* [l-comment]
-* [s-l-comments]
+* [s-b-comment] <!-- 1:4, 3:8 -->
+* [l-comment] <!-- 2 4 -->
+* [s-l-comments] <!-- 1:4, 2 3:8 4 -->
 
 ## #. Separation Lines
 
@@ -2719,9 +2719,9 @@ Note that structures following multi-line comment separation must be properly
 }
 ```
 **Legend:**
-* [s-separate-in-line]
-* [s-separate-lines(n)]
-* [s-indent(n)]
+* [s-separate-in-line] <!-- 1:2 1:9 1:16 1:22 1:27 -->
+* [s-separate-lines(n)] <!-- 1:30 2 3:1,2 3:6, 4:1,5 5:6, 6:1,3 -->
+* [s-indent(n)] <!-- 3:1,2 4:1,3 4:1,2 5:1,3 -->
 
 ## #. Directives
 
@@ -2775,9 +2775,9 @@ warning.
 "foo"
 ```
 **Legend:**
-* [ns-reserved-directive]
-* [ns-directive-name]
-* [ns-directive-parameter]
+* [ns-reserved-directive] <!-- 1:2,12 -->
+* [ns-directive-name] <!-- 1:2,3 -->
+* [ns-directive-parameter] <!-- 1:7,3 1:11,3 -->
 
 ### #. "**`YAML`**" Directives
 
@@ -2827,8 +2827,8 @@ of [non-ASCII line breaks], as described [above]).
 !!str "foo"
 ```
 **Legend:**
-* [ns-yaml-directive]
-* [ns-yaml-version]
+* [ns-yaml-directive] <!-- 1:2,8 -->
+* [ns-yaml-version] <!-- 1:7,3 -->
 
 It is an error to specify more than one "**`YAML`**" directive for the same
 document, even if both occurrences give the same version number.

@@ -364,7 +364,7 @@ class HtmlToMarkdown
       .replace(/`$/, '')
     return "```\n#{text}\n```\n"
 
-  @fmt_legend: (text)->
+  @fmt_legend: (text)=>
     return '' unless text
     text = text
       .replace(/^\s+/, '')
@@ -375,6 +375,13 @@ class HtmlToMarkdown
       .replace(/(\[c-sequence-start\])\s+(\[c-sequence-end\])/, "$1 $2")
       .replace(/(\[c-mapping-start\])\s+(\[c-mapping-end\])/, "$1 $2")
       .replace(/^\s*/mg, '* ')
+
+    legend = @legend.shift()
+
+    if legend? and legend[0]
+      for l in legend
+        text = text.replace /\]$/m, "] <!-- #{l} -->"
+
     return """
       **Legend:**
       #{text}\n
