@@ -2852,20 +2852,21 @@ warning.
 ```
 
 **Example #. Reserved Directives**
+
 ```
 %FOO  bar baz # Should be ignored
                # with a warning.
 --- "foo"
 ```
+
 ```
 %YAML 1.2
 --- !!str
 "foo"
 ```
-**Legend:**
-* [ns-reserved-directive]   <!-- 1:2,12 -->
-* [ns-directive-name]       <!-- 1:2,3 -->
-* [ns-directive-parameter]  <!-- 1:7,3 1:11,3 -->
+
+> **Legend:**
+> * [ns-reserved-directive] [ns-directive-name] [ns-directive-parameter]
 
 ### #. "**`YAML`**" Directives
 

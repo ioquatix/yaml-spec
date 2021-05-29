@@ -4,6 +4,7 @@ include $(ROOT)/tool/make/spec-1.2-files.mk
 
 
 SPEC12 := $(ROOT)/1.2
+LEGEND := $(ROOT)/spec/legend.yaml
 
 ALL_IMG_IMAGE := $(ALL_IMAGE:%=img/%)
 ALL_MD := $(ALL_HTML:%.html=%.md)
@@ -23,7 +24,7 @@ ifneq ($(wildcard $(SPEC12)/spec.dbk),)
 	touch $(SPEC12)/spec.dbk
 endif
 
-%.md: $(SPEC12)/%.html
+spec.md: $(SPEC12)/spec.html $(LEGEND)
 	html-to-markdown $^ > $@
 
 $(SPEC12)/%.html: $(SPEC12)/%.dbk

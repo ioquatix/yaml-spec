@@ -6,43 +6,12 @@ Node = require 'domino/lib/Node'
 wrap = require 'smartwrap'
 yaml = require 'yaml'
 
-
-count = 0
-
 tag_and_class = (tag, class_)->
   (n, o)->
     n.nodeName == tag.toUpperCase() and
     n.getAttribute('class') == class_
 
-getTexts = (node, a)->
-  if node.nodeType == Node.TEXT_NODE
-    a.push node._data
-  else if node.nodeName == 'BR'
-    a.push "\n  "
-  else
-    for n in node.childNodes
-      getTexts n, a
-
-getRowData = (tr)->
-  a = []
-  for td in tr.childNodes
-    a.push _.trim(td.textContent) || ' '
-  return a
-
-reformat = (text, width=79)->
-  text = text.replace /\ \ $/mg, '%%%'
-  text = text.replace ///
-      ([\s\S]+?)
-      (?:
-        ([^\#]\.)\ (?=[A-Z])
-      |
-        $
-      )
-    ///g,
-    (x, s, e='')->
-      wrap(s, width: width) + "#{e}\n"
-  text = text.replace /%%%$/mg, '  '
-  return text
+re = (re)-> HtmlToMarkdown.re[re].toString()[1...-1]
 
 
 class HtmlToMarkdown
@@ -82,68 +51,6 @@ class HtmlToMarkdown
     H4: '####'
 
   @rules:
-    titlepage:
-      filter: (n, o)->
-        n.nodeName.match(/^H[1-4]$/) and
-        n.getAttribute('class') == 'title'
-      replacement: (m, n, o)->
-        mark = HtmlToMarkdown.H[n.nodeName]
-        return "#{mark} #{m}" unless m.match /\d+\.\s/
-        text = m
-          .replace(/(\d+\.)+\s/, '#. ')
-        "#{mark} #{text}"
-
-    link:
-      filter: tag_and_class 'a', 'link'
-      replacement: (m, n, o)->
-        return "[#{m}]"
-
-    index:
-      filter: tag_and_class 'div', 'index'
-      replacement: (m, n, o)->
-        return "::index\n"
-
-    releaseinfo:
-      filter: tag_and_class 'p', 'releaseinfo'
-      replacement: (m, n, o)->
-        return m
-          .replace(/^\s+(.*)  $/mg, '* $1')
-          .replace(/^_(.*)_  $/m, "**$1**\n")
-          .replace(
-            /^_(.*)_ (.*)  $/m,
-            "{:.releaseinfo}\n\n**$1**\n$2")
-
-    simplelist:
-      filter: tag_and_class 'table', 'simplelist'
-      replacement: (m, n, o)->
-        return m unless m.match /\[\d+\]/
-        return m.replace ///^
-          [\s\S]*
-          (
-            ```\n
-            [\s\S]+\n
-            ```\n
-          )
-          \s*
-          (\S[\s\S]+?\S)
-          \s*
-        $///,
-          (m, m1, m2)->
-            if m2.match /grave /
-              m2 = m2.replace /```/, '<code>&grave;</code>'
-            """\
-            #{reformat m2}
-            #{m1}
-
-            """
-
-    subtitle:
-      filter: tag_and_class 'h2', 'subtitle'
-      replacement: (m, n, o)->
-        return """\
-          **#{m}**
-          """
-
     authorgroup:
       filter: tag_and_class 'div', 'authorgroup'
       replacement: (m, n, o)->
@@ -158,10 +65,15 @@ class HtmlToMarkdown
           {:.authorgroup}
           """
 
-    indexdiv:
-      filter: tag_and_class 'div', 'indexdiv'
+    releaseinfo:
+      filter: tag_and_class 'p', 'releaseinfo'
       replacement: (m, n, o)->
-        return m.replace /### (.*)/, '**$1**'
+        return m
+          .replace(/^\s+(.*)  $/mg, '* $1')
+          .replace(/^_(.*)_  $/m, "**$1**\n")
+          .replace(
+            /^_(.*)_ (.*)  $/m,
+            "{:.releaseinfo}\n\n**$1**\n$2")
 
     toc:
       filter: tag_and_class 'div', 'toc'
@@ -172,32 +84,65 @@ class HtmlToMarkdown
           ::toc
           """
 
+    index:
+      filter: tag_and_class 'div', 'index'
+      replacement: (m, n, o)->
+        return "::index\n"
+
+    simplelist:
+      filter: tag_and_class 'table', 'simplelist'
+      replacement: (m, n, o)=>
+        return m unless m.match /\[\d+\]/
+        return m.replace ///^
+          #{re'A'}*
+          ( #{re'pre_block'} )
+          \s*
+          (\S#{re'A'}+?\S)
+          \s*
+        $///,
+          (m, m1, m2)=>
+            if m2.match /grave /
+              m2 = m2.replace /```/, '<code>&grave;</code>'
+            """\
+            #{@do.reformat m2}
+            #{m1}
+
+            """
+
+    subtitle:
+      filter: tag_and_class 'h2', 'subtitle'
+      replacement: (m, n, o)->
+        return """\
+          **#{m}**
+          """
+
+    indexdiv:
+      filter: tag_and_class 'div', 'indexdiv'
+      replacement: (m, n, o)->
+        return m.replace /### (.*)/, '**$1**'
+
     informaltable:
       filter: tag_and_class 'div', 'informaltable'
-      replacement: (m, n, o)->
+      replacement: (m, n, o)=>
         table = ''
         for tr, i in n.getElementsByTagName 'TR'
-          a = getRowData tr
+          a = @do.getRowData tr
           table += '| ' + a.join(' | ') + "\n"
           if i == 0
             table += '| ' + _.repeat('-- | ', a.length - 1) + "--\n"
 
         return table + "\n"
 
-    br_example:
-      filter: tag_and_class 'br', 'example-break'
-      replacement: (m, n, o)-> ''
-
     production:
       filter: (n, o)->
         n.nodeName == 'TR' and
         n.firstChild.getAttribute('class') == 'productioncounter'
-      replacement: (m, n, o)->
+      replacement: (m, n, o)=>
         num = n.getElementsByClassName('productioncounter')[0].textContent
         lhs = n.getElementsByClassName('productionlhs')[0].textContent
         op  = n.getElementsByClassName('productionseperator')[0].textContent
         a = []
-        getTexts(n.getElementsByClassName('productionrhs')[0], a)
+        @do.getTexts(n.getElementsByClassName('productionrhs')[0], a)
         rhs = a.join ''
         if rhs.match /\ /
           rhs = "\n  #{rhs}"
@@ -212,7 +157,7 @@ class HtmlToMarkdown
           ```\n\n
           """
 
-    legend:
+    example:
       filter: (n, o)->
         n.nodeName == 'DIV' and
         n.getAttribute('class') == 'example-contents' and
@@ -242,6 +187,10 @@ class HtmlToMarkdown
           #{legend}\n\n
           """
 
+    example_break:
+      filter: tag_and_class 'br', 'example-break'
+      replacement: (m, n, o)-> ''
+
     node_comparison:
       filter: (n, o)->
         n.nodeName == 'DIV' and
@@ -254,13 +203,43 @@ class HtmlToMarkdown
         text.replace /^(\*.*\n(?:\S.*\n)+)/mg, (m, m1)->
           m1.replace(/^(?=[^\*])/mg, '  ')
 
+    p:
+      filter: (n, o)->
+        n.nodeName == 'P' and
+        n.getAttribute('class') != 'releaseinfo'
+      replacement: (m, n, o)=>
+        text = m
+          .replace /^(\*\*(?:Figure|Example)\s)(?:\d+\.)+\s+(.*\*\*)\s*$/, (m, m1, m2)->
+            "#{m1}#. #{m2}"
+        if n.parentNode.nodeName in ['LI', 'DD']
+          width = 77
+        else
+          width = 79
+        return @do.reformat(text, width) + "\n\n"
+
+    heading:
+      filter: (n, o)->
+        n.nodeName.match(/^H[1-4]$/) and
+        n.getAttribute('class') == 'title'
+      replacement: (m, n, o)=>
+        mark = @H[n.nodeName]
+        return "#{mark} #{m}" unless m.match /\d+\.\s/
+        text = m
+          .replace(/(\d+\.)+\s/, '#. ')
+        "#{mark} #{text}"
+
+    link:
+      filter: tag_and_class 'a', 'link'
+      replacement: (m, n, o)->
+        return "[#{m}]"
+
     itemizedlist:
       filter: tag_and_class 'div', 'itemizedlist'
-      replacement: (m, n, o)->
+      replacement: (m, n, o)=>
         text = m.replace /\s*$/, ''
         if text.match /\. [A-Z]/
           text = text.replace(/^\s*\*\s+/, '')
-          text = reformat(text, 77)
+          text = @do.reformat(text, 77)
             .replace(/^/mg, '  ')
             .replace(/./, '*')
         text
@@ -293,20 +272,6 @@ class HtmlToMarkdown
           ```\n\n
           """
 
-    p:
-      filter: (n, o)->
-        n.nodeName == 'P' and
-        n.getAttribute('class') != 'releaseinfo'
-      replacement: (m, n, o)->
-        text = m
-          .replace /^(\*\*(?:Figure|Example)\s)(?:\d+\.)+\s+(.*\*\*)\s*$/, (m, m1, m2)->
-            "#{m1}#. #{m2}"
-        if n.parentNode.nodeName in ['LI', 'DD']
-          width = 77
-        else
-          width = 79
-        return reformat(text, width) + "\n\n"
-
     dt:
       filter: 'dt'
       replacement: (m, n, o)->
@@ -316,8 +281,8 @@ class HtmlToMarkdown
 
     dd:
       filter: 'dd'
-      replacement: (m, n, o)->
-        text = reformat(m)
+      replacement: (m, n, o)=>
+        text = @do.reformat(m)
         text = text
           .replace(/\n+$/, '')
           .replace(/^/mg, '> ')
@@ -330,6 +295,45 @@ class HtmlToMarkdown
           return m
         else
           return "`#{m}`"
+
+  @re:
+    A: /[\s\S]/
+    pre_block: ///
+      ```\n
+      [\s\S]+\n
+      ```\n
+    ///
+
+  @do:
+    getTexts: (node, a)=>
+      if node.nodeType == Node.TEXT_NODE
+        a.push node._data
+      else if node.nodeName == 'BR'
+        a.push "\n  "
+      else
+        for n in node.childNodes
+          @do.getTexts n, a
+
+    getRowData: (tr)->
+      a = []
+      for td in tr.childNodes
+        a.push _.trim(td.textContent) || ' '
+      return a
+
+    reformat: (text, width=79)->
+      text = text.replace /\ \ $/mg, '%%%'
+      text = text.replace ///
+          ([\s\S]+?)
+          (?:
+            ([^\#]\.)\ (?=[A-Z])
+          |
+            $
+          )
+        ///g,
+        (x, s, e='')->
+          wrap(s, width: width) + "#{e}\n"
+      text = text.replace /%%%$/mg, '  '
+      return text
 
 
 main = (spec, links)->
