@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 
 use v5.18;
-use utf8;
+# use utf8;
 
 use YAML::PP;
 use XXX;
@@ -145,7 +145,9 @@ sub fmt_example {
   if ($legend) {
     $yaml1 = apply_legend($yaml1, $legend);
   }
-  $yaml1 = format_pre($yaml1);
+  else {
+    $yaml1 = format_pre($yaml1);
+  }
 
   if ($yaml2) {
     $yaml2 = format_pre($yaml2);
@@ -169,13 +171,15 @@ $yaml2
   if ($legend) {
     $_ = format_legend($legend);
     $out .= <<"...";
-<div class="legend">
+<div class="legend" markdown=1>
 $_
 </div>
 ...
   }
 
   chomp $out;
+
+#   die $out if $out =~ /<code/;
 
   $_ = <<"...";
 <div id="$id" class="example">
@@ -200,12 +204,16 @@ sub fmt_indent {
 }
 
 sub fmt_pre {
-  my $pre = $_;
+  my $pre = format_pre($_);
   if (/(\S+)\s+::=/) {
-    my $slug = slugify($1);
+    my $rule = $1;
+    $pre =~ s/<pre>/<pre class="rule">/;
     # $pre =~ s/(\b(?:ns|nb|s|l)-\S*)/<a href="rule-$1">$1<\/a>/g;
-    $pre = qq{<div id="rule-$slug" />\n$pre};
-    $pre .= "{:.rule}\n";
+    chomp $pre;
+    $pre = <<"...";
+<div id="rule-$rule" />
+$pre
+...
   }
   $_ = $pre;
 }
@@ -238,7 +246,7 @@ sub read_files {
 
 sub read_file {
   my ($file) = @_;
-  open my $fh, '<', $file;
+  open my $fh, '<:encoding(UTF-8)', $file;
   local $/;
   <$fh>;
 }
@@ -335,7 +343,80 @@ sub set_example_level {
 
 sub apply_legend {
   my ($yaml, $legend) = @_;
-  return $yaml;
+  my @lines = split /\n/, $legend;
+  my @rules;
+  for my $line (@lines) {
+    if ($line =~ /<!--/) {
+      $line =~ s/.*<!--\s+(.*?)\s+-->/$1/;
+      push @rules, [split /\s+/, $line];
+    }
+  }
+  # XXX \@rules if $yaml =~ /up, and away/;
+
+  $yaml =~ s/\A```\n//;
+  $yaml =~ s/\n```\n\z//;
+  XXX $yaml if /(?:\[%|%\])/;
+
+  @lines = split /\n/, $yaml;
+  my @chars = map
+    [ split //, $_ ],
+    @lines;
+
+  my $i = @rules + 1;
+  for my $rule (reverse @rules) {
+    $i--;
+    for my $r (@$rule) {
+      next unless $r =~ /^[1-9]/;
+      $r =~ /^([1-9]\d*)(?::(\d+)(,\d*)?)?$/
+        or XXX $r;
+      my ($row, $col, $end) = ($1, $2, $3);
+      my $len = @{$chars[--$row]} - 1;
+      if ($col) {
+        $col--;
+        if ($end) {
+          $end =~ s/^,// or die;
+          if ($end eq '') { $end = $len }
+          else { $end = $col + $end - 1 }
+        }
+        else { $end = $col }
+      }
+      else { $col = 0; $end = $len }
+      $chars[$row]->[$col] =~ s{^}{[%code class="legend-$i"%]};
+      $chars[$row]->[$end] =~ s{$}{[%/code%]};
+    }
+  }
+
+  $yaml = join "\n",
+    map { $_ = join '', @$_ }
+    @chars;
+
+  my $i = 0;
+  for my $rule (@rules) {
+    $i++;
+    my @re;
+    for my $r (@$rule) {
+      next if $r =~ /^[1-9]/;
+      $r =~ s/^0//;
+      $r =~ s/([\"\'\!\*\+\?\|\{\}\[\]\(\)\.\\])/\\$1/g;
+      $r =~ s/_/\\ /g;
+      push @re, $r;
+    }
+    next unless @re;
+    my $re = '(' . join('|', @re) . ')';
+    $yaml =~ s{$re}{[%code class="legend-$i"%]${1}[%/code%]}g;
+  }
+
+  $yaml =~ s/&/&amp;/g;
+  $yaml =~ s/</&lt;/g;
+  $yaml =~ s/>/&gt;/g;
+  $yaml =~ s/\[%/</g;
+  $yaml =~ s/%\]/>/g;
+
+  return <<"...";
+<pre>
+$yaml
+</pre>
+...
 }
 
 sub format_pre {

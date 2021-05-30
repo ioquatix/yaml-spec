@@ -1756,7 +1756,7 @@ double: "text"
 ```
 **Legend:**
 * [c-single-quote] <!-- ' -->
-* [c-double-quote] <!-- " -->
+* [c-double-quote] <!-- 2:9 2:14 -->
 
 A ["**`%`**"] (**`#x25`**, percent) denotes a [directive] line.
 
@@ -2203,7 +2203,7 @@ Any escaped character:
 A A A"
 ```
 **Legend:**
-* [c-ns-esc-char] <!-- \ -->
+* [c-ns-esc-char] <!-- \\ \" \b \e \f \↓ \n \r \t \v \0 4:1,2 \L \P \x41 \u0041 \U00000041 -->
 
 **Example #. Invalid Escaped Characters**
 ```
@@ -2607,9 +2607,9 @@ key:····# Comment↓
 }
 ```
 **Legend:**
-* [c-nb-comment-text] <!-- # Comment -->
+* [c-nb-comment-text] <!-- 1:9,9 -->
 * [b-comment] <!-- ↓ eof -->
-* [s-b-comment] <!-- 1:4, 2:8,3 -->
+* [s-b-comment] <!-- 1:5, 2:8,3 -->
 
 Outside [scalar content], comments may appear on a line of their own,
 independent of the [indentation] level.
@@ -2661,9 +2661,9 @@ key:····# Comment↓
 }
 ```
 **Legend:**
-* [s-b-comment] <!-- 1:4, 3:8 -->
+* [s-b-comment] <!-- 1:5, 3:8 -->
 * [l-comment] <!-- 2 4 -->
-* [s-l-comments] <!-- 1:4, 2 3:8 4 -->
+* [s-l-comments] <!-- 1:5, 2 3:8 4 -->
 
 ## #. Separation Lines
 
@@ -2720,8 +2720,8 @@ Note that structures following multi-line comment separation must be properly
 ```
 **Legend:**
 * [s-separate-in-line] <!-- 1:2 1:9 1:16 1:22 1:27 -->
-* [s-separate-lines(n)] <!-- 1:30 2 3:1,2 3:6, 4:1,5 5:6, 6:1,3 -->
-* [s-indent(n)] <!-- 3:1,2 4:1,3 4:1,2 5:1,3 -->
+* [s-separate-lines(n)] <!-- 1:30 2 3:1,2 3:6, 4:1,5 5:7, 6:1,3 -->
+* [s-indent(n)] <!-- 3:1,2 4:1,3 5:1,2 6:1,3 -->
 
 ## #. Directives
 
@@ -2871,9 +2871,9 @@ This allows for compact and readable [tag] notation.
 !!str "foo"
 ```
 **Legend:**
-* [ns-tag-directive]
-* [c-tag-handle]
-* [ns-tag-prefix]
+* [ns-tag-directive] <!-- 1:2, -->
+* [c-tag-handle] <!-- 1:6,6 -->
+* [ns-tag-prefix] <!-- 1:13, -->
 
 It is an error to specify more than one "**`TAG`**" directive for the same
 [handle] in the same document, even if both occurrences give the same [prefix].
@@ -2940,7 +2940,7 @@ There are three tag handle variants:
 !<tag:example.com,2000:app/foo> "bar"
 ```
 **Legend:**
-* [c-primary-tag-handle]
+* [c-primary-tag-handle] <!-- ! -->
 
 ##### Secondary Handle
 
@@ -2970,7 +2970,7 @@ There are three tag handle variants:
 !<tag:example.com,2000:app/int> "1 - 3"
 ```
 **Legend:**
-* [c-secondary-tag-handle]
+* [c-secondary-tag-handle] <!-- !! -->
 
 ##### Named Handles
 
@@ -3000,7 +3000,7 @@ There are three tag handle variants:
 !<tag:example.com,2000:app/foo> "bar"
 ```
 **Legend:**
-* [c-named-tag-handle]
+* [c-named-tag-handle] <!-- !e! -->
 
 #### #. Tag Prefixes
 
@@ -3045,7 +3045,7 @@ There are two _tag prefix_ variants:
 !<!my-light> "green"
 ```
 **Legend:**
-* [c-ns-local-tag-prefix]
+* [c-ns-local-tag-prefix] <!-- !my- -->
 
 ##### Global Tag Prefix
 
@@ -3073,7 +3073,7 @@ There are two _tag prefix_ variants:
 !<tag:example.com,2000:app/foo> "bar"
 ```
 **Legend:**
-* [ns-global-tag-prefix]
+* [ns-global-tag-prefix] <!-- tag:example.com,2000:app/ -->
 
 ## #. Node Properties
 
@@ -3107,9 +3107,9 @@ Either or both may be omitted.
 }
 ```
 **Legend:**
-* [c-ns-properties(n,c)]
-* [c-ns-anchor-property]
-* [c-ns-tag-property]
+* [c-ns-properties(n,c)] <!-- 1:1,9 2:3,5 3:1,3 -->
+* [c-ns-anchor-property] <!-- 1:7,3 -->
+* [c-ns-tag-property] <!-- 1:1,5 2:3,5 -->
 
 ### #. Node Tags
 
@@ -3153,7 +3153,7 @@ A tag is denoted by the _"**`!`**" indicator_.
 }
 ```
 **Legend:**
-* [c-verbatim-tag]
+* [c-verbatim-tag] <!-- !<tag:yaml.org,2002:str> !<!bar> -->
 
 **Example #. Invalid Verbatim Tags**
 ```
@@ -3218,7 +3218,7 @@ ERROR:
 ]
 ```
 **Legend:**
-* [c-ns-shorthand-tag]
+* [c-ns-shorthand-tag] <!-- !local !!str !e!tag%21 -->
 
 **Example #. Invalid Tag Shorthands**
 ```
@@ -3272,7 +3272,7 @@ ERROR:
 ]
 ```
 **Legend:**
-* [c-non-specific-tag]
+* [c-non-specific-tag] <!-- ! -->
 
 ### #. Node Anchors
 
@@ -3324,8 +3324,8 @@ Second occurrence: *anchor
 }
 ```
 **Legend:**
-* [c-ns-anchor-property]
-* [ns-anchor-name]
+* [c-ns-anchor-property] <!-- 1:19,7 -->
+* [ns-anchor-name] <!-- 1:20,6 2:21,6 -->
 
 # Chapter #. Flow Styles
 
@@ -3377,8 +3377,8 @@ Reuse anchor: *anchor
 }
 ```
 **Legend:**
-* [c-ns-alias-node]
-* [ns-anchor-name]
+* [c-ns-alias-node] <!-- 2:20,7 4:15,7 -->
+* [ns-anchor-name] <!-- 1:20,6 2:21,6 3:19,6 4:16,6 -->
 
 ## #. Empty Nodes
 
@@ -3412,7 +3412,7 @@ rather than to an actual character.
 }
 ```
 **Legend:**
-* [e-scalar]
+* [e-scalar] <!-- ° -->
 
 Both the [node’s properties] and [node content] are optional.
 This allows for a _completely empty node_.
@@ -3439,7 +3439,7 @@ for their existence.
 }
 ```
 **Legend:**
-* [e-node]
+* [e-node] <!-- ° -->
 
 ## #. Flow Scalar Styles
 
@@ -3509,8 +3509,8 @@ Double-quoted scalars are restricted to a single line when contained inside an
 }
 ```
 **Legend:**
-* [nb-double-one-line]
-* [c-double-quoted(n,c)]
+* [nb-double-one-line] <!-- 1:2,19 2:4,18 -->
+* [c-double-quoted(n,c)] <!-- 1:1,21 2:3,20 -->
 
 In a multi-line double-quoted scalar, [line breaks] are subject to [flow line
 folding], which discards any trailing [white space] characters.
@@ -3547,8 +3547,8 @@ to a line feed, or·→\↓
       or \t \tnon-content"
 ```
 **Legend:**
-* [s-flow-folded(n)]
-* [s-double-escaped(n)]
+* [s-flow-folded(n)] <!-- ·↓ →↓ -->
+* [s-double-escaped(n)] <!-- ·→\↓ 5:1 -->
 
 All leading and trailing [white space] characters are excluded from the
 [content].
@@ -3588,8 +3588,8 @@ Empty lines, if any, are consumed as part of the [line folding].
       3rd non-empty "
 ```
 **Legend:**
-* [nb-ns-double-in-line]
-* [s-double-next-line(n)]
+* [nb-ns-double-in-line] <!-- 1:2,14 3:2,13 4:2,13 -->
+* [s-double-next-line(n)] <!-- ↓ 3 4:1,14 -->
 
 ### #. Single-Quoted Style
 
@@ -3626,7 +3626,7 @@ In addition, it is only possible to break a long single-quoted line where a
 !!str "here's to \"quotes\""
 ```
 **Legend:**
-* [c-quoted-quote]
+* [c-quoted-quote] <!-- '' -->
 
 Single-quoted scalars are restricted to a single line when contained inside a
 [implicit key].
@@ -3668,8 +3668,8 @@ Single-quoted scalars are restricted to a single line when contained inside a
 }
 ```
 **Legend:**
-* [nb-single-one-line]
-* [c-single-quoted(n,c)]
+* [nb-single-one-line] <!-- 1:2,18 2:4,17 -->
+* [c-single-quoted(n,c)] <!-- 1:1,20 2:3,19 -->
 
 All leading and trailing [white space] characters are excluded from the
 [content].
@@ -3709,8 +3709,8 @@ Empty lines, if any, are consumed as part of the [line folding].
       3rd non-empty "
 ```
 **Legend:**
-* [nb-ns-single-in-line(n)]
-* [s-single-next-line(n)]
+* [nb-ns-single-in-line(n)] <!-- 1:2,14 2:2,13 3:2,13 -->
+* [s-single-next-line(n)] <!-- 1:16 2 3 4:1,14 -->
 
 ### #. Plain Style
 
@@ -3847,7 +3847,7 @@ implicit block key : [
 }
 ```
 **Legend:**
-* [ns-plain-one-line(c)]
+* [ns-plain-one-line(c)] <!-- 1:1,18 2:3,17 -->
 
 All leading and trailing [white space] characters are excluded from the
 [content].
@@ -3881,8 +3881,8 @@ Empty lines, if any, are consumed as part of the [line folding].
       3rd non-empty"
 ```
 **Legend:**
-* [nb-ns-plain-in-line(c)]
-* [s-ns-plain-next-line(n,c)]
+* [nb-ns-plain-in-line(c)] <!-- 1:1,13 3:2,13 4:2, -->
+* [s-ns-plain-next-line(n,c)] <!-- 1:14 2 3 4 -->
 
 ## #. Flow Collection Styles
 
@@ -3943,8 +3943,8 @@ Sequence entries are separated by a ["**`,`**"] character.
 ]
 ```
 **Legend:**
-* [c-sequence-start] [c-sequence-end]
-* [ns-flow-seq-entry(n,c)]
+* [c-sequence-start] [c-sequence-end] <!-- [ ] -->
+* [ns-flow-seq-entry(n,c)] <!-- one two three four -->
 
 Any [flow node] may be used as a flow sequence entry.
 In addition, YAML provides a [compact notation] for the case where a flow
@@ -3983,8 +3983,8 @@ single: pair,
 ]
 ```
 **Legend:**
-* [ns-flow-node(n,c)]
-* [ns-flow-pair(n,c)]
+* [ns-flow-node(n,c)] <!-- 2 3:1,8 3:11, 4:1,18 5 6:1,5 6:8,10 -->
+* [ns-flow-pair(n,c)] <!-- 7:1,12 -->
 
 ### #. Flow Mappings
 
@@ -4026,8 +4026,8 @@ Mapping entries are separated by a ["**`,`**"] character.
 ]
 ```
 **Legend:**
-* [c-mapping-start] [c-mapping-end]
-* [ns-flow-map-entry(n,c)]
+* [c-mapping-start] [c-mapping-end] <!-- { } -->
+* [ns-flow-map-entry(n,c)] <!-- one_:_two three:_four five:_six seven_:_eight -->
 
 If the optional _"**`?`**" mapping key indicator_ is specified, the rest of the
 entry may be [completely empty].
@@ -4064,9 +4064,9 @@ implicit: entry,
 }
 ```
 **Legend:**
-* [ns-flow-map-explicit-entry(n,c)]
-* [ns-flow-map-implicit-entry(n,c)]
-* [e-node]
+* [ns-flow-map-explicit-entry(n,c)] <!-- implicit:_entry -->
+* [ns-flow-map-implicit-entry(n,c)] <!-- explicit:_entry -->
+* [e-node] <!-- ° -->
 
 Normally, YAML insists the _"**`:`**" mapping value indicator_ be [separated]
 from the [value] by [white space].
@@ -4128,9 +4128,9 @@ omitted value:°,
 }
 ```
 **Legend:**
-* [ns-flow-yaml-node(n,c)]
-* [e-node]
-* [c-ns-flow-map-separate-value(n,c)]
+* [ns-flow-yaml-node(n,c)] <!-- unquoted http://foo.com omitted_value -->
+* [e-node] <!-- :·"separate" 4:14,2 :·omitted_key -->
+* [c-ns-flow-map-separate-value(n,c)] <!-- 4:15 5:1 -->
 
 To ensure [JSON compatibility], if a [key] inside a flow mapping is
 [JSON-like], YAML allows the following [value] to be specified adjacent to the
@@ -4173,9 +4173,9 @@ However, as this greatly reduces readability, YAML [processors] should
 }
 ```
 **Legend:**
-* [c-flow-json-node(n,c)]
-* [e-node]
-* [c-ns-flow-map-adjacent-value(n,c)]
+* [c-flow-json-node(n,c)] <!-- "adjacent" "readable" "empty" -->
+* [e-node] <!-- ° -->
+* [c-ns-flow-map-adjacent-value(n,c)] <!-- value -->
 
 A more compact notation is usable inside [flow sequences], if the [mapping]
 contains a _single key: value pair_.
@@ -4198,7 +4198,7 @@ foo: bar
 ]
 ```
 **Legend:**
-* [ns-flow-pair(n,c)]
+* [ns-flow-pair(n,c)] <!-- foo:_bar -->
 
 If the "**`?`**" indicator is explicitly specified, [parsing] is unambiguous,
 and the syntax is identical to the general case.
@@ -4228,7 +4228,7 @@ and the syntax is identical to the general case.
 ]
 ```
 **Legend:**
-* [ns-flow-map-explicit-entry(n,c)]
+* [ns-flow-map-explicit-entry(n,c)] <!-- foo bar_:_baz -->
 
 If the "**`?`**" indicator is omitted, [parsing] needs to see past the
 _implicit key_ to recognize it as such.
@@ -4305,8 +4305,8 @@ been impossible to implement.
 ]
 ```
 **Legend:**
-* [ns-s-implicit-yaml-key]
-* [c-s-implicit-json-key]
+* [ns-s-implicit-yaml-key] <!-- YAML· -->
+* [c-s-implicit-json-key] <!-- {JSON:_like} -->
 * [e-node] Value
 
 **Example #. Invalid Implicit Keys**
@@ -4363,8 +4363,8 @@ Even the [double-quoted style] is a superset of the JSON string format.
 ]
 ```
 **Legend:**
-* [c-flow-json-content(n,c)]
-* [ns-flow-yaml-content(n,c)]
+* [c-flow-json-content(n,c)] <!-- [_a,_b_] {_a:_b_} "a" 'b' -->
+* [ns-flow-yaml-content(n,c)] <!-- 5:3 -->
 
 A complete [flow] [node] also has optional [node properties], except for [alias
 nodes] which refer to the [anchored] [node properties].
@@ -4415,8 +4415,8 @@ nodes] which refer to the [anchored] [node properties].
 ]
 ```
 **Legend:**
-* [c-flow-json-node(n,c)]
-* [ns-flow-yaml-node(n,c)]
+* [c-flow-json-node(n,c)] <!-- !!str_"a" 'b' &anchor_"c" -->
+* [ns-flow-yaml-node(n,c)] <!-- *anchor !!str° -->
 
 # Chapter #. Block Styles
 
@@ -4469,7 +4469,7 @@ This is the only case where a [comment] must not be followed by additional
 ]
 ```
 **Legend:**
-* [c-b-block-header(m,t)]
+* [c-b-block-header(m,t)] <!-- _#_Empty_header↓ 01_#_Indentation_indicator↓ +_#_Chomping_indicator↓ 01-_#_Both_indicators↓ -->
 
 #### #. Block Indentation Indicator
 
