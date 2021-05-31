@@ -38,6 +38,7 @@ FILES := \
     _config.yml \
     _layouts \
     spec.scss \
+    review.html \
 
 FILES := $(FILES:%=$(STAGE)/%)
 
@@ -110,6 +111,8 @@ $(STAGE)/%.css: %.css $(STAGE)
 $(STAGE):
 	mkdir $@
 	mkdir $@/img
+	cp 1.2/* $@/
+	cp markdown.html $@/
 
 $(PAGES):
 	-git branch --track gh-pages origin/gh-pages 2>/dev/null
