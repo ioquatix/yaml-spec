@@ -9,14 +9,14 @@
 
 **Latest (patched) version:**
 
-* HTML: [http://yaml.org/spec/1.2/spec.html](http://yaml.org/spec/1.2/spec.html)
-* PDF: [http://yaml.org/spec/1.2/spec.pdf](http://yaml.org/spec/1.2/spec.pdf)
-* PS: [http://yaml.org/spec/1.2/spec.ps](http://yaml.org/spec/1.2/spec.ps)
-* Errata: [http://yaml.org/spec/1.2/errata.html](http://yaml.org/spec/1.2/errata.html)
+* HTML: [http://yaml.org/spec/1.2/spec.html](/spec/1.2/spec.html)
+* PDF: [http://yaml.org/spec/1.2/spec.pdf](/spec/1.2/spec.pdf)
+* PS: [http://yaml.org/spec/1.2/spec.ps](/spec/1.2/spec.ps)
+* Errata: [http://yaml.org/spec/1.2/errata.html](/spec/1.2/errata.html)
 {:.releaseinfo}
 
 **Previous (original) version:**
-[http://yaml.org/spec/1.2/2009-07-21/spec.html](http://yaml.org/spec/1.2/2009-07-21/spec.html)
+[http://yaml.org/spec/1.2/2009-07-21/spec.html](/spec/1.2/2009-07-21/spec.html)
 
 Copyright © 2001-2009 Oren Ben-Kiki, Clark Evans, Ingy döt Net
 
@@ -58,7 +58,7 @@ Therefore, there are several incompatibilities between syck and this revision
 as well.
 
 The list of known errors in this specification is available at
-[http://yaml.org/spec/1.2/errata.html](http://yaml.org/spec/1.2/errata.html).
+[http://yaml.org/spec/1.2/errata.html](/spec/1.2/errata.html).
 Please report errors in this document to the yaml-core mailing list.
 This revision contains fixes for all errors known as of 2009-10-01.
 
@@ -268,7 +268,7 @@ It should be mentioned that there are ongoing efforts to define standard
 XML/YAML mappings.
 This generally requires that a subset of each language be used.
 For more information on using both XML and YAML, please visit
-[http://yaml.org/xml](http://yaml.org/xml).
+[http://yaml.org/xml](/xml).
 
 ## #. Terminology
 
@@ -554,9 +554,8 @@ and [**`str`**] types from the [fail safe schema].
 A few examples also use the [**`int`**], [**`float`**], and [**`null`**] types
 from the [JSON schema].
 The [repository] includes additional types such as
-[**`binary`**](http://yaml.org/type/binary.html),
-[**`omap`**](http://yaml.org/type/omap.html),
-[**`set`**](http://yaml.org/type/set.html) and others.
+[**`binary`**](/type/binary.html), [**`omap`**](/type/omap.html),
+[**`set`**](/type/set.html) and others.
 
 **Example #. Integers**
 ```
@@ -974,76 +973,59 @@ any other data that is applicable to all of the tag’s [nodes].
 
 #### #. Node Comparison
 
-##### Equality
-
-Since YAML [mappings] require [key] uniqueness, [representations] must
-include a mechanism for testing the equality of [nodes].
-In general, it is impossible to ensure uniqueness for [presentations], for
-the following reasons:
-
-* YAML allows various ways to [format scalar content].
-  For example, the integer eleven can be written as "**`0o13`**" (octal) or
-  "**`0xB`**" (hexadecimal).
-  If both notations are used as [keys] in the same [mapping], only a YAML
-  [processor] which recognizes integer [formats] would correctly flag the
-  duplicate [key] as an error.
-
-* The semantics of the [representation] may require that values with different
-  [tags] be considered equal.
-  For example, the integer one and the float one are considered equal.
-  If both are used as [keys] in the same [mapping], only a YAML [processor]
-  which recognizes integer and float [representations] would correctly flag the
-  duplicate [key] as an error.
-  YAML therefore requires that each [tag] must specify a mechanism for testing
-  any of its values for _equality_ with any other value (including values of
-  any different [tag]).
-  This is often implemented directly by the [native data structure] instead of
-  the YAML [processor].
-  That is, duplicate [keys] are often flagged as an error during the
-  [construction] processing stage.
-
-In order to ensure greater compatibility and clarity, YAML allows the
-[processor] to flag obvious duplicate [keys] based on the [presentation].
-Specifically, two [scalar] [keys] in the same [mapping], with the same [tag]
-and the same [content], may be flagged as an error as soon as the [parsing]
-stage.
-Note that this tests also works for [non-specific tags] due to the way that
-[tag resolution] is defined.
-This allows a human reader to reasonably identify **`{ a: 1, a: 2 }`** as an
-error.
-Such constructs are silently accepted by many languages, but have no well
-defined meaning, and are therefore disallowed in YAML to avoid surprising
-behavior.
+Since YAML [mappings] require [key] uniqueness, [representations] must include
+a mechanism for testing the equality of [nodes].
+This is non-trivial since YAML allows various ways to [format scalar content].
+For example, the integer eleven can be written as "**`0o13`**" (octal) or
+"**`0xB`**" (hexadecimal).
+If both notations are used as [keys] in the same [mapping], only a YAML
+[processor] which recognizes integer [formats] would correctly flag the
+duplicate [key] as an error.
 
 ##### Canonical Form
 
-YAML also requires that every [scalar] [tag] must specify a mechanism for
-producing the _canonical form_ of any [formatted content].
-This form is a Unicode character string which also [presents] the same [content].
-While this can be used for equality testing (as long as the compared values
-have the same [tag]), it has other uses, such as the production of digital
-signatures.
+YAML supports the need for [scalar] equality by requiring that every
+[scalar] [tag] must specify a mechanism for producing the _canonical form_ of
+any [formatted content].
+This form is a Unicode character string which also [presents] the same
+[content], and can be used for equality testing.
+While this requirement is stronger than a well defined equality operator, it
+has other uses, such as the production of digital signatures.
+
+##### Equality
+
+Two [nodes] must have the same [tag] and [content] to be _equal_.
+Since each [tag] applies to exactly one [kind], this implies that the two
+[nodes] must have the same [kind] to be equal.
+Two [scalars] are equal only when their [tags] and canonical forms are equal
+character-by-character.
+Equality of [collections] is defined recursively.
+Two [sequences] are equal only when they have the same [tag] and length, and
+each [node] in one [sequence] is equal to the corresponding [node] in the
+other [sequence].
+Two [mappings] are equal only when they have the same [tag] and an equal set
+of [keys], and each [key] in this set is associated with equal [values] in
+both [mappings].
+
+Different URI schemes may define different rules for testing the equality of
+URIs.
+Since a YAML [processor] cannot be reasonably expected to be aware of them
+all, it must resort to a simple character-by-character comparison of [tags]
+to ensure consistency.
+This also happens to be the comparison method defined by the "**`tag:`**" URI
+scheme. [Tags] in a YAML stream must therefore be [presented] in a canonical
+way so that such comparison would yield the correct results.
 
 ##### Identity
 
 Two [nodes] are _identical_ only when they [represent] the same [native data
 structure].
 Typically, this corresponds to a single memory address.
-Identity should not be confused with equality; two equal [nodes] need not
-have the same identity.
+Identity should not be confused with equality; two equal [nodes] need not have
+the same identity.
 A YAML [processor] may treat equal [scalars] as if they were identical.
-In contrast, the separate identity of two distinct but equal [collections]
-must be preserved.
-
-A common programming idiom is creating an empty object to obtain a value that
-is only equal to itself (for example, in order to generate a dynamic
-"enumerated type").
-The proper way to [represent] this in YAML would be **`!object {}`**, where
-the **`!object`** [tag] defines two objects to be equal only if they are
-identical.
-The alternative [scalar] [representation] **`!object ''`** will not work as
-expected, as the YAML [processor] is not required to preserve the identity of
-such objects.
+In contrast, the separate identity of two distinct but equal [collections] must
+be preserved.
 
 ### #. Serialization Tree
 
@@ -1092,7 +1074,7 @@ It is therefore possible to provide an anchor for all [nodes] in
 
 ### #. Presentation Stream
 
-A YAML _presentation_ is a [stream] of Unicode characters making use of
+A YAML _presentation_ is a [stream] of Unicode characters making use of of
 [styles], [scalar content formats], [comments], [directives] and other
 [presentation details] to [present] a YAML [serialization] in a human readable
 way.
@@ -1113,7 +1095,7 @@ Each [node] is presented in some _style_, depending on its [kind].
 The node style is a [presentation detail] and is not reflected in the
 [serialization tree] or [representation graph].
 There are two groups of styles. [Block styles] use [indentation] to denote
-structure; in contrast, [flow styles] rely on explicit [indicators].
+structure; In contrast, [flow styles] styles rely on explicit [indicators].
 
 YAML provides a rich set of _scalar styles_. [Block scalar] styles include the
 [literal style] and the [folded style]. [Flow scalar] styles include the [plain
@@ -1160,7 +1142,7 @@ A directive has a name and an optional sequence of parameters.
 Directives are instructions to the YAML [processor], and like all other
 [presentation details] are not reflected in the YAML [serialization tree] or
 [representation graph].
-This version of YAML defines two directives, ["**`YAML`**"] and ["**`TAG`**"].
+This version of YAML defines a two directives, ["**`YAML`**"] and ["**`TAG`**"].
 All other directives are [reserved] for future versions of YAML.
 
 ## #. Loading Failure Points
@@ -1458,7 +1440,7 @@ encodings.
 For [JSON compatibility], the UTF-32 encodings must also be supported.
 
 If a character [stream] begins with a _byte order mark_, the character encoding
-will be taken to be as indicated by the byte order mark.
+will be taken to be as as indicated by the byte order mark.
 Otherwise, the [stream] must begin with an ASCII character.
 This allows the encoding to be deduced by the pattern of null (**`#x00`**)
 characters.
@@ -1736,7 +1718,7 @@ A ["**`"`**"] (**`#x22`**, double quote) surrounds a [double-quoted flow
 scalar].
 
 ```
-[#] c-double-quote ::= '"'
+[#] c-double-quote ::= """
 ```
 
 **Example #. Quoted Scalar Indicators**
@@ -1801,7 +1783,7 @@ Any indicator character:
 ```
 [#] c-indicator ::=
     "-" | "?" | ":" | "," | "[" | "]" | "{" | "}"
-  | "#" | "&" | "*" | "!" | "|" | ">" | "'" | '"'
+  | "#" | "&" | "*" | "!" | "|" | ">" | "'" | """
   | "%" | "@" | "`"
 ```
 
@@ -2107,7 +2089,7 @@ space to become part of the [content].
 Escaped ASCII double quote (**`#x22`**).
 
 ```
-[#] ns-esc-double-quote ::= '"'
+[#] ns-esc-double-quote ::= """
 ```
 
 Escaped ASCII slash (**`#x2F`**), for [JSON compatibility].
@@ -3049,7 +3031,7 @@ There are two _tag prefix_ variants:
 
 ##### Global Tag Prefix
 
-> If the prefix begins with a character other than ["**`!`**"], it must be a
+> If the prefix begins with a character other than ["**`!`**"], it must to be a
 > valid URI prefix, and should contain at least the scheme and the authority.
 > [Shorthands] using the associated [handle] are expanded to globally unique URI
 > tags, and their semantics is consistent across [applications].
@@ -3461,7 +3443,7 @@ characters.
 
 ```
 [#] nb-double-char ::=
-  c-ns-esc-char | ( nb-json - "\" - '"' )
+  c-ns-esc-char | ( nb-json - "\" - """ )
 ```
 
 ```
@@ -3474,7 +3456,7 @@ Double-quoted scalars are restricted to a single line when contained inside an
 
 ```
 [#] c-double-quoted(n,c) ::=
-  '"' nb-double-text(n,c) '"'
+  """ nb-double-text(n,c) """
 ```
 
 ```
@@ -3512,8 +3494,8 @@ Double-quoted scalars are restricted to a single line when contained inside an
 * [nb-double-one-line] <!-- 1:2,19 2:4,18 -->
 * [c-double-quoted(n,c)] <!-- 1:1,21 2:3,20 -->
 
-In a multi-line double-quoted scalar, [line breaks] are subject to [flow line
-folding], which discards any trailing [white space] characters.
+In a multi-line double-quoted scalar, [line breaks] are are subject to [flow
+line folding], which discards any trailing [white space] characters.
 It is also possible to _escape_ the [line break] character.
 In this case, the [line break] is excluded from the [content], and the trailing
 [white space] characters are preserved.
@@ -4685,7 +4667,7 @@ keep: |+
   ? !!str "clip"
   : !!str "# text\n",
   ? !!str "keep"
-  : !!str "# text\n\n",
+  : !!str "# text\n",
 }
 ```
 **Legend:**
@@ -5397,9 +5379,9 @@ folded:↓
 ---
 !!map {
   ? !!str "literal"
-  : !!str "value\n",
+  : !!str "value",
   ? !!str "folded"
-  : !<!foo> "value\n",
+  : !<!foo> "value",
 }
 ```
 **Legend:**
@@ -5589,10 +5571,9 @@ document
 %YAML 1.2
 ---
 !!str "Bare document"
-...
 %YAML 1.2
 ---
-!!str "%!PS-Adobe-2.0 # Not the first line\n"
+!!str "%!PS-Adobe-2.0\n"
 ```
 **Legend:**
 * [l-bare-document]
@@ -5783,16 +5764,12 @@ option.
 
 ##### Definition:
 
-> [Represents] an associative container, where each [key] is [unique] in the
+> [Represents] an associative container, where each [key] is unique in the
 > association and mapped to exactly one [value].
 > YAML places no restrictions on the type of [keys]; in particular, they are
 > not restricted to being [scalars].
 > Example [bindings] to [native] types include Perl’s hash, Python’s
 > dictionary, and Java’s Hashtable.
-
-##### Equality:
-
-> Two mappings are [equal] if and only if they are [identical].
 
 **Example #. `!!map` Examples**
 ```
@@ -5820,10 +5797,6 @@ Flow style: !!map { Clark: Evans, Ingy: döt Net, Oren: Ben-Kiki }
 > Example [bindings] to [native] types include Perl’s array, Python’s list or
 > tuple, and Java’s array or Vector.
 
-##### Equality:
-
-> Two sequences are [equal] if and only if they are [identical].
-
 **Example #. `!!seq` Examples**
 ```
 Block style: !!seq
@@ -5850,18 +5823,16 @@ Flow style: !!seq [ Clark Evans, Ingy döt Net, Oren Ben-Kiki ]
 > This type is usually [bound] to the [native] language’s string type, or, for
 > languages lacking one (such as C), to a character array.
 
-##### Equality:
-
-> Two strings are [equal] if and only if they have the same length and contain
-> the same characters in the same order.
-
 ##### Canonical Form:
 
 > The obvious.
 
 **Example #. `!!str` Examples**
 ```
-String: !!str "Just a theory."
+Block style: !!str |-
+  String: just a theory.
+
+Flow style: !!str "String: just a theory."
 ```
 
 ### #. Tag Resolution
@@ -5905,10 +5876,6 @@ The JSON [schema] uses the following [tags] in addition to those defined by the
 > Also, a [mapping] entry with some [key] and a null [value] is valid, and
 > different from not having that [key] in the [mapping].
 
-##### Equality:
-
-> All **`null`** values are [equal].
-
 ##### Canonical Form:
 
 > **`null`**.
@@ -5934,11 +5901,6 @@ key with null value: !!null null
 > [Represents] a true/false value.
 > In languages without a [native] Boolean type (such as C), is usually [bound]
 > to a native integer type, using one for true and zero for false.
-
-##### Equality:
-
-> All **`true`** values are [equal].
-> Similarly, all **`false`** values are [equal].
 
 ##### Canonical Form:
 
@@ -5978,12 +5940,6 @@ Pluto is a planet: !!bool false
 > In general, integers representable using 32 binary digits should safely
 > round-trip through most systems.
 
-##### Equality:
-
-> An integer value is [equal] to any other numeric value that evaluates to the
-> integer value.
-> For example, the integer **`1`** is equal to the floating-point **`1.0`**.
-
 ##### Canonical Form:
 
 > Decimal integer notation, with a leading "**`-`**" character for negative
@@ -6022,17 +5978,6 @@ positive: !!int 34
 > IEEE floats should be safe.
 > Since YAML does not specify a particular accuracy, using floating-point
 > [mapping keys] requires great care and is not recommended.
-
-##### Equality:
-
-> A floating-point value is [equal] to any other numeric value that evaluates
-> to the floating-point value.
-> For example, floating-point **`1.0`** is [equal] to the the integer **`1`**.
-> Note that for the purpose of [key] [uniqueness], all **`.nan`** values are
-> considered to be [equal].
-> Note that in some languages (such as Ruby and Python) "not a number" has
-> [identity] semantics and therefore is not properly [represented] in YAML as
-> **`!!float .nan`**.
 
 ##### Canonical Form:
 
@@ -6215,8 +6160,7 @@ This allows interoperable [schemas] to use [untagged] [nodes].
 It is strongly recommended that such [schemas] be based on the [core schema]
 defined above.
 In addition, it is strongly recommended that such [schemas] make as much use as
-possible of the the _YAML tag repository_ at
-[http://yaml.org/type/](http://yaml.org/type/).
+possible of the the _YAML tag repository_ at [http://yaml.org/type/](/type/).
 This repository provides recommended [global tags] for increasing the
 portability of YAML [documents] between different [applications].
 

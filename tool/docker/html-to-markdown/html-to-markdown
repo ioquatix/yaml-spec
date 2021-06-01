@@ -46,6 +46,7 @@ class HtmlToMarkdown
       .replace(/-MM/g, '-10')
       .replace(/-DD/g, '-01')
       .replace(/\[\d+\](?=.*::=)/g, '[#]')
+      .replace(/[“”]/g, '"')
 
     return markdown + "\n"
 
@@ -247,6 +248,8 @@ class HtmlToMarkdown
       replacement: (m, n, o)=>
         mark = @H[n.nodeName]
         return "#{mark} #{m}" unless m.match /\d+\.\s/
+        if m.match(/^Chapter/)
+          mark = '#'
         text = m
           .replace(/(\d+\.)+\s/, '#. ')
         "#{mark} #{text}"

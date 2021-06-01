@@ -14,9 +14,7 @@ ALL := $(ALL_MD) $(ALL_IMG_IMAGE)
 build: $(ALL)
 
 force:
-ifneq ($(wildcard $(SPEC12)/spec.html),)
-	touch $(SPEC12)/spec.html
-endif
+	touch $(SPEC12)/spec-1.2.html
 
 force-all: force
 ifneq ($(wildcard $(SPEC12)/spec.dbk),)
@@ -24,11 +22,8 @@ ifneq ($(wildcard $(SPEC12)/spec.dbk),)
 	touch $(SPEC12)/spec.dbk
 endif
 
-spec.md: $(SPEC12)/spec.html $(LEGEND)
+spec.md: $(SPEC12)/spec-1.2.html $(LEGEND)
 	html-to-markdown $^ > $@
-
-$(SPEC12)/%.html: $(SPEC12)/%.dbk
-	make -C $(SPEC12) $(@:$(SPEC12)/%=%) YAML_SPEC_DIR=
 
 img/%.png: $(SPEC12)/%.png img
 	cp $< $@

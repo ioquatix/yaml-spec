@@ -12,14 +12,14 @@ layout: default
 
 **Latest (patched) version:**
 
-* HTML: [http://yaml.org/spec/1.2/spec.html](http://yaml.org/spec/1.2/spec.html)
-* PDF: [http://yaml.org/spec/1.2/spec.pdf](http://yaml.org/spec/1.2/spec.pdf)
-* PS: [http://yaml.org/spec/1.2/spec.ps](http://yaml.org/spec/1.2/spec.ps)
-* Errata: [http://yaml.org/spec/1.2/errata.html](http://yaml.org/spec/1.2/errata.html)
+* HTML: [http://yaml.org/spec/1.2/spec.html](/spec/1.2/spec.html)
+* PDF: [http://yaml.org/spec/1.2/spec.pdf](/spec/1.2/spec.pdf)
+* PS: [http://yaml.org/spec/1.2/spec.ps](/spec/1.2/spec.ps)
+* Errata: [http://yaml.org/spec/1.2/errata.html](/spec/1.2/errata.html)
 {:.releaseinfo}
 
 **Previous (original) version:**
-[http://yaml.org/spec/1.2/2009-07-21/spec.html](http://yaml.org/spec/1.2/2009-07-21/spec.html)
+[http://yaml.org/spec/1.2/2009-07-21/spec.html](/spec/1.2/2009-07-21/spec.html)
 
 Copyright © 2001-2009 Oren Ben-Kiki, Clark Evans, Ingy döt Net
 
@@ -61,7 +61,7 @@ Therefore, there are several incompatibilities between syck and this revision
 as well.
 
 The list of known errors in this specification is available at
-[http://yaml.org/spec/1.2/errata.html](http://yaml.org/spec/1.2/errata.html).
+[http://yaml.org/spec/1.2/errata.html](/spec/1.2/errata.html).
 Please report errors in this document to the yaml-core mailing list.
 This revision contains fixes for all errors known as of 2009-10-01.
 
@@ -282,7 +282,7 @@ It should be mentioned that there are ongoing efforts to define standard
 XML/YAML mappings.
 This generally requires that a subset of each language be used.
 For more information on using both XML and YAML, please visit
-[http://yaml.org/xml](http://yaml.org/xml).
+[http://yaml.org/xml](/xml).
 
 <div id="terminology" />
 ## 1.5. Terminology
@@ -652,9 +652,8 @@ and ~~[**`str`**](#undefined)~~ types from the ~~[fail safe schema](#undefined)~
 A few examples also use the ~~[**`int`**](#undefined)~~, ~~[**`float`**](#undefined)~~, and ~~[**`null`**](#undefined)~~ types
 from the ~~[JSON schema](#undefined)~~.
 The ~~[repository](#undefined)~~ includes additional types such as
-[**`binary`**](http://yaml.org/type/binary.html),
-[**`omap`**](http://yaml.org/type/omap.html),
-[**`set`**](http://yaml.org/type/set.html) and others.
+[**`binary`**](/type/binary.html), [**`omap`**](/type/omap.html),
+[**`set`**](/type/set.html) and others.
 
 <div id="example-integers" class="example">
 **Example 2.19 Integers**
@@ -1132,76 +1131,59 @@ any other data that is applicable to all of the tag’s ~~[nodes](#undefined)~~.
 #### 3.2.1.3. Node Comparison
 
 
-##### Equality
-
-Since YAML [mappings](#mapping) require [key](#nodes) uniqueness, [representations](#representation-graph) must
-include a mechanism for testing the equality of ~~[nodes](#undefined)~~.
-In general, it is impossible to ensure uniqueness for ~~[presentations](#undefined)~~, for
-the following reasons:
-
-* YAML allows various ways to ~~[format scalar content](#undefined)~~.
-  For example, the integer eleven can be written as "**`0o13`**" (octal) or
-  "**`0xB`**" (hexadecimal).
-  If both notations are used as ~~[keys](#undefined)~~ in the same ~~[mapping](#undefined)~~, only a YAML
-  [processor](#processing-yaml-information) which recognizes integer ~~[formats](#undefined)~~ would correctly flag the
-  duplicate [key](#nodes) as an error.
-
-* The semantics of the [representation](#representation-graph) may require that values with different
-  ~~[tags](#undefined)~~ be considered equal.
-  For example, the integer one and the float one are considered equal.
-  If both are used as ~~[keys](#undefined)~~ in the same ~~[mapping](#undefined)~~, only a YAML [processor](#processing-yaml-information)
-  which recognizes integer and float [representations](#representation-graph) would correctly flag the
-  duplicate [key](#nodes) as an error.
-  YAML therefore requires that each [tag](#tags) must specify a mechanism for testing
-  any of its values for _equality_ with any other value (including values of
-  any different [tag](#tags)).
-  This is often implemented directly by the ~~[native data structure](#undefined)~~ instead of
-  the YAML [processor](#processing-yaml-information).
-  That is, duplicate ~~[keys](#undefined)~~ are often flagged as an error during the
-  ~~[construction](#undefined)~~ processing stage.
-
-In order to ensure greater compatibility and clarity, YAML allows the
-[processor](#processing-yaml-information) to flag obvious duplicate ~~[keys](#undefined)~~ based on the [presentation](#presentation-stream).
-Specifically, two [scalar](#scalar) ~~[keys](#undefined)~~ in the same ~~[mapping](#undefined)~~, with the same [tag](#tags)
-and the same [content](#nodes), may be flagged as an error as soon as the ~~[parsing](#undefined)~~
-stage.
-Note that this tests also works for ~~[non-specific tags](#undefined)~~ due to the way that
-~~[tag resolution](#undefined)~~ is defined.
-This allows a human reader to reasonably identify **`{ a: 1, a: 2 }`** as an
-error.
-Such constructs are silently accepted by many languages, but have no well
-defined meaning, and are therefore disallowed in YAML to avoid surprising
-behavior.
+Since YAML [mappings](#mapping) require [key](#nodes) uniqueness, [representations](#representation-graph) must include
+a mechanism for testing the equality of ~~[nodes](#undefined)~~.
+This is non-trivial since YAML allows various ways to ~~[format scalar content](#undefined)~~.
+For example, the integer eleven can be written as "**`0o13`**" (octal) or
+"**`0xB`**" (hexadecimal).
+If both notations are used as ~~[keys](#undefined)~~ in the same ~~[mapping](#undefined)~~, only a YAML
+[processor](#processing-yaml-information) which recognizes integer ~~[formats](#undefined)~~ would correctly flag the
+duplicate [key](#nodes) as an error.
 
 ##### Canonical Form
 
-YAML also requires that every [scalar](#scalar) [tag](#tags) must specify a mechanism for
-producing the _canonical form_ of any [formatted content](#scalar-formats).
-This form is a Unicode character string which also ~~[presents](#undefined)~~ the same [content](#nodes).
-While this can be used for equality testing (as long as the compared values
-have the same [tag](#tags)), it has other uses, such as the production of digital
-signatures.
+YAML supports the need for [scalar](#scalar) equality by requiring that every
+[scalar](#scalar) [tag](#tags) must specify a mechanism for producing the _canonical form_ of
+any [formatted content](#scalar-formats).
+This form is a Unicode character string which also ~~[presents](#undefined)~~ the same
+[content](#nodes), and can be used for equality testing.
+While this requirement is stronger than a well defined equality operator, it
+has other uses, such as the production of digital signatures.
+
+##### Equality
+
+Two ~~[nodes](#undefined)~~ must have the same [tag](#tags) and [content](#nodes) to be _equal_.
+Since each [tag](#tags) applies to exactly one ~~[kind](#undefined)~~, this implies that the two
+~~[nodes](#undefined)~~ must have the same ~~[kind](#undefined)~~ to be equal.
+Two ~~[scalars](#undefined)~~ are equal only when their ~~[tags](#undefined)~~ and canonical forms are equal
+character-by-character.
+Equality of ~~[collections](#undefined)~~ is defined recursively.
+Two [sequences](#sequence) are equal only when they have the same [tag](#tags) and length, and
+each [node](#nodes) in one ~~[sequence](#undefined)~~ is equal to the corresponding [node](#nodes) in the
+other ~~[sequence](#undefined)~~.
+Two [mappings](#mapping) are equal only when they have the same [tag](#tags) and an equal set
+of ~~[keys](#undefined)~~, and each [key](#nodes) in this set is associated with equal ~~[values](#undefined)~~ in
+both [mappings](#mapping).
+
+Different URI schemes may define different rules for testing the equality of
+URIs.
+Since a YAML [processor](#processing-yaml-information) cannot be reasonably expected to be aware of them
+all, it must resort to a simple character-by-character comparison of ~~[tags](#undefined)~~
+to ensure consistency.
+This also happens to be the comparison method defined by the "**`tag:`**" URI
+scheme. ~~[Tags](#undefined)~~ in a YAML stream must therefore be ~~[presented](#undefined)~~ in a canonical
+way so that such comparison would yield the correct results.
 
 ##### Identity
 
 Two ~~[nodes](#undefined)~~ are _identical_ only when they ~~[represent](#undefined)~~ the same ~~[native data
 structure](#undefined)~~.
 Typically, this corresponds to a single memory address.
-Identity should not be confused with equality; two equal ~~[nodes](#undefined)~~ need not
-have the same identity.
+Identity should not be confused with equality; two equal ~~[nodes](#undefined)~~ need not have
+the same identity.
 A YAML [processor](#processing-yaml-information) may treat equal ~~[scalars](#undefined)~~ as if they were identical.
-In contrast, the separate identity of two distinct but equal ~~[collections](#undefined)~~
-must be preserved.
-
-A common programming idiom is creating an empty object to obtain a value that
-is only equal to itself (for example, in order to generate a dynamic
-"enumerated type").
-The proper way to ~~[represent](#undefined)~~ this in YAML would be **`!object {}`**, where
-the **`!object`** [tag](#tags) defines two objects to be equal only if they are
-identical.
-The alternative [scalar](#scalar) [representation](#representation-graph) **`!object ''`** will not work as
-expected, as the YAML [processor](#processing-yaml-information) is not required to preserve the identity of
-such objects.
+In contrast, the separate identity of two distinct but equal ~~[collections](#undefined)~~ must
+be preserved.
 
 <div id="serialization-tree" />
 ### 3.2.2. Serialization Tree
@@ -1258,7 +1240,7 @@ It is therefore possible to provide an anchor for all ~~[nodes](#undefined)~~ in
 ### 3.2.3. Presentation Stream
 
 
-A YAML _presentation_ is a [stream](#streams) of Unicode characters making use of
+A YAML _presentation_ is a [stream](#streams) of Unicode characters making use of of
 [styles](#node-styles), ~~[scalar content formats](#undefined)~~, ~~[comments](#undefined)~~, ~~[directives](#undefined)~~ and other
 ~~[presentation details](#undefined)~~ to ~~[present](#undefined)~~ a YAML [serialization](#serialization-tree) in a human readable
 way.
@@ -1281,7 +1263,7 @@ Each [node](#nodes) is presented in some _style_, depending on its ~~[kind](#und
 The node style is a ~~[presentation detail](#undefined)~~ and is not reflected in the
 ~~[serialization tree](#undefined)~~ or [representation graph](#representation-graph).
 There are two groups of styles. ~~[Block styles](#undefined)~~ use [indentation](#indentation-spaces) to denote
-structure; in contrast, ~~[flow styles](#undefined)~~ rely on explicit ~~[indicators](#undefined)~~.
+structure; In contrast, ~~[flow styles](#undefined)~~ styles rely on explicit ~~[indicators](#undefined)~~.
 
 YAML provides a rich set of _scalar styles_. ~~[Block scalar](#undefined)~~ styles include the
 ~~[literal style](#undefined)~~ and the ~~[folded style](#undefined)~~. ~~[Flow scalar](#undefined)~~ styles include the ~~[plain
@@ -1334,7 +1316,7 @@ A directive has a name and an optional sequence of parameters.
 Directives are instructions to the YAML [processor](#processing-yaml-information), and like all other
 ~~[presentation details](#undefined)~~ are not reflected in the YAML ~~[serialization tree](#undefined)~~ or
 [representation graph](#representation-graph).
-This version of YAML defines two directives, ~~["**`YAML`**"](#undefined)~~ and ~~["**`TAG`**"](#undefined)~~.
+This version of YAML defines a two directives, ~~["**`YAML`**"](#undefined)~~ and ~~["**`TAG`**"](#undefined)~~.
 All other directives are ~~[reserved](#undefined)~~ for future versions of YAML.
 
 <div id="loading-failure-points" />
@@ -1656,7 +1638,7 @@ encodings.
 For ~~[JSON compatibility](#undefined)~~, the UTF-32 encodings must also be supported.
 
 If a character [stream](#streams) begins with a _byte order mark_, the character encoding
-will be taken to be as indicated by the byte order mark.
+will be taken to be as as indicated by the byte order mark.
 Otherwise, the [stream](#streams) must begin with an ASCII character.
 This allows the encoding to be deduced by the pattern of null (**`#x00`**)
 characters.
@@ -2054,7 +2036,7 @@ scalar](#undefined)~~.
 
 <div id="rule-c-double-quote" />
 <pre class="rule">
-[19] c-double-quote ::= '"'
+[19] c-double-quote ::= """
 </pre>
 
 <div id="example-quoted-scalar-indicators" class="example">
@@ -2165,7 +2147,7 @@ Any indicator character:
 <pre class="rule">
 [22] c-indicator ::=
     "-" | "?" | ":" | "," | "[" | "]" | "{" | "}"
-  | "#" | "&amp;" | "*" | "!" | "|" | "&gt;" | "'" | '"'
+  | "#" | "&amp;" | "*" | "!" | "|" | "&gt;" | "'" | """
   | "%" | "@" | "`"
 </pre>
 
@@ -2539,7 +2521,7 @@ Escaped ASCII double quote (**`#x22`**).
 
 <div id="rule-ns-esc-double-quote" />
 <pre class="rule">
-[52] ns-esc-double-quote ::= '"'
+[52] ns-esc-double-quote ::= """
 </pre>
 
 Escaped ASCII slash (**`#x2F`**), for ~~[JSON compatibility](#undefined)~~.
@@ -3888,7 +3870,7 @@ There are two _tag prefix_ variants:
 
 ##### Global Tag Prefix
 
-> If the prefix begins with a character other than ~~["**`!`**"](#undefined)~~, it must be a
+> If the prefix begins with a character other than ~~["**`!`**"](#undefined)~~, it must to be a
 > valid URI prefix, and should contain at least the scheme and the authority.
 > ~~[Shorthands](#undefined)~~ using the associated ~~[handle](#undefined)~~ are expanded to globally unique URI
 > tags, and their semantics is consistent across [applications](#processing-yaml-information).
@@ -4490,7 +4472,7 @@ characters.
 <div id="rule-nb-double-char" />
 <pre class="rule">
 [107] nb-double-char ::=
-  c-ns-esc-char | ( nb-json - "\" - '"' )
+  c-ns-esc-char | ( nb-json - "\" - """ )
 </pre>
 
 <div id="rule-ns-double-char" />
@@ -4505,7 +4487,7 @@ Double-quoted scalars are restricted to a single line when contained inside an
 <div id="rule-c-double-quoted(n,c)" />
 <pre class="rule">
 [109] c-double-quoted(n,c) ::=
-  '"' nb-double-text(n,c) '"'
+  """ nb-double-text(n,c) """
 </pre>
 
 <div id="rule-nb-double-text(n,c)" />
@@ -4560,8 +4542,8 @@ Double-quoted scalars are restricted to a single line when contained inside an
 </div>
 </div>
 
-In a multi-line double-quoted scalar, [line breaks](#line-break-characters) are subject to ~~[flow line
-folding](#undefined)~~, which discards any trailing [white space](#white-space-characters) characters.
+In a multi-line double-quoted scalar, [line breaks](#line-break-characters) are are subject to ~~[flow
+line folding](#undefined)~~, which discards any trailing [white space](#white-space-characters) characters.
 It is also possible to _escape_ the [line break](#line-break-characters) character.
 In this case, the [line break](#line-break-characters) is excluded from the [content](#nodes), and the trailing
 [white space](#white-space-characters) characters are preserved.
@@ -6177,7 +6159,7 @@ keep: |+
   ? !!str "clip"
   : !!str "# text\n",
   ? !!str "keep"
-  : !!str "# text\n\n",
+  : !!str "# text\n",
 }
 </pre>
 
@@ -7171,9 +7153,9 @@ folded:↓
 ---
 !!map {
   ? !!str "literal"
-  : !!str "value\n",
+  : !!str "value",
   ? !!str "folded"
-  : !&lt;!foo&gt; "value\n",
+  : !&lt;!foo&gt; "value",
 }
 </pre>
 
@@ -7441,10 +7423,9 @@ document
 %YAML 1.2
 ---
 !!str "Bare document"
-...
 %YAML 1.2
 ---
-!!str "%!PS-Adobe-2.0 # Not the first line\n"
+!!str "%!PS-Adobe-2.0\n"
 </pre>
 
 </td>
@@ -7705,16 +7686,12 @@ option.
 
 ##### Definition:
 
-> ~~[Represents](#undefined)~~ an associative container, where each [key](#nodes) is [unique](#node-comparison) in the
+> ~~[Represents](#undefined)~~ an associative container, where each [key](#nodes) is unique in the
 > association and mapped to exactly one ~~[value](#undefined)~~.
 > YAML places no restrictions on the type of ~~[keys](#undefined)~~; in particular, they are
 > not restricted to being ~~[scalars](#undefined)~~.
 > Example ~~[bindings](#undefined)~~ to ~~[native](#undefined)~~ types include Perl’s hash, Python’s
 > dictionary, and Java’s Hashtable.
-
-##### Equality:
-
-> Two mappings are ~~[equal](#undefined)~~ if and only if they are ~~[identical](#undefined)~~.
 
 <div id="example-map-examples" class="example">
 **Example 10.1 `!!map` Examples**
@@ -7748,10 +7725,6 @@ Flow style: !!map { Clark: Evans, Ingy: döt Net, Oren: Ben-Kiki }
 > Example ~~[bindings](#undefined)~~ to ~~[native](#undefined)~~ types include Perl’s array, Python’s list or
 > tuple, and Java’s array or Vector.
 
-##### Equality:
-
-> Two sequences are ~~[equal](#undefined)~~ if and only if they are ~~[identical](#undefined)~~.
-
 <div id="example-seq-examples" class="example">
 **Example 10.2 `!!seq` Examples**
 
@@ -7784,11 +7757,6 @@ Flow style: !!seq [ Clark Evans, Ingy döt Net, Oren Ben-Kiki ]
 > This type is usually ~~[bound](#undefined)~~ to the ~~[native](#undefined)~~ language’s string type, or, for
 > languages lacking one (such as C), to a character array.
 
-##### Equality:
-
-> Two strings are ~~[equal](#undefined)~~ if and only if they have the same length and contain
-> the same characters in the same order.
-
 ##### Canonical Form:
 
 > The obvious.
@@ -7797,7 +7765,10 @@ Flow style: !!seq [ Clark Evans, Ingy döt Net, Oren Ben-Kiki ]
 **Example 10.3 `!!str` Examples**
 
 <pre class="example">
-String: !!str "Just a theory."
+Block style: !!str |-
+  String: just a theory.
+
+Flow style: !!str "String: just a theory."
 </pre>
 
 </div>
@@ -7851,10 +7822,6 @@ The JSON ~~[schema](#undefined)~~ uses the following ~~[tags](#undefined)~~ in a
 > Also, a ~~[mapping](#undefined)~~ entry with some [key](#nodes) and a null ~~[value](#undefined)~~ is valid, and
 > different from not having that [key](#nodes) in the ~~[mapping](#undefined)~~.
 
-##### Equality:
-
-> All **`null`** values are ~~[equal](#undefined)~~.
-
 ##### Canonical Form:
 
 > **`null`**.
@@ -7886,11 +7853,6 @@ key with null value: !!null null
 > ~~[Represents](#undefined)~~ a true/false value.
 > In languages without a ~~[native](#undefined)~~ Boolean type (such as C), is usually ~~[bound](#undefined)~~
 > to a native integer type, using one for true and zero for false.
-
-##### Equality:
-
-> All **`true`** values are ~~[equal](#undefined)~~.
-> Similarly, all **`false`** values are ~~[equal](#undefined)~~.
 
 ##### Canonical Form:
 
@@ -7936,12 +7898,6 @@ Pluto is a planet: !!bool false
 > In general, integers representable using 32 binary digits should safely
 > round-trip through most systems.
 
-##### Equality:
-
-> An integer value is ~~[equal](#undefined)~~ to any other numeric value that evaluates to the
-> integer value.
-> For example, the integer **`1`** is equal to the floating-point **`1.0`**.
-
 ##### Canonical Form:
 
 > Decimal integer notation, with a leading "**`-`**" character for negative
@@ -7986,17 +7942,6 @@ positive: !!int 34
 > IEEE floats should be safe.
 > Since YAML does not specify a particular accuracy, using floating-point
 > [mapping keys](#nodes) requires great care and is not recommended.
-
-##### Equality:
-
-> A floating-point value is ~~[equal](#undefined)~~ to any other numeric value that evaluates
-> to the floating-point value.
-> For example, floating-point **`1.0`** is ~~[equal](#undefined)~~ to the the integer **`1`**.
-> Note that for the purpose of [key](#nodes) ~~[uniqueness](#undefined)~~, all **`.nan`** values are
-> considered to be ~~[equal](#undefined)~~.
-> Note that in some languages (such as Ruby and Python) "not a number" has
-> ~~[identity](#undefined)~~ semantics and therefore is not properly ~~[represented](#undefined)~~ in YAML as
-> **`!!float .nan`**.
 
 ##### Canonical Form:
 
@@ -8219,8 +8164,7 @@ This allows interoperable ~~[schemas](#undefined)~~ to use ~~[untagged](#undefin
 It is strongly recommended that such ~~[schemas](#undefined)~~ be based on the ~~[core schema](#undefined)~~
 defined above.
 In addition, it is strongly recommended that such ~~[schemas](#undefined)~~ make as much use as
-possible of the the _YAML tag repository_ at
-[http://yaml.org/type/](http://yaml.org/type/).
+possible of the the _YAML tag repository_ at [http://yaml.org/type/](/type/).
 This repository provides recommended ~~[global tags](#undefined)~~ for increasing the
 portability of YAML [documents](#document) between different [applications](#processing-yaml-information).
 
