@@ -340,7 +340,7 @@ its own line. ~~[Block sequences](#undefined)~~ indicate each entry with a dash 
 <div id="example-sequence-of-scalars" class="example">
 **Example 2.1 Sequence of Scalars (ball players)**
 
-<pre>
+<pre class="example">
 - Mark McGwire
 - Sammy Sosa
 - Ken Griffey
@@ -351,7 +351,7 @@ its own line. ~~[Block sequences](#undefined)~~ indicate each entry with a dash 
 <div id="example-mapping-scalars-to-scalars" class="example">
 **Example 2.2 Mapping Scalars to Scalars (player statistics)**
 
-<pre>
+<pre class="example">
 hr:  65    # Home runs
 avg: 0.278 # Batting average
 rbi: 147   # Runs Batted In
@@ -362,7 +362,7 @@ rbi: 147   # Runs Batted In
 <div id="example-mapping-scalars-to-sequences" class="example">
 **Example 2.3 Mapping Scalars to Sequences (ball clubs in each league)**
 
-<pre>
+<pre class="example">
 american:
   - Boston Red Sox
   - Detroit Tigers
@@ -378,7 +378,7 @@ national:
 <div id="example-sequence-of-mappings" class="example">
 **Example 2.4 Sequence of Mappings (players’ statistics)**
 
-<pre>
+<pre class="example">
 -
   name: Mark McGwire
   hr:   65
@@ -400,7 +400,7 @@ In a similar manner, the ~~[flow mapping](#undefined)~~ uses ~~[curly](#undefine
 <div id="example-sequence-of-sequences" class="example">
 **Example 2.5 Sequence of Sequences**
 
-<pre>
+<pre class="example">
 - [name        , hr, avg  ]
 - [Mark McGwire, 65, 0.278]
 - [Sammy Sosa  , 63, 0.288]
@@ -411,7 +411,7 @@ In a similar manner, the ~~[flow mapping](#undefined)~~ uses ~~[curly](#undefine
 <div id="example-mapping-of-mappings" class="example">
 **Example 2.6 Mapping of Mappings**
 
-<pre>
+<pre class="example">
 Mark McGwire: {hr: 65, avg: 0.278}
 Sammy Sosa: {
     hr: 63,
@@ -435,7 +435,7 @@ new one, for use in communication channels.
 <div id="example-two-documents-in-a-stream" class="example">
 **Example 2.7 Two Documents in a Stream (each with a leading comment)**
 
-<pre>
+<pre class="example">
 # Ranking of 1998 home runs
 ---
 - Mark McGwire
@@ -453,7 +453,7 @@ new one, for use in communication channels.
 <div id="example-play-by-play-feed-from-a-game" class="example">
 **Example 2.8 Play by Play Feed from a Game**
 
-<pre>
+<pre class="example">
 ---
 time: 20:03:20
 player: Sammy Sosa
@@ -475,7 +475,7 @@ asterisk - ~~["**`*`**"](#undefined)~~) thereafter.
 <div id="example-single-document-with-two-comments" class="example">
 **Example 2.9 Single Document with Two Comments**
 
-<pre>
+<pre class="example">
 ---
 hr: # 1998 hr ranking
   - Mark McGwire
@@ -491,7 +491,7 @@ rbi:
 <div id="example-node-for-sammy-sosa-appears-twice-in-this-document" class="example">
 **Example 2.10 Node for "**`Sammy Sosa`**" appears twice in this document**
 
-<pre>
+<pre class="example">
 ---
 hr:
   - Mark McGwire
@@ -511,7 +511,7 @@ the ~~[dash](#undefined)~~, ~~[colon](#undefined)~~, or ~~[question mark](#undef
 <div id="example-mapping-between-sequences" class="example">
 **Example 2.11 Mapping between Sequences**
 
-<pre>
+<pre class="example">
 ? - Detroit Tigers
   - Chicago cubs
 :
@@ -528,7 +528,7 @@ the ~~[dash](#undefined)~~, ~~[colon](#undefined)~~, or ~~[question mark](#undef
 <div id="example-compact-nested-mapping" class="example">
 **Example 2.12 Compact Nested Mapping**
 
-<pre>
+<pre class="example">
 ---
 # Products purchased
 - item    : Super Hoop
@@ -554,7 +554,7 @@ Alternatively, they can be written with the ~~[folded style](#undefined)~~ ~~[(d
 <div id="example-in-literals-newlines-are-preserved" class="example">
 **Example 2.13 In literals, newlines are preserved**
 
-<pre>
+<pre class="example">
 # ASCII Art
 --- |
   \//||\/||
@@ -566,7 +566,7 @@ Alternatively, they can be written with the ~~[folded style](#undefined)~~ ~~[(d
 <div id="example-in-the-folded-scalars-newlines-become-spaces" class="example">
 **Example 2.14 In the folded scalars, newlines become spaces**
 
-<pre>
+<pre class="example">
 --- &gt;
   Mark McGwire's
   year was crippled
@@ -579,7 +579,7 @@ Alternatively, they can be written with the ~~[folded style](#undefined)~~ ~~[(d
 **Example 2.15 Folded newlines are preserved for "more indented" and blank
 lines**
 
-<pre>
+<pre class="example">
 &gt;
  Sammy Sosa completed another
  fine season with great stats.
@@ -595,7 +595,7 @@ lines**
 <div id="example-indentation-determines-scope" class="example">
 **Example 2.16 Indentation determines scope**
 
-<pre>
+<pre class="example">
 name: Mark McGwire
 accomplishment: &gt;
   Mark set a major league
@@ -616,7 +616,7 @@ All ~~[flow scalars](#undefined)~~ can span multiple lines; [line breaks](#line-
 <div id="example-quoted-scalars" class="example">
 **Example 2.17 Quoted Scalars**
 
-<pre>
+<pre class="example">
 unicode: "Sosa did fine.\u263A"
 control: "\b1998\t1999\t2000\n"
 hex esc: "\x0d\x0a is \r\n"
@@ -631,7 +631,7 @@ tie-fighter: '|\-*-/|'
 <div id="example-multi-line-flow-scalars" class="example">
 **Example 2.18 Multi-line Flow Scalars**
 
-<pre>
+<pre class="example">
 plain:
   This unquoted scalar
   spans many lines.
@@ -659,7 +659,7 @@ The ~~[repository](#undefined)~~ includes additional types such as
 <div id="example-integers" class="example">
 **Example 2.19 Integers**
 
-<pre>
+<pre class="example">
 canonical: 12345
 decimal: +12345
 octal: 0o14
@@ -671,7 +671,7 @@ hexadecimal: 0xC
 <div id="example-floating-point" class="example">
 **Example 2.20 Floating Point**
 
-<pre>
+<pre class="example">
 canonical: 1.23015e+3
 exponential: 12.3015e+02
 fixed: 1230.15
@@ -684,7 +684,7 @@ not a number: .NaN
 <div id="example-miscellaneous" class="example">
 **Example 2.21 Miscellaneous**
 
-<pre>
+<pre class="example">
 null:
 booleans: [ true, false ]
 string: '012345'
@@ -695,7 +695,7 @@ string: '012345'
 <div id="example-timestamps" class="example">
 **Example 2.22 Timestamps**
 
-<pre>
+<pre class="example">
 canonical: 2001-12-15T02:59:43.1Z
 iso8601: 2001-12-14t21:59:43.10-05:00
 spaced: 2001-12-14 21:59:43.10 -5
@@ -712,7 +712,7 @@ also be used.
 <div id="example-various-explicit-tags" class="example">
 **Example 2.23 Various Explicit Tags**
 
-<pre>
+<pre class="example">
 ---
 not-date: !!str 2002-04-28
 
@@ -733,7 +733,7 @@ application specific tag: !something |
 <div id="example-global-tags" class="example">
 **Example 2.24 Global Tags**
 
-<pre>
+<pre class="example">
 %TAG ! tag:clarkevans.com,2002:
 --- !shape
   # Use the ! handle for presenting
@@ -755,7 +755,7 @@ application specific tag: !something |
 <div id="example-unordered-sets" class="example">
 **Example 2.25 Unordered Sets**
 
-<pre>
+<pre class="example">
 # Sets are represented as a
 # Mapping where each key is
 # associated with a null value
@@ -770,7 +770,7 @@ application specific tag: !something |
 <div id="example-ordered-mappings" class="example">
 **Example 2.26 Ordered Mappings**
 
-<pre>
+<pre class="example">
 # Ordered maps are represented as
 # A sequence of mappings, with
 # each mapping having one key
@@ -792,7 +792,7 @@ On the left is a sample invoice; on the right is a sample log file.
 <div id="example-invoice" class="example">
 **Example 2.27 Invoice**
 
-<pre>
+<pre class="example">
 --- !&lt;tag:clarkevans.com,2002:invoice&gt;
 invoice: 34843
 date   : 2001-01-23
@@ -829,7 +829,7 @@ comments:
 <div id="example-log-file" class="example">
 **Example 2.28 Log File**
 
-<pre>
+<pre class="example">
 ---
 Time: 2001-11-23 15:01:42 -5
 User: ed
@@ -895,7 +895,7 @@ Translating between ~~[native data structures](#undefined)~~ and a character [st
 in several logically distinct stages, each with a well defined input and output
 data model, as shown in the following diagram:
 
-**Figure #. Processing Overview**
+**Figure 3.1. Processing Overview**
 
 ![Processing Overview](img/overview2.png)
 
@@ -1026,7 +1026,7 @@ Full arrows denote composition, hollow arrows denote inheritance, "**`1`**" and
 A single "**`+`**" denotes [serialization](#serialization-tree) details, a double "**`++`**" denotes
 [presentation](#presentation-stream) details.
 
-**Figure #. Information Models**
+**Figure 3.2. Information Models**
 
 ![Information Models](img/model2.png)
 
@@ -1049,7 +1049,7 @@ YAML supports two ~~[kinds](#undefined)~~ of ~~[collection nodes](#undefined)~~:
 ~~[Mapping nodes](#undefined)~~ are somewhat tricky because their ~~[keys](#undefined)~~ are unordered and must
 be [unique](#node-comparison).
 
-**Figure #. Representation Model**
+**Figure 3.3. Representation Model**
 
 ![Representation Model](img/represent2.png)
 
@@ -1216,7 +1216,7 @@ This tree can be traversed for a serial event-based API. ~~[Construction](#undef
 ~~[native data structures](#undefined)~~ from the serial interface should not use ~~[key order](#undefined)~~
 or ~~[anchor names](#undefined)~~ for the preservation of [application](#processing-yaml-information) data.
 
-**Figure #. Serialization Model**
+**Figure 3.4. Serialization Model**
 
 ![Serialization Model](img/serialize2.png)
 
@@ -1269,7 +1269,7 @@ character stream, as a series of [documents](#document) separated by ~~[markers]
 Documents appearing in the same stream are independent; that is, a [node](#nodes) must
 not appear in more than one ~~[serialization tree](#undefined)~~ or [representation graph](#representation-graph).
 
-**Figure #. Presentation Model**
+**Figure 3.5. Presentation Model**
 
 ![Presentation Model](img/present2.png)
 
@@ -1297,7 +1297,7 @@ In addition, YAML provides a ~~[compact notation](#undefined)~~ for ~~[flow mapp
 single ~~[key: value pair](#undefined)~~, nested inside a ~~[flow sequence](#undefined)~~.
 These allow for a natural "ordered mapping" notation.
 
-**Figure #. Kind/Style Combinations**
+**Figure 3.6. Kind/Style Combinations**
 
 ![Kind/Style Combinations](img/styles2.png)
 
@@ -1358,7 +1358,7 @@ and provides the ~~[canonical form](#undefined)~~ of ~~[formatted scalar content
 A complete representation is required in order to ~~[construct](#undefined)~~ ~~[native data
 structures](#undefined)~~.
 
-**Figure #. Loading Failure Points**
+**Figure 3.7. Loading Failure Points**
 
 ![Loading Failure Points](img/validity2.png)
 
@@ -7719,7 +7719,7 @@ option.
 <div id="example-map-examples" class="example">
 **Example 10.1 `!!map` Examples**
 
-<pre>
+<pre class="example">
 Block style: !!map
   Clark : Evans
   Ingy  : döt Net
@@ -7755,7 +7755,7 @@ Flow style: !!map { Clark: Evans, Ingy: döt Net, Oren: Ben-Kiki }
 <div id="example-seq-examples" class="example">
 **Example 10.2 `!!seq` Examples**
 
-<pre>
+<pre class="example">
 Block style: !!seq
 - Clark Evans
 - Ingy döt Net
@@ -7796,7 +7796,7 @@ Flow style: !!seq [ Clark Evans, Ingy döt Net, Oren Ben-Kiki ]
 <div id="example-str-examples" class="example">
 **Example 10.3 `!!str` Examples**
 
-<pre>
+<pre class="example">
 String: !!str "Just a theory."
 </pre>
 
@@ -7862,7 +7862,7 @@ The JSON ~~[schema](#undefined)~~ uses the following ~~[tags](#undefined)~~ in a
 <div id="example-null-examples" class="example">
 **Example 10.4 `!!null` Examples**
 
-<pre>
+<pre class="example">
 !!null null: value for null key
 key with null value: !!null null
 </pre>
@@ -7899,7 +7899,7 @@ key with null value: !!null null
 <div id="example-bool-examples" class="example">
 **Example 10.5 `!!bool` Examples**
 
-<pre>
+<pre class="example">
 YAML is a superset of JSON: !!bool true
 Pluto is a planet: !!bool false
 </pre>
@@ -7950,7 +7950,7 @@ Pluto is a planet: !!bool false
 <div id="example-int-examples" class="example">
 **Example 10.6 `!!int` Examples**
 
-<pre>
+<pre class="example">
 negative: !!int -12
 zero: !!int 0
 positive: !!int 34
@@ -8007,7 +8007,7 @@ positive: !!int 34
 <div id="example-float-examples" class="example">
 **Example 10.7 `!!float` Examples**
 
-<pre>
+<pre class="example">
 negative: !!float -1
 zero: !!float 0
 positive: !!float 2.3e4

@@ -165,6 +165,7 @@ $yaml2
 ...
   }
   else {
+    $yaml1 =~ s/<pre>/<pre class="example">/;
     $out .= "$yaml1\n";
   }
 
@@ -192,9 +193,15 @@ sub fmt_ul {
   undefined_links();
 }
 
+my $figure = 0;
 sub fmt_p {
   set_dates();
   undefined_links();
+  if (/^\*\*Figure #\./m) {
+    my $chapter = $lvl[0];
+    $figure++;
+    s/^\*\*Figure #\./**Figure $chapter.$figure./;
+  }
 }
 
 sub fmt_hr {}
