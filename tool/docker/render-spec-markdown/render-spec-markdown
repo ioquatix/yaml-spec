@@ -203,10 +203,13 @@ sub fmt_indent {
   undefined_links();
 }
 
+my $num = 0;
 sub fmt_pre {
   my $pre = format_pre($_);
   if (/(\S+)\s+::=/) {
     my $rule = $1;
+    $num++;
+    $pre =~ s/\[\#\]/[$num]/;
     $pre =~ s/<pre>/<pre class="rule">/;
     # $pre =~ s/(\b(?:ns|nb|s|l)-\S*)/<a href="rule-$1">$1<\/a>/g;
     chomp $pre;

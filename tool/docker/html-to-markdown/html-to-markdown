@@ -45,6 +45,7 @@ class HtmlToMarkdown
       .replace(/YYYY/g, '2009')
       .replace(/-MM/g, '-10')
       .replace(/-DD/g, '-01')
+      .replace(/\[\d+\](?=.*::=)/g, '[#]')
 
     return markdown + "\n"
 
