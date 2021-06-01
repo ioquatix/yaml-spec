@@ -42,6 +42,9 @@ class HtmlToMarkdown
       .replace(/^> $/mg, '>')
       .replace(/^\d\.\ +/mg, '1. ')
       .replace(/\xa0/g, ' ')
+      .replace(/YYYY/g, '2009')
+      .replace(/-MM/g, '-10')
+      .replace(/-DD/g, '-01')
 
     return markdown + "\n"
 
@@ -295,7 +298,8 @@ class HtmlToMarkdown
       filter: 'dt'
       replacement: (m, n, o)->
         text = m
-        text = "##### #{text.replace(/\s+$/, '')}" unless text.match /\*\*/
+        text = "##### #{text.replace(/\s+$/, '')}" \
+          unless text.match /\*\*/
         return "#{text}\n\n"
 
     dd:

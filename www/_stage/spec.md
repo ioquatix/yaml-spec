@@ -3,7 +3,7 @@ layout: default
 ---
 # YAML Ain’t Markup Language (YAML™) Version 1.2
 
-**3rd Edition, Patched at 2021-05-31**
+**3rd Edition, Patched at 2009-10-01**
 
 * **Oren Ben-Kiki <[oren@ben-kiki.org](mailto:oren@ben-kiki.org)>**
 * **Clark Evans <[cce@clarkevans.com](mailto:cce@clarkevans.com)>**
@@ -21,7 +21,7 @@ layout: default
 **Previous (original) version:**
 [http://yaml.org/spec/1.2/2009-07-21/spec.html](http://yaml.org/spec/1.2/2009-07-21/spec.html)
 
-Copyright © 2001-2021 Oren Ben-Kiki, Clark Evans, Ingy döt Net
+Copyright © 2001-2009 Oren Ben-Kiki, Clark Evans, Ingy döt Net
 
 This document may be freely copied, provided it is not modified.
 
@@ -63,7 +63,7 @@ as well.
 The list of known errors in this specification is available at
 [http://yaml.org/spec/1.2/errata.html](http://yaml.org/spec/1.2/errata.html).
 Please report errors in this document to the yaml-core mailing list.
-This revision contains fixes for all errors known as of 2021-05-31.
+This revision contains fixes for all errors known as of 2009-10-01.
 
 We wish to thank implementers who have tirelessly tracked earlier versions of
 this specification, and our fabulous user community whose feedback has both
