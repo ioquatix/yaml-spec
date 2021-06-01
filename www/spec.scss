@@ -1,10 +1,8 @@
 ---
 ---
-div.rule > * {
-  pre {
-    background-color: #E0F8F8;
-    border: none;
-  }
+pre.rule {
+  background-color: #E0F8F8 !important;
+  border: none !important;
 }
 
 div.example > * {
@@ -16,6 +14,7 @@ div.example > * {
 
   pre {
     background-color: #E0F8E0;
+    border: none;
   }
 }
 
