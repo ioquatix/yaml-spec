@@ -54,23 +54,28 @@ pre.example {
   color: #000 !important;
 }
 
+code.container {
+  padding-top: 3px !important;
+  padding-bottom: 3px !important;
+}
+
 div.legend > *, pre {
   code {
     &.legend-1 {
       background-color: #F8F8E0 !important;
-      border: 1px solid #ccc !important;
+      border: 1px solid #666 !important;
     }
     &.legend-2 {
       background-color: #E0E0F8 !important;
-      border: 1px solid #ccc !important;
+      border: 1px solid #666 !important;
     }
     &.legend-3 {
       background-color: #F8E0F8 !important;
-      border: 1px solid #ccc !important;
+      border: 1px solid #666 !important;
     }
     &.legend-4 {
       background-color: #E0F8F8 !important;
-      border: 1px solid #ccc !important;
+      border: 1px solid #666 !important;
     }
   }
 }
