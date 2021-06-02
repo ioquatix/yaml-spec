@@ -1690,7 +1690,7 @@ In the examples, byte order mark characters are displayed as "**`⇔`**".
 <tr>
 <td class="side-by-side">
 <pre>
-<code class="legend-1">⇔</code>\# Comment only.
+<code class="legend-1">⇔</code># Comment only.
 </pre>
 
 </td>
@@ -1715,7 +1715,7 @@ In the examples, byte order mark characters are displayed as "**`⇔`**".
 <table width="100%">
 <tr>
 <td class="side-by-side">
-<pre>
+<pre class="error">
 - Invalid use of BOM
 ⇔
 - Inside a document.
@@ -1723,7 +1723,7 @@ In the examples, byte order mark characters are displayed as "**`⇔`**".
 
 </td>
 <td class="side-by-side">
-<pre>
+<pre class="error">
 ERROR:
  A BOM must not appear
  inside a document.
@@ -2123,14 +2123,14 @@ grave accent) are _reserved_ for future use.
 <table width="100%">
 <tr>
 <td class="side-by-side">
-<pre>
+<pre class="error">
 commercial-at: @text
 grave-accent: text
 </pre>
 
 </td>
 <td class="side-by-side">
-<pre>
+<pre class="error">
 ERROR:
  Reserved indicators can't
  start a plain scalar.
@@ -2650,7 +2650,7 @@ A A A"
 <table width="100%">
 <tr>
 <td class="side-by-side">
-<pre>
+<pre class="error">
 Bad escapes:
   "\c
   \xq-"
@@ -2658,7 +2658,7 @@ Bad escapes:
 
 </td>
 <td class="side-by-side">
-<pre>
+<pre class="error">
 ERROR:
 - c is an invalid escaped character.
 - q and - are invalid hex digits.
@@ -2724,8 +2724,8 @@ independently.
 <tr>
 <td class="side-by-side">
 <pre>
-··\# Leading comment line spaces are
-···\# neither content nor indentation.
+··# Leading comment line spaces are
+···# neither content nor indentation.
 ····
 Not indented:
 <code class="legend-1">·</code>By one space: |
@@ -3546,7 +3546,7 @@ document, even if both occurrences give the same version number.
 <table width="100%">
 <tr>
 <td class="side-by-side">
-<pre>
+<pre class="error">
 %YAML 1.2
 %YAML 1.1
 foo
@@ -3554,7 +3554,7 @@ foo
 
 </td>
 <td class="side-by-side">
-<pre>
+<pre class="error">
 ERROR:
 The YAML directive must only be
 given at most once per document.
@@ -3622,7 +3622,7 @@ It is an error to specify more than one "**`TAG`**" directive for the same
 <table width="100%">
 <tr>
 <td class="side-by-side">
-<pre>
+<pre class="error">
 %TAG ! !foo
 %TAG ! !foo
 bar
@@ -3630,7 +3630,7 @@ bar
 
 </td>
 <td class="side-by-side">
-<pre>
+<pre class="error">
 ERROR:
 The TAG directive must only
 be given at most once per
@@ -4035,14 +4035,14 @@ A tag is denoted by the _"**`!`**" indicator_.
 <table width="100%">
 <tr>
 <td class="side-by-side">
-<pre>
+<pre class="error">
 - !&lt;!\&gt; foo
 - !&lt;$:?\&gt; bar
 </pre>
 
 </td>
 <td class="side-by-side">
-<pre>
+<pre class="error">
 ERROR:
 - Verbatim tags aren't resolved,
   so ! is invalid.
@@ -4129,7 +4129,7 @@ ERROR:
 <table width="100%">
 <tr>
 <td class="side-by-side">
-<pre>
+<pre class="error">
 %TAG !e! tag:example,2000:app/
 ---
 - !e! foo
@@ -4138,7 +4138,7 @@ ERROR:
 
 </td>
 <td class="side-by-side">
-<pre>
+<pre class="error">
 ERROR:
 - The !o! handle has no suffix.
 - The !h! handle wasn't declared.
@@ -5654,7 +5654,7 @@ been impossible to implement.
 <table width="100%">
 <tr>
 <td class="side-by-side">
-<pre>
+<pre class="error">
 [ foo
  bar: invalid,
  "foo_...&gt;1K characters..._bar": invalid ]
@@ -5662,7 +5662,7 @@ been impossible to implement.
 
 </td>
 <td class="side-by-side">
-<pre>
+<pre class="error">
 ERROR:
 - The foo bar key spans multiple lines
 - The foo...bar key is too long
@@ -5924,7 +5924,7 @@ indicator for cases where detection will fail.
 - &gt;°
 ·
 ··
-··\# detected
+··# detected
 - |1
 ··explicit
 - &gt;°
@@ -5961,7 +5961,7 @@ indicator for cases where detection will fail.
 <table width="100%">
 <tr>
 <td class="side-by-side">
-<pre>
+<pre class="error">
 - |
 ··
 ·text
@@ -5974,7 +5974,7 @@ indicator for cases where detection will fail.
 
 </td>
 <td class="side-by-side">
-<pre>
+<pre class="error">
 ERROR:
 - A leading all-space line must
   not have too many spaces.

@@ -1486,7 +1486,7 @@ In the examples, byte order mark characters are displayed as "**`⇔`**".
 
 **Example #. Byte Order Mark**
 ```
-⇔\# Comment only.
+⇔# Comment only.
 
 ```
 ```
@@ -2242,8 +2242,8 @@ independently.
 
 **Example #. Indentation Spaces**
 ```
-··\# Leading comment line spaces are
-···\# neither content nor indentation.
+··# Leading comment line spaces are
+···# neither content nor indentation.
 ····
 Not indented:
 ·By one space: |
@@ -4486,7 +4486,7 @@ indicator for cases where detection will fail.
 - >°
 ·
 ··
-··\# detected
+··# detected
 - |1
 ··explicit
 - >°

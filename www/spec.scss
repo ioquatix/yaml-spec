@@ -1,35 +1,16 @@
 ---
 ---
+/*
 .main-content {
-  font-size: 20px !important;
-  line-height: 1.23 !important;
-  color: #000 !important;
+  font-size: 20px;
+  line-height: 1.23;
+  color: #000;
 }
-
-h1 {
-  font-size: 140% !important;
-}
-
-h2 {
-  font-size: 140% !important;
-}
-
-h3 {
-  font-size: 120% !important;
-}
-
-h4 {
-  font-size: 100% !important;
-}
-
-h5 {
-  font-size: 100% !important;
-  margin-top: 1em !important;
-}
+*/
 
 pre.rule {
-  background-color: #E0F8F8 !important;
-  border: none !important;
+  background-color: #E0F8F8;
+  border: none;
 }
 
 div.example > * {
@@ -45,13 +26,17 @@ div.example > * {
   }
 }
 
+pre.error {
+  background-color: #F8E0E0 !important;
+}
+
 pre.example {
-  background-color: #E1F8E0 !important;
-  border: none !important;
+  background-color: #E1F8E0;
+  border: none;
 }
 
 .main-content blockquote {
-  color: #000 !important;
+  color: #000;
 }
 
 code.container {
@@ -62,20 +47,20 @@ code.container {
 div.legend > *, pre {
   code {
     &.legend-1 {
-      background-color: #F8F8E0 !important;
-      border: 1px solid #666 !important;
+      background-color: #F8F8E0;
+      border: 1px solid #666;
     }
     &.legend-2 {
-      background-color: #E0E0F8 !important;
-      border: 1px solid #666 !important;
+      background-color: #E0E0F8;
+      border: 1px solid #666;
     }
     &.legend-3 {
-      background-color: #F8E0F8 !important;
-      border: 1px solid #666 !important;
+      background-color: #F8E0F8;
+      border: 1px solid #666;
     }
     &.legend-4 {
-      background-color: #E0F8F8 !important;
-      border: 1px solid #666 !important;
+      background-color: #E0F8F8;
+      border: 1px solid #666;
     }
   }
 }

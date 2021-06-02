@@ -151,6 +151,10 @@ sub fmt_example {
 
   if ($yaml2) {
     $yaml2 = format_pre($yaml2);
+    if ($yaml2 =~ /ERROR:/) {
+      $yaml1 =~ s/<pre(\ ?)/<pre class="error"$1/;
+      $yaml2 =~ s/<pre(\ ?)/<pre class="error"$1/;
+    }
     $out .= <<"...";
 <table width="100%">
 <tr>
@@ -361,7 +365,6 @@ sub apply_legend {
       push @rules, [split /\s+/, $line];
     }
   }
-  # XXX \@rules if $yaml =~ /up, and away/;
 
   $yaml =~ s/\A```\n//;
   $yaml =~ s/\n```\n\z//;

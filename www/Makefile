@@ -39,6 +39,7 @@ FILES := \
     _layouts \
     spec.scss \
     review.html \
+    spec-plain.md \
 
 FILES := $(FILES:%=$(STAGE)/%)
 
@@ -97,6 +98,9 @@ $(STAGE)/%.md: %.md $(STAGE)
 	cat $< > $@
 
 $(STAGE)/%.md: %.md.yaml $(SPEC)/%.md $(LINKS) $(STAGE)
+	render-spec-markdown $^ > $@
+
+$(STAGE)/spec-plain.md: spec-plain.md.yaml $(SPEC)/spec.md $(LINKS) $(STAGE)
 	render-spec-markdown $^ > $@
 
 $(STAGE)/%.png: $(SPEC)/%.png

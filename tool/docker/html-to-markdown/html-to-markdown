@@ -290,6 +290,7 @@ class HtmlToMarkdown
           .replace(/\ +$/mg, '')
           .replace(/\\\\/g, '\\')
           .replace(/\\_/g, '_')
+          .replace(/\\#/g, '#')
           .replace(/`(.*?)`/g, '$1')
           .replace(/([^`])`(?=[^`])/g, '$1')
         return """
