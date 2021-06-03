@@ -56,6 +56,7 @@ build: stage
 	$(eval override export YAML_SPEC_DIR := www/$(STAGE))
 	$(call docker-run,run $(JEKYLL_BUILD),$(DOCKER_BUILD_OPTS))
 	echo $(PUBLISH_CNAME) > $(PAGES)/CNAME
+	cp $(PAGES)/spec.html ./
 
 serve: stage
 	$(eval override export YAML_SPEC_DIR := www/$(STAGE))
@@ -99,6 +100,7 @@ $(STAGE)/%.md: %.md $(STAGE)
 
 $(STAGE)/%.md: %.md.yaml $(SPEC)/%.md $(LINKS) $(STAGE)
 	render-spec-markdown $^ > $@
+	cp $@ ./
 
 $(STAGE)/spec-plain.md: spec-plain.md.yaml $(SPEC)/spec.md $(LINKS) $(STAGE)
 	render-spec-markdown $^ > $@
