@@ -2185,7 +2185,7 @@ Any escaped character:
 A A A"
 ```
 **Legend:**
-* [c-ns-esc-char] <!-- \\ \" \b \e \f \↓ \n \r \t \v \0 4:1,2 \L \P \x41 \u0041 \U00000041 -->
+* [c-ns-esc-char] <!-- \\ \" \a \b \e \f \↓ \n \r \t \v \0 4:1,2 \N \L \P \x41 \u0041 \U00000041 -->
 
 **Example #. Invalid Escaped Characters**
 ```
@@ -3090,7 +3090,7 @@ Either or both may be omitted.
 ```
 **Legend:**
 * [c-ns-properties(n,c)] <!-- 1:1,9 2:3,5 3:1,3 -->
-* [c-ns-anchor-property] <!-- 1:7,3 -->
+* [c-ns-anchor-property] <!-- 1:7,3 3:1,3 -->
 * [c-ns-tag-property] <!-- 1:1,5 2:3,5 -->
 
 ### #. Node Tags
@@ -3691,7 +3691,7 @@ Empty lines, if any, are consumed as part of the [line folding].
       3rd non-empty "
 ```
 **Legend:**
-* [nb-ns-single-in-line(n)] <!-- 1:2,14 2:2,13 3:2,13 -->
+* [nb-ns-single-in-line(n)] <!-- 1:2,14 2:2,13 3:2,13 4:2,13 -->
 * [s-single-next-line(n)] <!-- 1:16 2 3 4:1,14 -->
 
 ### #. Plain Style
@@ -4504,8 +4504,8 @@ indicator for cases where detection will fail.
 ]
 ```
 **Legend:**
-* [c-indentation-indicator(m)]
-* [s-indent(n)]
+* [c-indentation-indicator(m)] <!-- ° 7:4 -->
+* [s-indent(n)] <!-- ·· · -->
 
 **Example #. Invalid Block Scalar Indentation Indicators**
 ```
@@ -4597,8 +4597,8 @@ keep: |+
 }
 ```
 **Legend:**
-* [b-non-content]
-* [b-as-line-feed]
+* [b-non-content] <!-- 2:7 -->
+* [b-as-line-feed] <!-- 4:7 6:7 -->
 
 The interpretation of the trailing [empty lines] following a [block scalar] is
 also controlled by the chomping indicator specified in the [block scalar
@@ -4671,9 +4671,9 @@ keep: |+
 }
 ```
 **Legend:**
-* [l-strip-empty(n)]
-* [l-keep-empty(n)]
-* [l-trail-comments(n)]
+* [l-strip-empty(n)] <!-- 5 6 7 8 11 12 13 14 -->
+* [l-keep-empty(n)] <!-- 17 18 19 -->
+* [l-trail-comments(n)] <!-- 6 7 8 12 13 14 18 19 -->
 
 If a [block scalar] consists only of [empty lines], then these lines are
 considered as trailing lines and hence are affected by chomping.
@@ -4700,8 +4700,8 @@ keep: |+
 }
 ```
 **Legend:**
-* [l-strip-empty(n)]
-* [l-keep-empty(n)]
+* [l-strip-empty(n)] <!-- 2 4 -->
+* [l-keep-empty(n)] <!-- 6 -->
 
 ### #. Literal Style
 
@@ -4727,7 +4727,7 @@ It is the simplest, most restricted, and most readable [scalar style].
 !!str "literal\n\ttext\n"
 ```
 **Legend:**
-* [c-l+literal(n)]
+* [c-l+literal(n)] <!-- 1 2 3 4 -->
 
 Inside literal scalars, all ([indented]) characters are considered to be
 [content], including [white space] characters.
@@ -4776,10 +4776,10 @@ In addition, there is no way to break a long literal line.
 !!str "\n\nliteral\n·\n\ntext\n"
 ```
 **Legend:**
-* [l-nb-literal-text(n)]
-* [b-nb-literal-next(n)]
-* [b-chomped-last(t)]
-* [l-chomped-empty(n,t)]
+* [l-nb-literal-text(n)] <!-- 2 3 4:1,9 5:1,3 6 7:1,6 -->
+* [b-nb-literal-next(n)] <!-- 4:10 5:1,3 5:4 6 7:1,6 -->
+* [b-chomped-last(t)] <!-- 7:7 -->
+* [l-chomped-empty(n,t)] <!-- 9 -->
 
 ### #. Folded Style
 
@@ -4806,7 +4806,7 @@ It is similar to the [literal style]; however, folded scalars are subject to
 !!str "folded text\n"
 ```
 **Legend:**
-* [c-l+folded(n)]
+* [c-l+folded(n)] <!-- 1 2 3 4 -->
 
 [Folding] allows long lines to be broken anywhere a single [space] character
 separates two non-[space] characters.
@@ -4854,8 +4854,8 @@ separates two non-[space] characters.
       last line\n"
 ```
 **Legend:**
-* [s-nb-folded-text(n)]
-* [l-nb-folded-lines(n)]
+* [s-nb-folded-text(n)] <!-- 3:1,7 4:1,5 6 7:1,4 13:1,5 14:1,5 -->
+* [l-nb-folded-lines(n)] <!-- 3 4 6 7 13 14 -->
 
 (The following three examples duplicate this example, each highlighting
 different productions.)
@@ -4912,8 +4912,8 @@ Lines starting with [white space] characters (_more-indented_ lines) are not
       last line\n"
 ```
 **Legend:**
-* [s-nb-spaced-text(n)]
-* [l-nb-spaced-lines(n)]
+* [s-nb-spaced-text(n)] <!-- 8:1,11 10:1,9 11:1,10 -->
+* [l-nb-spaced-lines(n)] <!-- 8 9 10 11:1,10 -->
 
 [Line breaks] and [empty lines] separating folded and more-indented lines are
 also not [folded].
@@ -4963,9 +4963,9 @@ also not [folded].
       last line\n"
 ```
 **Legend:**
-* [b-as-line-feed]
+* [b-as-line-feed] <!-- 4:6 7:6 -->
 * (separation)
-* [l-empty(n,c)]
+* [l-empty(n,c)] <!-- 2 5 12 -->
 
 The final [line break], and trailing [empty lines] if any, are subject to
 [chomping] and are never [folded].
@@ -5008,8 +5008,8 @@ The final [line break], and trailing [empty lines] if any, are subject to
       last line\n"
 ```
 **Legend:**
-* [b-chomped-last(t)]
-* [l-chomped-empty(n,t)]
+* [b-chomped-last(t)] <!-- 13:6 -->
+* [l-chomped-empty(n,t)] <!-- 14 15 -->
 
 ## #. Block Collection Styles
 
@@ -5059,7 +5059,7 @@ block sequence:
 }
 ```
 **Legend:**
-* [c-l-block-seq-entry(n)]
+* [c-l-block-seq-entry(n)] <!-- 2:3, 3:3, -->
 * auto-detected [s-indent(n)]
 
 The entry [node] may be either [completely empty], be a nested [block node], or
@@ -5113,7 +5113,7 @@ Note that it is not possible to specify [node properties] for such a
 ```
 **Legend:**
 * Empty
-* [s-l+block-node(n,c)]
+* [s-l+block-node(n,c)] <!-- 1:2, -->
 * [ns-l-compact-sequence(n)]
 * [ns-l-compact-mapping(n)]
 
@@ -5145,8 +5145,8 @@ block mapping:
 }
 ```
 **Legend:**
-* [ns-l-block-map-entry(n)]
-* auto-detected [s-indent(n)]
+* [ns-l-block-map-entry(n)] <!-- 2:2, -->
+* auto-detected [s-indent(n)] <!-- 2:1 -->
 
 If the ["**`?`**"] indicator is specified, the optional value node must be
 specified on a separate line, denoted by the ["**`:`**"] indicator.
@@ -5199,9 +5199,9 @@ for [block sequence] entries.
 }
 ```
 **Legend:**
-* [c-l-block-map-explicit-key(n)]
-* [l-block-map-explicit-value(n)]
-* [e-node]
+* [c-l-block-map-explicit-key(n)] <!-- 1:1,28 2 3 -->
+* [l-block-map-explicit-value(n)] <!-- 4 5 -->
+* [e-node] <!-- 1:29 -->
 
 If the "**`?`**" indicator is omitted, [parsing] needs to see past the
 [implicit key], in the same way as in the [single key: value pair] [flow
@@ -5259,8 +5259,8 @@ plain key: in-line value
 }
 ```
 **Legend:**
-* [ns-s-block-map-implicit-key]
-* [c-l-block-map-implicit-value(n)]
+* [ns-s-block-map-implicit-key] <!-- 1:1,9 2:1 3:1,12 -->
+* [c-l-block-map-implicit-value(n)] <!-- 1:10, 2:2, 3:13 4 -->
 
 A [compact in-line notation] is also available.
 This compact notation may be nested inside [block sequences] and explicit block
@@ -5300,7 +5300,7 @@ mapping.
 ]
 ```
 **Legend:**
-* [ns-l-compact-mapping(n)]
+* [ns-l-compact-mapping(n)] <!-- 1:3, 2:3, 3 -->
 
 ### #. Block Nodes
 
@@ -5345,8 +5345,8 @@ scalar] and an [implicit key] starting a nested [block mapping].
 ]
 ```
 **Legend:**
-* [s-l+flow-in-block(n)]
-* [s-l+block-in-block(n,c)]
+* [s-l+flow-in-block(n)] <!-- 1:2 2 -->
+* [s-l+block-in-block(n,c)] <!-- 3:3 4 5:3, 6 -->
 
 The block [node’s properties] may span across several lines.
 In this case, they must be [indented] by at least one more [space] than the
@@ -5385,8 +5385,8 @@ folded:↓
 }
 ```
 **Legend:**
-* [c-l+literal(n)]
-* [c-l+folded(n)]
+* [c-l+literal(n)] <!-- 1:10, 2:1,7 -->
+* [c-l+folded(n)] <!-- 3:8 4 5 6 -->
 
 Since people perceive the ["**`-`**" indicator] as [indentation], nested [block
 sequences] may be [indented] by one less [space] to compensate, except, of
@@ -5432,9 +5432,9 @@ mapping: !!map
 }
 ```
 **Legend:**
-* [l+block-sequence(n)]
-* [l+block-mapping(n)]
-* [s-l+block-collection(n,c)]
+* [l+block-sequence(n)] <!-- 2 3 4 -->
+* [l+block-mapping(n)] <!-- 6 -->
+* [s-l+block-collection(n,c)] <!-- 1:10, 2 3 4 5:9, 6 -->
 
 # Chapter #. YAML Character Stream
 
@@ -5472,7 +5472,7 @@ Document
 !!str "Document"
 ```
 **Legend:**
-* [l-document-prefix]
+* [l-document-prefix] <!-- 1 2 -->
 
 ### #. Document Markers
 
@@ -5535,9 +5535,9 @@ Document
 !!str "Document"
 ```
 **Legend:**
-* [c-directives-end]
-* [c-document-end]
-* [l-document-suffix]
+* [c-directives-end] <!-- 2 -->
+* [c-document-end] <!-- 4 -->
+* [l-document-suffix] <!-- 4:1,3 -->
 
 ### #. Bare Documents
 
@@ -5576,7 +5576,7 @@ document
 !!str "%!PS-Adobe-2.0\n"
 ```
 **Legend:**
-* [l-bare-document]
+* [l-bare-document] <!-- 1 2 6 7 -->
 
 ### #. Explicit Documents
 
@@ -5614,7 +5614,7 @@ Since the existence of the [document] is indicated by this [marker], the
 !!null ""
 ```
 **Legend:**
-* [l-explicit-document]
+* [l-explicit-document] <!-- 1 2 3 5 6 -->
 
 ### #. Directives Documents
 
@@ -5648,7 +5648,7 @@ A _directives document_ begins with some [directives] followed by an explicit
 !!null ""
 ```
 **Legend:**
-* [l-explicit-document]
+* [l-explicit-document] <!-- 1 2 3 5 6 7 -->
 
 ## #. Streams
 
@@ -5700,9 +5700,9 @@ matches %: 20
 }
 ```
 **Legend:**
-* [l-any-document]
-* [l-document-suffix]
-* [l-explicit-document]
+* [l-any-document] <!-- 1 2 3 -->
+* [l-document-suffix] <!--  -->
+* [l-explicit-document] <!-- 5 6 7 -->
 
 A sequence of bytes is a _well-formed stream_ if, taken as a whole, it complies
 with the above **`l-yaml-stream`** production.

@@ -111,11 +111,22 @@ $(STAGE)/%.png: $(SPEC)/%.png
 $(STAGE)/%.css: %.css $(STAGE)
 	cp -r $< $@
 
-$(STAGE):
+$(STAGE): markdown.html
 	mkdir $@
 	mkdir $@/img
 	cp 1.2/* $@/
 	cp markdown.html $@/
+
+markdown.html: $(SPEC)/spec.md
+	( \
+	    echo '<pre>'; \
+	    perl -Mstrict -p0 \
+		-e 's/&/&amp;/g; s/</&lt;/g; s/>/&gt;/g;' \
+		-e 's{^(#.*)}{<code>$$1</code>}gm;' \
+		-e 's{^(\*\*(?!Legend).*(\n.*)?\*\*)$$}{<code>$$1</code>}gm' $<; \
+	    echo '</pre>' \
+	) > $@
+
 
 $(PAGES):
 	-git branch --track gh-pages origin/gh-pages 2>/dev/null
