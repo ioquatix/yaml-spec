@@ -1,0 +1,13 @@
+FROM ubuntu:20.04
+
+RUN apt-get update \
+ && DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential nodejs npm
+
+RUN mkdir /node_modules \
+ && cd / \
+ && npm install -g coffeescript \
+ && npm install domino ingy-prelude turndown turndown-plugin-gfm smartwrap
+
+COPY html-to-markdown /bin
+
+RUN apt-get install -y git silversearcher-ag tig tmux vim

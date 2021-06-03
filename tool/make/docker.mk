@@ -1,10 +1,6 @@
 DOCKER_DIR ?= .
 CMD ?= bash
 
-ifneq ($(wildcard Dockerfile.yaml),)
-    DOCKERFILE ?= -f $$(./Dockerfile.yaml)
-endif
-
 docker-build: $(DOCKER_DEPS)
 	docker build \
 	    -t $(DOCKER_IMAGE) \

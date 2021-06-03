@@ -1,6 +1,5 @@
-ALL := $(shell echo */Dockerfile*)
+ALL := $(shell echo */Dockerfile)
 ALL := $(ALL:%/Dockerfile=%)
-ALL := $(ALL:%/Dockerfile.yaml=%)
 
 ALL_BUILD := $(ALL:%=%-BUILD)
 ALL_PUSH := $(ALL:%=%-PUSH)
