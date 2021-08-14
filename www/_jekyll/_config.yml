@@ -1,0 +1,11 @@
+# See https://jekyllrb.com/docs/configuration/default/
+
+title: YAML™ Ain’t Markup Language — Version 1.x
+name: null
+
+destination: /host/www/_gh-pages
+
+kramdown:
+  parse_block_html: true
+
+theme: jekyll-theme-cayman
